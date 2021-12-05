@@ -8,8 +8,12 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
   set(STANDALONE ON)
 endif( )
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(GQJacobi)
+include(dependencies)
+
 message(STATUS "GQJacobi")
 
 find_package(Eigen3 REQUIRED)
@@ -29,5 +33,5 @@ target_sources(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/GQJacobi/gauss-jacobi.hpp>
 )
 
-target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
+target_link_libraries(${LIB_NAME} PUBLIC Eigen3::Eigen)
 target_compile_features(${LIB_NAME} INTERFACE cxx_std_11 )
