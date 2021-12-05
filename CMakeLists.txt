@@ -17,6 +17,7 @@ project(GQJacobi)
 message(STATUS "GQJacobi")
 
 find_package(Eigen3 REQUIRED NO_MODULE)
+set(EIGEN3_INCLUDE_DIR "/usr/local/include")
 SET( EIGEN3_INCLUDE_DIR "$ENV{EIGEN3_INCLUDE_DIR}" )
 
 string( REGEX REPLACE "^lib" "" LIB_NAME ${PROJECT_NAME} )
