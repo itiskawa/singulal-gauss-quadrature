@@ -39,7 +39,8 @@ target_sources(
 target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
 target_compile_features(${LIB_NAME} INTERFACE cxx_std_11 )
 
-install(TARGETS ${LIB_NAME} EXPORT ${PROJECT_NAME}TARGETS
+install(TARGETS ${LIB_NAME} 
+EXPORT ${PROJECT_NAME}Targets
 LIBRARY DESTINATION lib
 ARCHIVE DESTINATION lib
 RUNTIME DESTINATION bin
@@ -56,11 +57,15 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/
   FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h"
 )
 
-
+install(EXPORT ${PROJECT_NAME}Targets
+  FILE ${PROJECT_NAME}Targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION cmake
+)
 
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
 "include(CMakeFindDependencyMacro)
-find_dependency(Boost)
+find_dependency(Eigen)
 include(\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}Targets.cmake)
 "
 )
