@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 if( TARGET GQJacobi)
     return()
-endif(TARGET GQJAcobi)
+endif(TARGET GQJacobi)
 
 if( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
   set(STANDALONE ON)
@@ -16,9 +16,9 @@ project(GQJacobi)
 
 message(STATUS "GQJacobi")
 
-find_package(Eigen3 REQUIRED NO_MODULE)
-set(EIGEN3_INCLUDE_DIR "/usr/local/include")
-SET( EIGEN3_INCLUDE_DIR "$ENV{EIGEN3_INCLUDE_DIR}" )
+#list(APPEND CMAKE_MODULE_PATH "/usr/local/Cellar/eigen/3.4.0_1/share/cmake/Modules/FindEigen3.cmake")
+find_package(Eigen3 REQUIRED)
+
 
 string( REGEX REPLACE "^lib" "" LIB_NAME ${PROJECT_NAME} )
 add_library( ${LIB_NAME} INTERFACE )
@@ -28,12 +28,12 @@ target_include_directories( ${LIB_NAME} INTERFACE
   $<BUILD_INTERFACE:${${PROJECT_NAME}_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
 )
-target_link_libraries(${LIB_NAME} PUBLIC Eigen3::Eigen)
 
 target_sources(
-    ${LIB_NAME}
-    INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/GQJacobi/gauss-jacobi.hpp>
-)
-
+  ${LIB_NAME}
+  INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/GQJacobi/gauss-jacobi.hpp>
+  )
+  
+target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
 target_compile_features(${LIB_NAME} INTERFACE cxx_std_11 )
