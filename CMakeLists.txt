@@ -9,13 +9,14 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
 endif( )
 
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "usr/local/include/eigen3")
-#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(GQJacobi)
+project(GQJacobi VERSION 1.0.0)
 #include(dependencies)
 
-message(STATUS "GQJacobi")
+message(STATUS "GQJacobi version : ${${PROJECT_NAME}_VERSION}")
 
+          
 #list(APPEND CMAKE_MODULE_PATH "/usr/local/Cellar/eigen/3.4.0_1/share/cmake/Modules/FindEigen3.cmake")
 find_package(Eigen3 REQUIRED)
 
@@ -37,3 +38,54 @@ target_sources(
   
 target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
 target_compile_features(${LIB_NAME} INTERFACE cxx_std_11 )
+
+install(TARGETS ${LIB_NAME} EXPORT ${PROJECT_NAME}TARGETS
+LIBRARY DESTINATION lib
+ARCHIVE DESTINATION lib
+RUNTIME DESTINATION bin
+INCLUDES DESTINATION include/${PROJECT_NAME}
+)
+
+install(DIRECTORY src/
+  DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h"
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/
+  DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h"
+)
+
+
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+"include(CMakeFindDependencyMacro)
+find_dependency(Boost)
+include(\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}Targets.cmake)
+"
+)
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+  VERSION ${${PROJECT_NAME}_VERSION}
+  COMPATIBILITY SameMajorVersion
+  ARCH_INDEPENDENT
+)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+  DESTINATION cmake
+)
+
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A C++ library for Gauss-Jacobi Quadratures")
+SET(CPACK_PACKAGE_VENDOR "Victor K.B. - alias itiskawa")
+SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+#SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
+if( ${PROJECT_NAME}_VERSION_MAJOR)
+  SET(CPACK_PACKAGE_VERSION_MAJOR ${${PROJECT_NAME}_VERSION_MAJOR})
+endif()
+if( ${PROJECT_NAME}_VERSION_MINOR)
+  SET(CPACK_PACKAGE_VERSION_MINOR ${${PROJECT_NAME}_VERSION_MINOR})
+endif()
+if( ${PROJECT_NAME}_VERSION_PATCH)
+  SET(CPACK_PACKAGE_VERSION_PATCH ${${PROJECT_NAME}_VERSION_PATCH})
+endif()
+INCLUDE(CPack)
