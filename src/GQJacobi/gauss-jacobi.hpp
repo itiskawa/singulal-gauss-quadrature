@@ -133,7 +133,7 @@ namespace GQJacobi{
 
     }; // GaussJacobiRule
 
-    struct GaussLegendreRule{
+   /*  struct GaussLegendreRule{
         public:
         std::vector<double> nodes;
         std::vector<double> weights;
@@ -167,7 +167,7 @@ namespace GQJacobi{
             } 
         }
 
-    }; // GaussChebyshevRule
+    }; // GaussChebyshevRule */
     
     
 
