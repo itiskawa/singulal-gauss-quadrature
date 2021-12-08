@@ -131,7 +131,7 @@ namespace GQJacobi{
 
     template <typename T>
     template <typename FUNCTION>
-        T GaussJacobiRule<T>::operator(FUNCTION f) const { // takes an rValue 
+        T GaussJacobiRule<T>::operator () (FUNCTION f) const { // takes an rValue 
             T quad = 0;
             for(int i = 0; i < degree; i++){
                 quad += weights[i]*f(nodes[i]);
