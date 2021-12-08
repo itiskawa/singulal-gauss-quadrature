@@ -60,7 +60,7 @@ namespace GQJacobi{
             assert(coeffs.rows() == n);
             assert(coeffs.cols() == 2);
             
-            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiag = (Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>)::Matrix(n, n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiag = (Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>)::Zero(n, n);
 
             // setting alpha0 in top left corner
             tridiag(0, 0) = coeffs(0, 0); 
