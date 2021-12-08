@@ -191,7 +191,7 @@ namespace GQJacobi{
         public:
 
         GaussLegendreRule(std::size_t n)
-        : GaussJacobiRule(n, 0, 0)
+        : GaussJacobiRule<T>(n, 0, 0)
         { }
 
     }; // GaussLegendreRule
@@ -204,9 +204,9 @@ namespace GQJacobi{
     */
     template<typename T>
     class GaussChebyshevRule : public GaussJacobiRule{
-
+        public:
         GaussChebyshevRule(std::size_t n, int sgn) 
-        : GaussJacobiRule(n, sgn*0.5, sgn*0.5)
+        : GaussJacobiRule<T>(n, sgn*0.5, sgn*0.5)
         {
             this->sgn = sgn;
         }
