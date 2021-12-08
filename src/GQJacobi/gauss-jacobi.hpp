@@ -5,15 +5,15 @@
 
 namespace GQJacobi{
 
-    template<typename T>
+    
     struct GaussJacobiRule{
 
         private:
-        double gamma_zero(T a, T b) {
+        double gamma_zero(double a, double b) {
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
         }
 
-        Eigen::MatrixXd c_jacobi(int n, T a, T b) {
+        Eigen::MatrixXd c_jacobi(int n, double a, double b) {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
@@ -75,7 +75,7 @@ namespace GQJacobi{
             return tridiag;
         }
 
-        Eigen::MatrixXd jacobi_nw(int n, T a, T b) {
+        Eigen::MatrixXd jacobi_nw(int n, double a, double b) {
 
             double gamma_0 = gamma_zero(a, b);
 
@@ -108,7 +108,7 @@ namespace GQJacobi{
         std::vector<T> nodes;
         std::vector<T> weights;
 
-        GaussJacobiRule(int n, T a, T b){
+        GaussJacobiRule(int n, double a, double b){
             Eigen::MatrixXd nw = jacobi_nw(n, a, b);
 
             for(int i = 0; i < n; i++){
