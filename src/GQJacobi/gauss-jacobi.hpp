@@ -111,7 +111,7 @@ namespace GQJacobi{
         std::vector<T> nodes;
         std::vector<T> weights;
 
-        <typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
+        <typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>;
         T operator()(F f, std::size_t n, double a, double b) const { // takes an rValue 
             Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
             degree = n;
