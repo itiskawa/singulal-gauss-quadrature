@@ -20,7 +20,7 @@ namespace GQJacobi{
             assert(b > -1);
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-            Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Matrix(n, 2);
+            Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
             
 
             // this method follows Gautschi's r_jacobi function
