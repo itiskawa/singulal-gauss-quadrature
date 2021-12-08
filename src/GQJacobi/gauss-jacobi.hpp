@@ -11,7 +11,7 @@ namespace GQJacobi{
     * @brief a struct that contains the nodes & weights of a Gauss-Jacobi quadrature rule
     * 
     */
-    template <typename T>
+    template <class T>
     class GaussJacobiRule{
 
         
@@ -173,9 +173,9 @@ namespace GQJacobi{
 
 
 
-    template<typename T>
+    template<class T>
     template<typename F>
-    GaussJacobiRule<T>::operator()(F f) const { // takes an rValue 
+    GaussJacobiRule<T>::operator()(F f) const {
         T quad = 0;
         for(std::size_t i = 0; i < degree; i++){
             quad += weights[i] * f(nodes[i]) ;
