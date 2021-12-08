@@ -9,7 +9,8 @@ namespace GQJacobi{
     template <typename T, int N = 0>
     struct GaussJacobiRule{
 
-        private:
+        
+        public:
         double gamma_zero(double a, double b) {
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
         }
@@ -106,7 +107,6 @@ namespace GQJacobi{
         }
 
 
-        public:
         std::size_t degree;
         std::vector<T> nodes;
         std::vector<T> weights;
@@ -133,29 +133,29 @@ namespace GQJacobi{
 
 
 
-        template<typename T, std::size_t N>
-        template<typename F, std::size_t N_, typename SFINAE>
-        T GaussJacobiRule<T,N>::operator()(F f, std::size_t n, double a, double b) const { // takes an rValue
-            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-            degree = n;
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw.col(1)[i]);
-            }
-
-            T quad = 0;
-            for(int i = 0; i < degree; i++){
-                quad += weights[i] * f(nodes[i]) ;
-            }
-            return quad;
-        }   
 
 
 
     }; // GaussJacobiRule
 
 
+    template<typename T, std::size_t N>
+    template<typename F, std::size_t N_, typename SFINAE>
+    T GaussJacobiRule<T,N>::operator()(F f, std::size_t n, double a, double b) const { // takes an rValue
+        Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
+        degree = n;
+
+        for(int i = 0; i < n; i++){
+            nodes.push_back(nw.col(0)[i]);
+            weights.push_back(nw.col(1)[i]);
+        }
+
+        T quad = 0;
+        for(int i = 0; i < degree; i++){
+            quad += weights[i] * f(nodes[i]) ;
+        }
+        return quad;
+    }   
 
    /*  struct GaussLegendreRule{
         public:
