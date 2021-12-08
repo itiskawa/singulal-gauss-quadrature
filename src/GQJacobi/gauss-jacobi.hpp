@@ -1,24 +1,35 @@
 #pragma once
-
 #include <Eigen/Dense>
 #include <vector>
 using namespace Eigen;
 
 namespace GQJacobi{
 
+    /*
+    * @author V.B (@itiskawa)
+    * @struct
+    * @brief a struct that contains the nodes & weights of a Gauss-Jacobi quadrature rule
+    * 
+    */
     template <typename T>
     struct GaussJacobiRule{
 
         
         public:
+        /*
+        * @method
+        * @brief first moment of the Jacobi weight function
+        */
         double gamma_zero(double a, double b) {
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
         }
 
+        /*
+        * @method 
+        * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
+        * monic polynomials associated to the Jacobi weight function
+        */
         Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
-            assert(n>1);
-            assert(a > -1);
-            assert(b > -1);
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
             Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
@@ -55,7 +66,11 @@ namespace GQJacobi{
         }    
 
 
-
+        /*
+        * @method 
+        * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
+        * following the Golub-Welsch Algorithm
+        */
         Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
             // argument is a nx2 matrix
             // SIZE CHECK
@@ -100,20 +115,31 @@ namespace GQJacobi{
             nw.col(0) = nodes;
             nw.col(1) = weights;
             
-            
-
             return nw;
             
         }
 
 
-        std::size_t degree;
+        /*
+        * @attributes
+        * nodes: associated quadrature rule nodes
+        * weights: associated quadrature rule weights
+        * degree: number of quadrature points
+        */
         std::vector<T> nodes;
         std::vector<T> weights;
+        std::size_t degree;
 
+        /*
+        * @constructor 
+        * @brief instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
+        */
         GaussJacobiRule(std::size_t n, double a, double b) {
+            assert(n>1);
+            assert(a > -1);
+            assert(b > -1);
             Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-            degree = n;
+            this->degree = n;
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
@@ -138,69 +164,59 @@ namespace GQJacobi{
         T operator()(F f) const { // takes an rValue 
 
             T quad = 0;
-            for(int i = 0; i < degree; i++){
+            for(std::size_t i = 0; i < degree; i++){
                 quad += weights[i] * f(nodes[i]) ;
             } 
             return quad;
         }   
 
 
-
-
-
-
-
-
     }; // GaussJacobiRule
 
 
+    /*
+    * @struct
+    * @brief a substruct of GaussJacobiRule, but deserved its own name, for ease of use
+    *
+    */
+    template<typename T>
+    struct GaussLegendreRule : GaussJacobiRule{
 
-   /*  struct GaussLegendreRule{
+        /*
+        * @attributes
+        * nodes: associated quadrature rule nodes
+        * weights: associated quadrature rule weights
+        * degree: number of quadrature points
+        */
         public:
-        std::vector<double> nodes;
-        std::vector<double> weights;
 
-        GaussLegendreRule(int n){
-            GaussJacobiRule gqj = GaussJacobiRule(n, 0, 0);
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(gqj.nodes[i]);
-                weights.push_back(gqj.weights(1)[i]);
-            } 
-        }
+        GaussLegendreRule(std::size_t n) : GaussJacobiRule(n, 0, 0){ }
 
     }; // GaussLegendreRule
 
 
-    struct GaussChebyshevRule{
+    /*
+    * @struct
+    * @brief a substruct of GaussJacobiRule, but deserved its own name, for ease of use
+    *
+    */
+   template<typename T>
+    struct GaussChebyshevRule : GaussJacobiRule{
+
+        /*
+        * @attributes
+        * sgn: -1 will yield the weight function aossiciated to Chebyshev Polynomials of the first kind T(n)
+        *      whereas +1 will yield the weight function associated to the second kind U(n)
+        */
         public:
-        std::vector<double> nodes;
-        std::vector<double> weights;
-        int sgn; // -1 is the first kind T(n), +1 is the second kind U(n)
+        int sgn; 
 
-        GaussChebyshevRule(int n, int sgn){
+        GaussChebyshevRule(std::size_t n, int sgn) : GaussJacobiRule(n, sgn*0.5, sgn*0.5){
             this->sgn = sgn;
-
-            GaussJacobiRule gqj = GaussJacobiRule(n, sgn*0.5, sgn*0.5);
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(gqj.nodes[i]);
-                weights.push_back(gqj.weights(1)[i]);
-            } 
         }
-
     }; // GaussChebyshevRule */
     
     
-
-
-
-
-
-
-
-    
-
 
 
 } // namespace GQJacobi
