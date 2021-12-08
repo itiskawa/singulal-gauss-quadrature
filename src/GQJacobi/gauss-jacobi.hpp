@@ -105,15 +105,15 @@ namespace GQJacobi{
         }
 
         public:
-        std::vector<T> nodes;
-        std::vector<T> weights;
+        std::vector<double> nodes;
+        std::vector<double> weights;
 
         GaussJacobiRule(int n, double a, double b){
             Eigen::MatrixXd nw = jacobi_nw(n, a, b);
 
             for(int i = 0; i < n; i++){
-                nodes.push_back(nw[i,0]);
-                weights.push_back(nw[i, 1]);
+                nodes.push_back(nw.col(0)[i]);
+                weights.push_back(nw[.col(1)[i]);
             }
             
         }
