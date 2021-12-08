@@ -124,7 +124,7 @@ namespace GQJacobi{
 
 
         template <typename FUNCTION>
-        T operator () (FUNCTION &&f, double a, double b) const { // takes an rValue 
+        T operator () (FUNCTION f, double a, double b) const { // takes an rValue 
             T quad = 0;
             for(int i = 0; i < degree; i++){
                 quad += weights[i]*f(nodes[i]);
