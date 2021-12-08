@@ -125,7 +125,7 @@ namespace GQJacobi{
 
 
         template <typename FUNCTION>
-        T compute(FUNCTION f, double a, double b) const;
+        T operator()(FUNCTION f, double a, double b) const;
 
     }; // GaussJacobiRule
 
