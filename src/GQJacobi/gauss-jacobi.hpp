@@ -180,7 +180,7 @@ namespace GQJacobi{
     *
     */
     template<typename T>
-    class GaussLegendreRule : public GaussJacobiRule{
+    class GaussLegendreRule : public GaussJacobiRule<T>{
 
         /*
         * @attributes
@@ -203,7 +203,7 @@ namespace GQJacobi{
     *
     */
     template<typename T>
-    class GaussChebyshevRule : public GaussJacobiRule{
+    class GaussChebyshevRule : public GaussJacobiRule<T>{
         public:
         GaussChebyshevRule(std::size_t n, int sgn) 
         : GaussJacobiRule<T>(n, sgn*0.5, sgn*0.5)
