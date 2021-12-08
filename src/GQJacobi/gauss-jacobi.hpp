@@ -157,7 +157,7 @@ namespace GQJacobi{
         int sgn; // -1 is the first kind T(n), +1 is the second kind U(n)
 
         GaussChebyshevRule(int n, int sgn){
-            this.sgn = sgn;
+            this->sgn = sgn;
 
             GaussJacobiRule gqj = GaussJacobiRule(n, sgn*0.5, sgn*0.5);
 
