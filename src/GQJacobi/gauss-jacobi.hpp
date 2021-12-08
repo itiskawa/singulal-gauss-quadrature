@@ -6,7 +6,7 @@ using namespace Eigen;
 
 namespace GQJacobi{
 
-    template <typename T, int N = 0>
+    template <typename T>
     struct GaussJacobiRule{
 
         
@@ -124,7 +124,8 @@ namespace GQJacobi{
 
 
         ///template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
-        T operator()(T f) const { // takes an rValue 
+        template T F<T>(T);
+        T operator()(F f) const { // takes an rValue 
 
             T quad = 0;
             /* for(int i = 0; i < degree; i++){
