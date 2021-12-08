@@ -139,23 +139,6 @@ namespace GQJacobi{
     }; // GaussJacobiRule
 
 
-    template<typename T, std::size_t N>
-    template<typename F, std::size_t N_, typename SFINAE>
-    T GaussJacobiRule<T,N>::operator()(F f, std::size_t n, double a, double b) const { // takes an rValue
-        Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-        degree = n;
-
-        for(int i = 0; i < n; i++){
-            nodes.push_back(nw.col(0)[i]);
-            weights.push_back(nw.col(1)[i]);
-        }
-
-        T quad = 0;
-        for(int i = 0; i < degree; i++){
-            quad += weights[i] * f(nodes[i]) ;
-        }
-        return quad;
-    }   
 
    /*  struct GaussLegendreRule{
         public:
