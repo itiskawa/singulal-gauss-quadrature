@@ -5,7 +5,7 @@
 
 namespace GQJacobi{
 
-    
+    template <typename T>
     struct GaussJacobiRule{
 
         private:
@@ -13,13 +13,13 @@ namespace GQJacobi{
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
         }
 
-        Eigen::MatrixXd c_jacobi(int n, double a, double b) {
+        Eigen::Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-            Eigen::MatrixXd coeffs = Eigen::MatrixXd::Zero(n, 2);
+            Eigen::Matrix<T, Dynamic, Dynamic> coeffs = Eigen::Matrix<T, Dynamic, Dynamic>::Matrix(n, 2);
             
 
             // this method follows Gautschi's r_jacobi function
@@ -35,8 +35,8 @@ namespace GQJacobi{
 
             // alpha coefficients
             coeffs(0, 0) = a0;
-            Eigen::VectorXd deg = Eigen::VectorXd::LinSpaced(n-1,1, n-1);
-            Eigen::VectorXd ndeg = (2*deg)+(Eigen::VectorXd::Ones(n-1)*(a+b));
+            Eigen::VectorXd deg = Eigen::Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
+            Eigen::VectorXd ndeg = (2*deg)+(Eigen::Vector<T, Dynamic>::Ones(n-1)*(a+b));
 
             for(int i = 1; i < n; i++){
                 coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
@@ -54,13 +54,13 @@ namespace GQJacobi{
 
 
 
-        Eigen::MatrixXd tridiagCoeffs(Eigen::MatrixXd coeffs, int n) {
+        Eigen::Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Eigen::Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
             // argument is a nx2 matrix
             // SIZE CHECK
             assert(coeffs.rows() == n);
             assert(coeffs.cols() == 2);
             
-            Eigen::MatrixXd tridiag = Eigen::MatrixXd::Zero(n, n);
+            Eigen::Matrix<T, Dynamic, Dynamic> tridiag = Eigen::Matrix<T, Dynamic, Dynamic>::Matrix(n, n);
 
             // setting alpha0 in top left corner
             tridiag(0, 0) = coeffs(0, 0); 
@@ -75,26 +75,26 @@ namespace GQJacobi{
             return tridiag;
         }
 
-        Eigen::MatrixXd jacobi_nw(int n, double a, double b) {
+        Eigen::Matrix<T, Dynamic, Dynamic> jacobi_nw(std::size_t n, double a, double b) {
 
             double gamma_0 = gamma_zero(a, b);
 
-            Eigen::MatrixXd coeffs = c_jacobi(n, a, b);
-            Eigen::MatrixXd J_n = tridiagCoeffs(coeffs, n);
-            Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> solve(J_n); // yields much faster computations of high n
+            Eigen::Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi(n, a, b);
+            Eigen::Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
+            Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             
 
-            Eigen::VectorXd nodes= solve.eigenvalues().real();
+            Eigen::Vector<T, Dynamic> nodes= solve.eigenvalues().real();
 
-            Eigen::MatrixXd eigenvecs = solve.eigenvectors().real();
+            Eigen::Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
 
-            Eigen::VectorXd weights = Eigen::VectorXd::Zero(n);
+            Eigen::Vector<T, Dynamic> weights = Eigen::Vector<T, Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
                 weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
             }
 
-            Eigen::MatrixXd nw = Eigen::MatrixXd::Zero(n, 2);
+            Eigen::Matrix<T, Dynamic, Dynamic> nw = Eigen::Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
             nw.col(0) = nodes;
             nw.col(1) = weights;
             
@@ -104,19 +104,32 @@ namespace GQJacobi{
             
         }
 
-        public:
-        std::vector<double> nodes;
-        std::vector<double> weights;
 
-        GaussJacobiRule(int n, double a, double b){
-            Eigen::MatrixXd nw = jacobi_nw(n, a, b);
+        public:
+        std::size_t degree;
+        std::vector<T> nodes;
+        std::vector<T> weights;
+
+        GaussJacobiRule(std::size_t n, double a, double b){
+            degree = n;
+            Eigen::Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
                 weights.push_back(nw.col(1)[i]);
             }
             
-        }
+        } // constructor
+
+
+        template <typename FUNCTION>
+        T operator () (FUNCTION &&f, double a, double b) const { // takes an rValue 
+            T quad = 0;
+            for(int i = 0; i < degree; i++){
+                quad += weights[i]*f(nodes[i]);
+            }
+            return quad;
+        }   
 
     }; // GaussJacobiRule
 
