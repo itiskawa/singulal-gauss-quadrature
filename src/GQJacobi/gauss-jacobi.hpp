@@ -123,6 +123,7 @@ namespace GQJacobi{
         } // constructor
 
 
+        
         template <typename FUNCTION>
         T operator () (FUNCTION f, double a, double b) const { // takes an rValue 
             T quad = 0;
