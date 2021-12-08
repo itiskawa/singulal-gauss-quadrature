@@ -91,7 +91,7 @@ namespace GQJacobi{
             Eigen::VectorXd weights = Eigen::VectorXd::Zero(n);
 
             for(int i = 0; i < n; i++){
-                weights_v[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
+                weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
             }
 
             Eigen::MatrixXd nw = Eigen::MatrixXd::Zero(n, 2);
