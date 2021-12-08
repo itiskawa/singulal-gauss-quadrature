@@ -180,7 +180,7 @@ namespace GQJacobi{
     *
     */
     template<typename T>
-    struct GaussLegendreRule : GaussJacobiRule{
+    struct GaussLegendreRule : public GaussJacobiRule{
 
         /*
         * @attributes
@@ -190,7 +190,9 @@ namespace GQJacobi{
         */
         public:
 
-        GaussLegendreRule(std::size_t n) : GaussJacobiRule(n, 0, 0){ }
+        GaussLegendreRule(std::size_t n)
+        : GaussJacobiRule(n, 0, 0)
+        { }
 
     }; // GaussLegendreRule
 
@@ -201,7 +203,7 @@ namespace GQJacobi{
     *
     */
    template<typename T>
-    struct GaussChebyshevRule : GaussJacobiRule{
+    struct GaussChebyshevRule : public GaussJacobiRule{
 
         /*
         * @attributes
@@ -211,7 +213,9 @@ namespace GQJacobi{
         public:
         int sgn; 
 
-        GaussChebyshevRule(std::size_t n, int sgn) : GaussJacobiRule(n, sgn*0.5, sgn*0.5){
+        GaussChebyshevRule(std::size_t n, int sgn) 
+        : GaussJacobiRule(n, sgn*0.5, sgn*0.5)
+        {
             this->sgn = sgn;
         }
     }; // GaussChebyshevRule */
