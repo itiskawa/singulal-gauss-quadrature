@@ -128,10 +128,10 @@ namespace GQJacobi{
         T operator()(F f) const { // takes an rValue 
 
             T quad = 0;
-            /* for(int i = 0; i < degree; i++){
+            for(int i = 0; i < degree; i++){
                 quad += weights[i] * f(nodes[i]) ;
-            } */
-            return f;
+            } 
+            return quad;
         }   
 
 
