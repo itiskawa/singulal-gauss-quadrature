@@ -166,22 +166,18 @@ namespace GQJacobi{
 
 
         template <typename F>
-        T operator()(F f) const; 
+        T operator()(F f) const {
+            T quad = 0;
+            for(std::size_t i = 0; i < degree; i++){
+                quad += weights[i] * f(nodes[i]) ;
+            } 
+            return quad;
+        }   
+        
 
 
     }; // GaussJacobiRule
 
-
-
-    template<class T>
-    template<typename F>
-    GaussJacobiRule<T>::T operator()(F f) const {
-        T quad = 0;
-        for(std::size_t i = 0; i < degree; i++){
-            quad += weights[i] * f(nodes[i]) ;
-        } 
-        return quad;
-    }   
 
 
     /*
