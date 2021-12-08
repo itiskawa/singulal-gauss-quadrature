@@ -113,7 +113,7 @@ namespace GQJacobi{
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw[.col(1)[i]);
+                weights.push_back(nw.col(1)[i]);
             }
             
         }
