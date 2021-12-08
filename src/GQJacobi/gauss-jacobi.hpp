@@ -13,13 +13,13 @@ namespace GQJacobi{
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
         }
 
-        Eigen::Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> c_jacobi(std::size_t n, double a, double b) {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-            Eigen::Matrix<T, Dynamic, Dynamic> coeffs = Eigen::Matrix<T, Dynamic, Dynamic>::Matrix(n, 2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Matrix(n, 2);
             
 
             // this method follows Gautschi's r_jacobi function
@@ -35,8 +35,8 @@ namespace GQJacobi{
 
             // alpha coefficients
             coeffs(0, 0) = a0;
-            Eigen::VectorXd deg = Eigen::Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-            Eigen::VectorXd ndeg = (2*deg)+(Eigen::Vector<T, Dynamic>::Ones(n-1)*(a+b));
+            Eigen::VectorXd deg = Eigen::Vector<T, Eigen::Dynamic>::LinSpaced(n-1,1, n-1);
+            Eigen::VectorXd ndeg = (2*deg)+(Eigen::Vector<T, Eigen::Dynamic>::Ones(n-1)*(a+b));
 
             for(int i = 1; i < n; i++){
                 coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
@@ -54,13 +54,13 @@ namespace GQJacobi{
 
 
 
-        Eigen::Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Eigen::Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiagCoeffs(Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs, std::size_t n) {
             // argument is a nx2 matrix
             // SIZE CHECK
             assert(coeffs.rows() == n);
             assert(coeffs.cols() == 2);
             
-            Eigen::Matrix<T, Dynamic, Dynamic> tridiag = Eigen::Matrix<T, Dynamic, Dynamic>::Matrix(n, n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiag = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Matrix(n, n);
 
             // setting alpha0 in top left corner
             tridiag(0, 0) = coeffs(0, 0); 
@@ -75,26 +75,26 @@ namespace GQJacobi{
             return tridiag;
         }
 
-        Eigen::Matrix<T, Dynamic, Dynamic> jacobi_nw(std::size_t n, double a, double b) {
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> jacobi_nw(std::size_t n, double a, double b) {
 
             double gamma_0 = gamma_zero(a, b);
 
-            Eigen::Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi(n, a, b);
-            Eigen::Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
-            Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = c_jacobi(n, a, b);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> J_n = tridiagCoeffs(coeffs, n);
+            Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> solve(J_n); // yields much faster computations of high n
             
 
-            Eigen::Vector<T, Dynamic> nodes= solve.eigenvalues().real();
+            Eigen::Vector<T, Eigen::Dynamic> nodes= solve.eigenvalues().real();
 
-            Eigen::Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> eigenvecs = solve.eigenvectors().real();
 
-            Eigen::Vector<T, Dynamic> weights = Eigen::Vector<T, Dynamic>::Zero(n);
+            Eigen::Vector<T, Eigen::Dynamic> weights = Eigen::Vector<T, Eigen::Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
                 weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
             }
 
-            Eigen::Matrix<T, Dynamic, Dynamic> nw = Eigen::Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);
             nw.col(0) = nodes;
             nw.col(1) = weights;
             
@@ -112,7 +112,7 @@ namespace GQJacobi{
 
         GaussJacobiRule(std::size_t n, double a, double b){
             degree = n;
-            Eigen::Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw = jacobi_nw(n, a, b);
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
