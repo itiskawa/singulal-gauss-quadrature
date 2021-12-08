@@ -123,7 +123,7 @@ namespace GQJacobi{
 
 
 
-        template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
+        ///template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
         T operator()(T f) const { // takes an rValue 
 
             T quad = 0;
