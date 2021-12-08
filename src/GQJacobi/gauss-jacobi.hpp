@@ -17,6 +17,34 @@ namespace GQJacobi{
         
         public:
         /*
+        * @attributes
+        * nodes: associated quadrature rule nodes
+        * weights: associated quadrature rule weights
+        * degree: number of quadrature points
+        */
+        std::vector<T> nodes;
+        std::vector<T> weights;
+        std::size_t degree;
+
+        /*
+        * @constructor 
+        * @brief instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
+        */
+        GaussJacobiRule(std::size_t n, double a, double b) {
+            assert(n>1);
+            assert(a > -1);
+            assert(b > -1);
+            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
+            this->degree = n;
+
+            for(int i = 0; i < n; i++){
+                nodes.push_back(nw.col(0)[i]);
+                weights.push_back(nw.col(1)[i]);
+            }
+        }
+
+        protected:
+        /*
         * @method
         * @brief first moment of the Jacobi weight function
         */
@@ -92,6 +120,10 @@ namespace GQJacobi{
             return tridiag;
         }
 
+        /*
+        * @method 
+        * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
+        */
         Matrix<T, Dynamic, Dynamic> jacobi_nw(std::size_t n, double a, double b) {
 
             double gamma_0 = gamma_zero(a, b);
@@ -120,58 +152,36 @@ namespace GQJacobi{
         }
 
 
-        /*
-        * @attributes
-        * nodes: associated quadrature rule nodes
-        * weights: associated quadrature rule weights
-        * degree: number of quadrature points
-        */
-        std::vector<T> nodes;
-        std::vector<T> weights;
-        std::size_t degree;
-
-        /*
-        * @constructor 
-        * @brief instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
-        */
-        GaussJacobiRule(std::size_t n, double a, double b) {
-            assert(n>1);
-            assert(a > -1);
-            assert(b > -1);
-            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-            this->degree = n;
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw.col(1)[i]);
-            }
-        }
-
 
         ///template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
         //template <typename F>
-        T operator()(T (*f)(T)) const { // takes an rValue 
+        /* T operator()(T (*f)(T)) const { // takes an rValue 
 
             T quad = 0;
             for(int i = 0; i < degree; i++){
                 quad += weights[i] * f(nodes[i]) ;
             } 
             return quad;
-        }   
+        }    */
 
 
         template <typename F>
-        T operator()(F f) const { // takes an rValue 
-
-            T quad = 0;
-            for(std::size_t i = 0; i < degree; i++){
-                quad += weights[i] * f(nodes[i]) ;
-            } 
-            return quad;
-        }   
+        T operator()(F f) const; 
 
 
     }; // GaussJacobiRule
+
+
+
+    template<typename T>
+    template<typename F>
+    GaussJacobiRule<T>::operator()(F f) const { // takes an rValue 
+        T quad = 0;
+        for(std::size_t i = 0; i < degree; i++){
+            quad += weights[i] * f(nodes[i]) ;
+        } 
+        return quad;
+    }   
 
 
     /*
@@ -182,12 +192,7 @@ namespace GQJacobi{
     template<typename T>
     class GaussLegendreRule : public GaussJacobiRule<T>{
 
-        /*
-        * @attributes
-        * nodes: associated quadrature rule nodes
-        * weights: associated quadrature rule weights
-        * degree: number of quadrature points
-        */
+
         public:
 
         GaussLegendreRule(std::size_t n)
