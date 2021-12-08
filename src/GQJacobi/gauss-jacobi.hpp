@@ -126,19 +126,16 @@ namespace GQJacobi{
 
         <typename F, std::size_t N_ = N,
            typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
-        T operator()(F f) const;
+        T operator()(F f) const { // takes an rValue 
+            T quad = 0;
+            for(int i = 0; i < degree; i++){
+                quad += weights[i] * f(nodes[i]) ;
+            }
+            return quad;
+        }   
 
     }; // GaussJacobiRule
 
-    template <typename T, int N>
-    template <typename F, int N_, typename SFINAE>
-    T GaussJacobiRule<T>::operator ()(F f) const { // takes an rValue 
-        T quad = 0;
-        for(int i = 0; i < degree; i++){
-            quad += weights[i] * f(nodes[i]) ;
-        }
-        return quad;
-    }   
 
    /*  struct GaussLegendreRule{
         public:
