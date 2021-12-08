@@ -61,7 +61,7 @@ namespace GQJacobi{
             assert(coeffs.rows() == n);
             assert(coeffs.cols() == 2);
             
-            Matrix<T, Dynamic, Dynamic> tridiag = (Matrix<T, Dynamic, Dynamic>)::Zero(n, n);
+            Matrix<T, Dynamic, Dynamic> tridiag = Matrix<T, Dynamic, Dynamic>::Zero(n, n);
 
             // setting alpha0 in top left corner
             tridiag(0, 0) = coeffs(0, 0); 
