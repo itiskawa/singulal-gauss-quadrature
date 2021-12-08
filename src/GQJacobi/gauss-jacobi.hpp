@@ -12,7 +12,7 @@ namespace GQJacobi{
     * 
     */
     template <typename T>
-    struct GaussJacobiRule{
+    class GaussJacobiRule{
 
         
         public:
@@ -180,7 +180,7 @@ namespace GQJacobi{
     *
     */
     template<typename T>
-    struct GaussLegendreRule : public GaussJacobiRule{
+    class GaussLegendreRule : public GaussJacobiRule{
 
         /*
         * @attributes
@@ -202,15 +202,15 @@ namespace GQJacobi{
     * @brief a substruct of GaussJacobiRule, but deserved its own name, for ease of use
     *
     */
-   template<typename T>
-    struct GaussChebyshevRule : public GaussJacobiRule{
+    template<typename T>
+    class GaussChebyshevRule : public GaussJacobiRule{
 
         GaussChebyshevRule(std::size_t n, int sgn) 
         : GaussJacobiRule(n, sgn*0.5, sgn*0.5)
         {
             this->sgn = sgn;
         }
-        
+
         /*
         * @attributes
         * sgn: -1 will yield the weight function aossiciated to Chebyshev Polynomials of the first kind T(n)
