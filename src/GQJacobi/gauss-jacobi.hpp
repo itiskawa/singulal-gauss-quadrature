@@ -118,7 +118,43 @@ namespace GQJacobi{
             
         }
 
-    };
+    }; // GaussJacobiRule
+
+    struct GaussLegendreRule{
+        public:
+        std::vector<double> nodes;
+        std::vector<double> weights;
+
+        GaussLegendreRule(int n){
+            GaussJacobiRule gqj = GaussJacobiRule(n, 0, 0);
+
+            for(int i = 0; i < n; i++){
+                nodes.push_back(gqj.nodes[i]);
+                weights.push_back(gqj.weights(1)[i]);
+            } 
+        }
+
+    }; // GaussLegendreRule
+
+
+    struct GaussChebyshevRule{
+        public:
+        std::vector<double> nodes;
+        std::vector<double> weights;
+        int sgn; // -1 is the first kind T(n), +1 is the second kind U(n)
+
+        GaussChebyshevRule(int n, int sgn){
+            this.sgn = sgn;
+
+            GaussJacobiRule gqj = GaussJacobiRule(n, sgn*0.5, sgn*0.5);
+
+            for(int i = 0; i < n; i++){
+                nodes.push_back(gqj.nodes[i]);
+                weights.push_back(gqj.weights(1)[i]);
+            } 
+        }
+
+    }; // GaussChebyshevRule
     
     
 
