@@ -125,15 +125,19 @@ namespace GQJacobi{
 
 
         template <typename FUNCTION>
-        T compute(FUNCTION f, double a, double b) const { // takes an rValue 
+        T compute(FUNCTION f, double a, double b) const;
+
+    }; // GaussJacobiRule
+
+    template <typename T>
+    template <typename FUNCTION>
+        T GaussJacobiRule<T>::operator(FUNCTION f) const { // takes an rValue 
             T quad = 0;
             for(int i = 0; i < degree; i++){
                 quad += weights[i]*f(nodes[i]);
             }
             return quad;
         }   
-
-    }; // GaussJacobiRule
 
    /*  struct GaussLegendreRule{
         public:
