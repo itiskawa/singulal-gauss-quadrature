@@ -111,7 +111,7 @@ namespace GQJacobi{
         std::vector<T> nodes;
         std::vector<T> weights;
 
-        GaussJacobiRule(std:size_t n, double a, double b) {
+        GaussJacobiRule(std::size_t n, double a, double b) {
             Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
             degree = n;
 
@@ -122,7 +122,7 @@ namespace GQJacobi{
         }
 
 
-        
+
         template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
         T operator()(F f) const { // takes an rValue 
 
