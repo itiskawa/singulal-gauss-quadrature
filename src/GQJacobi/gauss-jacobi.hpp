@@ -125,7 +125,7 @@ namespace GQJacobi{
 
         ///template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
         //template <typename F>
-        T operator()(T *f(T)) const { // takes an rValue 
+        T operator()(T (*f)(T)) const { // takes an rValue 
 
             T quad = 0;
             for(int i = 0; i < degree; i++){
