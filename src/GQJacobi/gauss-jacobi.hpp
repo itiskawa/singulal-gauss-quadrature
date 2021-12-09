@@ -47,11 +47,12 @@ namespace GQJacobi{
             }
         } */
         template <typename F>
-        T operator()(F f, std::size_t n, double a, double b) {
+        T compute(F f, std::size_t n, double a, double b) {
 
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
+
             Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
             this->degree = n;
 
