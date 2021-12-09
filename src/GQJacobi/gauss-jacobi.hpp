@@ -46,6 +46,26 @@ namespace GQJacobi{
                 weights.push_back(nw.col(1)[i]);
             }
         } */
+        template <typename F>
+        T operator()(F f, std::size_t n, double a, double b) {
+
+            assert(n>1);
+            assert(a > -1);
+            assert(b > -1);
+            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
+            this->degree = n;
+
+            for(int i = 0; i < n; i++){
+                nodes.push_back(nw.col(0)[i]);
+                weights.push_back(nw.col(1)[i]);
+            }
+            
+            T quad = 0;
+            for(std::size_t i = 0; i < degree; i++){
+                quad += weights[i] * f(nodes[i]) ;
+            } 
+            return quad;
+        }   
 
         protected:
         /*
@@ -169,26 +189,6 @@ namespace GQJacobi{
         }    */
 
 
-        template <typename F>
-        T operator()(F f, std::size_t n, double a, double b) const {
-
-            assert(n>1);
-            assert(a > -1);
-            assert(b > -1);
-            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-            this->degree = n;
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw.col(1)[i]);
-            }
-            
-            T quad = 0;
-            for(std::size_t i = 0; i < degree; i++){
-                quad += weights[i] * f(nodes[i]) ;
-            } 
-            return quad;
-        }   
         
 
 
