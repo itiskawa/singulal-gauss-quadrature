@@ -1,6 +1,8 @@
 #pragma once
 #include <Eigen/Dense>
 #include <vector>
+#include <cstddef>
+#include <type_traits>
 using namespace Eigen;
 
 namespace GQJacobi{
