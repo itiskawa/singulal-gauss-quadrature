@@ -29,7 +29,7 @@ If you are building with CMake, this isn't a problem. However, if you are simply
 ## Building
 
 ### With CMake
-Your master CMake will need to include the following lines
+Your root CMake will need to include the following lines
 
 ```
 find_package(GQJacobi)
@@ -50,4 +50,20 @@ Once `GQJacobi` is installed and incuded, import is by typing:
 #include "GQJacobi/gauss-jacobi.hpp"
 ```
 
-### 
+### Example
+````
+double square(double x)
+{
+    return x*x;
+}
+
+GQJacobi::GaussJacobiRule<double> gqj(4, -0.8, -0,2); // generates a 4-point Gauss-Jacobi quadrature rule
+
+//computation
+double quad = 0.;
+for(int i = 0; i <gqj.degree; i++){
+    quad += gqj.weights[i]*(square(gqj.nodes[i]));
+}
+
+// now quad contains the integral from -1 to 1 of x^2
+``` 
