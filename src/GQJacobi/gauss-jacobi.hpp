@@ -9,8 +9,8 @@ namespace GQJacobi{
 
     /*
     * @author V.B (@itiskawa)
-    * @struct
-    * @brief a struct that contains the nodes & weights of a Gauss-Jacobi quadrature rule
+    * @class
+    * @brief a class that contains the nodes, weights and number of points of a Gauss-Jacobi quadrature rule
     * 
     */
     template <class T>
@@ -36,7 +36,7 @@ namespace GQJacobi{
         * @constructor 
         * @brief instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
         */
-        /* GaussJacobiRule(std::size_t n, double a, double b) {
+        GaussJacobiRule(std::size_t n, double a, double b) {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
@@ -47,7 +47,7 @@ namespace GQJacobi{
                 nodes.push_back(nw.col(0)[i]);
                 weights.push_back(nw.col(1)[i]);
             }
-        } */
+        }
         template <typename F>
         T compute(F f, std::size_t n, double a, double b) {
 
