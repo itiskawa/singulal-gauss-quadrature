@@ -42,7 +42,7 @@ for `GQJacobi` to work. The rest is already handled (dependencies and such).
 You will need to configure your project in such a way that the `gauss-jacobi.hpp` file can properly include `Eigen`.
 
 
-**NOTE!** _You may need to add the include path to Eigen in your environment!_
+**NOTE!** _You may need to add the include path to Eigen in your environment! The code compiles and runs, but the IDE or editor may fuss about, thus making the experience uncomfortable._
 
 ## Usage
 
