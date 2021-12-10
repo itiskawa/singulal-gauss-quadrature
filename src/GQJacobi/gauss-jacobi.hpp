@@ -29,12 +29,27 @@ namespace GQJacobi{
         std::size_t degree;
 
 
+        /*
+        * @constructor
+        * @brief default constructor
+        */
         GaussJacobiRule() = default;
 
+        /*
+        * @constructor
+        * @brief copy constructor
+        */
+        GaussJacobiRule(GaussJacobiRule g){
+            this->degree = g.degree;
+            for(int i = 0; i < degree; i++){
+                this->nodes[i] = g.nodes[i];
+                this->weights[i] = g.weights[i];
+            }
+        }
 
         /*
         * @constructor 
-        * @brief instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
+        * @brief full constructor instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
         */
         GaussJacobiRule(std::size_t n, double a, double b) {
             assert(n>1);
@@ -48,21 +63,15 @@ namespace GQJacobi{
                 weights.push_back(nw.col(1)[i]);
             }
         }
+
+
+
+        /*
+        * @method
+        * @brief still trying to figure it out...
+        */
         template <typename F>
-        T compute(F f, std::size_t n, double a, double b) {
-
-            assert(n>1);
-            assert(a > -1);
-            assert(b > -1);
-
-            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
-            this->degree = n;
-
-            for(int i = 0; i < n; i++){
-                nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw.col(1)[i]);
-            }
-            
+        T operator ()(F f, std::size_t n, double a, double b) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
                 quad += weights[i] * f(nodes[i]) ;
@@ -178,30 +187,14 @@ namespace GQJacobi{
             
         }
 
-
-
-        ///template<typename F, std::size_t N_ = N, typename SFINAE = typename std::enable_if<(N_ == 0)>::type>
-        //template <typename F>
-        /* T operator()(T (*f)(T)) const { // takes an rValue 
-
-            T quad = 0;
-            for(int i = 0; i < degree; i++){
-                quad += weights[i] * f(nodes[i]) ;
-            } 
-            return quad;
-        }    */
-
-
-        
-
-
+    
     }; // GaussJacobiRule
 
 
 
     /*
-    * @struct
-    * @brief a substruct of GaussJacobiRule, but deserved its own name, for ease of use
+    * @class
+    * @brief a subclass of GaussJacobiRule, but deserved its own name, for ease of use
     *
     */
     template<typename T>
@@ -209,17 +202,16 @@ namespace GQJacobi{
 
 
         public:
-
         GaussLegendreRule(std::size_t n)
         : GaussJacobiRule<T>(n, 0, 0)
-        { }
+        {}
 
     }; // GaussLegendreRule
 
 
     /*
-    * @struct
-    * @brief a substruct of GaussJacobiRule, but deserved its own name, for ease of use
+    * @class
+    * @brief a subclass of GaussJacobiRule, but deserved its own name, for ease of use
     *
     */
     template<typename T>
