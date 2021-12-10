@@ -39,7 +39,7 @@ namespace GQJacobi{
         * @constructor
         * @brief copy constructor
         */
-        GaussJacobiRule(GaussJacobiRule g){
+        GaussJacobiRule(GaussJacobiRule &g){
             this->degree = g.degree;
             for(int i = 0; i < degree; i++){
                 this->nodes[i] = g.nodes[i];
