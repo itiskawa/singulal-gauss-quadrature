@@ -71,7 +71,7 @@ namespace GQJacobi{
         * @brief still trying to figure it out...
         */
         template<typename F>
-        T operator ()(F f, std::size_t n, double a, double b) const {
+        T operator ()(F<T> f, std::size_t n, double a, double b) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
                 quad += weights[i] * f(nodes[i]) ;
