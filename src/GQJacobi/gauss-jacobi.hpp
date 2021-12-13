@@ -1,5 +1,6 @@
 #pragma once
 #include <Eigen/Dense>
+#include <complex>
 #include <vector>
 #include <cstddef>
 #include <type_traits>
@@ -74,7 +75,7 @@ namespace GQJacobi{
         T operator ()(F f, std::size_t n, double a, double b) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
-                quad += ((T)weights[i] * (T)f(nodes[i])) ;
+                quad += ((T)weights[i] * (T)f(std::real(nodes[i]))) ;
             } 
             return quad;
         }   
