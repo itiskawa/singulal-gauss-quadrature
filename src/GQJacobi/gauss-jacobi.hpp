@@ -70,11 +70,11 @@ namespace GQJacobi{
         * @method
         * @brief still trying to figure it out...
         */
-        template <typename F>
+        template<template<typename> class F, class T>
         T operator ()(F f, std::size_t n, double a, double b) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
-                quad += weights[i] * f<T>(nodes[i]) ;
+                quad += weights[i] * fnodes[i]) ;
             } 
             return quad;
         }   
