@@ -118,7 +118,7 @@ namespace GQLog {
 
 
         Matrix<T, Dynamic, Dynamic> thang(int n){
-            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n, 0, 0);
+            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom(2*n);
             Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
             return nw;
