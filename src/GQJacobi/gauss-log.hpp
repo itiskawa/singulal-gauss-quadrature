@@ -127,7 +127,7 @@ namespace GQLog {
 
 
         template<typename F>
-        T operator()(F f) const{
+        T operator()(F f, int n) const{
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom(2*n);
             Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
