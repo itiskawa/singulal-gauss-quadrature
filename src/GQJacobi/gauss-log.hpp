@@ -86,7 +86,7 @@ namespace GQLog {
             Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
-                mom[i] = pow(-1, i)/((i-1)*i);
+                mom[i] = pow(-1, i)/((i+1)*i);
             }
             return mom;
         }
