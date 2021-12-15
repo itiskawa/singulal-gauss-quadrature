@@ -40,11 +40,11 @@ namespace GQJacobi{
         * @constructor
         * @brief copy constructor
         */
-        GaussJacobiRule(const GaussJacobiRule& g){
-            degree = g.degree;
+        GaussJacobiRule(const GaussJacobiRule& gq){
+            this->degree = gq.degree;
             for(int i = 0; i < degree; i++){
-                nodes[i] = g.nodes[i];
-                weights[i] = g.weights[i];
+                this->nodes.push_back(gq.nodes[i]);
+                this->weights.push_back(gq.weights[i]);
             }
         }
 
@@ -92,11 +92,8 @@ namespace GQJacobi{
                 
                 for(size_t i = 0; i < degree; i++){
                     this->nodes.push_back(gq.nodes[i]);
-                    std::cout << "copied " << i << "th node" << std::endl;
                     this->weights.push_back(gq.weights[i]);
-                    std::cout << "copied " << i << "th weight" << std::endl;
                 }
-                std::cout << "done " << std::endl;
             }
             return *this;
 
