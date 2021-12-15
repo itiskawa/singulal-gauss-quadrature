@@ -116,7 +116,64 @@ namespace GQLog {
             }
             return ab;
         }
+        /*
+        * @method 
+        * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
+        * following the Golub-Welsch Algorithm
+        */
+        Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
+            // argument is a nx2 matrix
+            // SIZE CHECK
+            assert(coeffs.rows() == n);
+            assert(coeffs.cols() == 2);
+            
+            Matrix<T, Dynamic, Dynamic> tridiag = Matrix<T, Dynamic, Dynamic>::Zero(n, n);
 
+            // setting alpha0 in top left corner
+            tridiag(0, 0) = coeffs(0, 0); 
+
+            // setting tridiagonal coefficients
+            for(int i = 1; i < n; i++){
+                tridiag(i, i) = coeffs(i, 0);
+                tridiag(i,i-1) = sqrt(coeffs(i, 1));
+                tridiag(i-1, i) = sqrt(coeffs(i, 1));
+            }
+
+            return tridiag;
+        }
+
+        /*
+        * @method 
+        * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
+        */
+        Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
+
+            double gamma_0 = gamma_zero(a, b);
+
+            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
+            Vector<T, Dynamic> mom = mmom(2*n);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
+            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
+            SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
+            
+
+            Vector<T, Dynamic> nodes= solve.eigenvalues().real();
+
+            Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
+
+            Vector<T, Dynamic> weights = Vector<T, Dynamic>::Zero(n);
+
+            for(int i = 0; i < n; i++){
+                weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
+            }
+
+            Matrix<T, Dynamic, Dynamic> nw = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            nw.col(0) = nodes;
+            nw.col(1) = weights;
+            
+            return nw;
+            
+        }
 
         Matrix<T, Dynamic, Dynamic> thang(int n){
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
@@ -128,9 +185,8 @@ namespace GQLog {
 
         template<typename F>
         T operator()(F f, int n) {
-            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            Vector<T, Dynamic> mom = mmom(2*n);
-            Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
+            Matrix<T, Dynamic, Dynamic> nw = log_nw(n);
+
 
             T quad = 0;
             for(int i = 0; i < nw.col(0).size(); i++){
