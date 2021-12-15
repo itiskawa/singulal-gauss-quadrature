@@ -103,14 +103,14 @@ namespace GQLog {
 
             ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
             ab(0,1)=mom[0];
-            cout << " so far so good 1" << std::endl;
+            std::cout << " so far so good 1" << std::endl;
 
             sig.col(1) = mom;
 
-            cout << " so far so good 2" << std::endl;
+            std::cout << " so far so good 2" << std::endl;
 
             for(int i = 2; i < n+1; i++){
-                cout << " so far so good i="<<i << std::endl;
+                std::cout << " so far so good i="<<i << std::endl;
                 for(int k = i-1; k < 2*n-i+2; k++){
                     sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
                 }
