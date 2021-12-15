@@ -127,7 +127,7 @@ namespace GQLog {
 
 
         tempate<typename F>
-        T operator()(F f){
+        T operator()(F f) const{
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom(2*n);
             Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
