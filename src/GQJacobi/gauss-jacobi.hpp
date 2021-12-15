@@ -41,10 +41,10 @@ namespace GQJacobi{
         * @brief copy constructor
         */
         GaussJacobiRule(const GaussJacobiRule& g){
-            this->degree = g.degree;
+            degree = g.degree;
             for(int i = 0; i < degree; i++){
-                this->nodes[i] = g.nodes[i];
-                this->weights[i] = g.weights[i];
+                nodes[i] = g.nodes[i];
+                weights[i] = g.weights[i];
             }
         }
 
