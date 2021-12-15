@@ -31,6 +31,14 @@ namespace GQJacobi{
         public:
         /*
         * @method
+        * @brief getter for number of quadrature points
+        */
+        std::size_t getDeg() const{
+            return this->degree;
+        }
+
+        /*
+        * @method
         * @brief getter for quadrature nodes
         */
         std::vector<T> getN() const{
@@ -58,10 +66,10 @@ namespace GQJacobi{
         * @brief copy constructor
         */
         GaussJacobiRule(const GaussJacobiRule& gq){
-            this->degree = gq.degree;
+            this->degree = gq.getDeg();
             for(int i = 0; i < degree; i++){
-                this->nodes.push_back(gq.nodes[i]);
-                this->weights.push_back(gq.weights[i]);
+                this->nodes.push_back(gq.getN()[i]);
+                this->weights.push_back(gq.getW()[i]);
             }
         }
 
@@ -120,11 +128,11 @@ namespace GQJacobi{
         */
         GaussJacobiRule& operator=(const GaussJacobiRule& gq){
             if(this != &gq){
-                this->degree = gq.degree;
+                this->degree = gq.getDeg();
                 
                 for(size_t i = 0; i < degree; i++){
-                    this->nodes.push_back(gq.nodes[i]);
-                    this->weights.push_back(gq.weights[i]);
+                    this->nodes.push_back(gq.getN()[i]);
+                    this->weights.push_back(gq.getW()[i]);
                 }
             }
             return *this;
@@ -270,6 +278,15 @@ namespace GQJacobi{
     */
     template<typename T>
     class GaussChebyshevRule : public GaussJacobiRule<T>{
+        /*
+        * @attributes
+        * sgn: -1 will yield the weight function aossiciated to Chebyshev Polynomials of the first kind T(n)
+        *      whereas +1 will yield the weight function associated to the second kind U(n)
+        */
+        private:
+        int sgn; 
+
+
         public:
         GaussChebyshevRule(std::size_t n, int sgn) 
         : GaussJacobiRule<T>(n, sgn*0.5, sgn*0.5)
@@ -278,12 +295,13 @@ namespace GQJacobi{
         }
 
         /*
-        * @attributes
-        * sgn: -1 will yield the weight function aossiciated to Chebyshev Polynomials of the first kind T(n)
-        *      whereas +1 will yield the weight function associated to the second kind U(n)
+        * @method
+        * @brief getter for sign
         */
-        public:
-        int sgn; 
+        int getSgn() const{
+            return this->sgn;
+        }
+
 
     }; // GaussChebyshevRule
     
