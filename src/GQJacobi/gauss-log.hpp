@@ -65,7 +65,7 @@ namespace GQLog {
             Matrix<T, Dynamic, Dynamic> abj = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
             Matrix<T, Dynamic, Dynamic> ab = c_jacobi(n, 0, 0);
 
-            std::cout << "all good" << endl;
+            std::cout << "all good" << std::endl;
 
             abj(0,0) = (1+ab(0,0))/2.;
             abj(0,1) = (ab(0,1))/2;
