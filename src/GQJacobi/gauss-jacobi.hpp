@@ -87,10 +87,10 @@ namespace GQJacobi{
         */
         GaussJacobiRule& operator=(const GaussJacobiRule& gq){
             if(this != &gq){
-                this->degree = gq->degree;
+                this->degree = gq.degree;
                 for(size_t i = 0; i < degree; i++){
-                    this->nodes.push_back(gq->nodes[i]);
-                    this->weights.push_back(gq->weights[i]);
+                    this->nodes.push_back(gq.nodes[i]);
+                    this->weights.push_back(gq.weights[i]);
                 }
             }
 
