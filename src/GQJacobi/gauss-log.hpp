@@ -148,7 +148,7 @@ namespace GQLog {
         */
         Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
 
-            double gamma_0 = gamma_zero(a, b);
+            double gamma_0 = 1;
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom(2*n);
