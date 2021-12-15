@@ -91,10 +91,12 @@ namespace GQJacobi{
                 std::cout << "copied degree to "<< this->degree << std::endl;
                 
                 for(size_t i = 0; i < degree; i++){
-                    std::cout << "copying " << i << "th nodes / weight" << std::endl;
                     this->nodes.push_back(gq.nodes[i]);
+                    std::cout << "copied " << i << "th node" << std::endl;
                     this->weights.push_back(gq.weights[i]);
+                    std::cout << "copied " << i << "th weight" << std::endl;
                 }
+                std::cout << "done " << std::endl;
             }
 
         }
