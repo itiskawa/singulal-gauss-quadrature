@@ -9,7 +9,7 @@ using namespace Eigen;
 namespace GQJacobi{
 
     /*
-    * @author V.B (@itiskawa)
+    * @author V.B. (alias @itiskawa)
     * @class
     * @brief a class that contains the nodes, weights and number of points of a Gauss-Jacobi quadrature rule
     * 
@@ -17,8 +17,7 @@ namespace GQJacobi{
     template <class T>
     class GaussJacobiRule{
 
-        
-        public:
+        private:
         /*
         * @attributes
         * nodes: associated quadrature rule nodes
@@ -28,6 +27,24 @@ namespace GQJacobi{
         std::vector<T> nodes;
         std::vector<T> weights;
         std::size_t degree;
+
+        public:
+        /*
+        * @method
+        * @brief getter for quadrature nodes
+        */
+        std::vector<T> getN() const{
+            return this->nodes;
+        }
+
+        /*
+        * @method
+        * @brief getter for quadrature weights
+        */
+        std::vector<T> getW() const{
+            return this->weights;
+        }
+
 
 
         /*
@@ -83,25 +100,6 @@ namespace GQJacobi{
 
         /*
         * @operator
-        * @brief assignment override
-        */
-        GaussJacobiRule& operator=(const GaussJacobiRule& gq){
-            if(this != &gq){
-                this->degree = gq.degree;
-                std::cout << "copied degree to "<< this->degree << std::endl;
-                
-                for(size_t i = 0; i < degree; i++){
-                    this->nodes.push_back(gq.nodes[i]);
-                    this->weights.push_back(gq.weights[i]);
-                }
-            }
-            return *this;
-
-        }
-
-
-        /*
-        * @operator
         * @brief applies affine pullback of the function template f over interval ]a, b[
         *
         */
@@ -116,6 +114,22 @@ namespace GQJacobi{
             return quad;
         }   
 
+        /*
+        * @operator
+        * @brief assignment override
+        */
+        GaussJacobiRule& operator=(const GaussJacobiRule& gq){
+            if(this != &gq){
+                this->degree = gq.degree;
+                
+                for(size_t i = 0; i < degree; i++){
+                    this->nodes.push_back(gq.nodes[i]);
+                    this->weights.push_back(gq.weights[i]);
+                }
+            }
+            return *this;
+
+        }
 
 
         protected:
