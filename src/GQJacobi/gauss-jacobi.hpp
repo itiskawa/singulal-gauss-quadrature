@@ -90,7 +90,7 @@ namespace GQJacobi{
                 this->degree = gq->degree;
                 for(size_t i = 0; i < degree; i++){
                     this->nodes.push_back(gq->nodes[i]);
-                    this->weights.push_back(gq-<weights)[i]);
+                    this->weights.push_back(gq->weights)[i]);
                 }
             }
 
