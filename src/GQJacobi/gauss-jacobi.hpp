@@ -69,10 +69,10 @@ namespace GQJacobi{
 
         /*
         * @method
-        * @brief still trying to figure it out...
+        * @brief template evaluation function
         */
         template<typename F>
-        T operator ()(F f, std::size_t n, double a, double b) const {
+        T operator ()(F f) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
                 quad += ((T)weights[i] * std::real(f(nodes[i]))) ;
