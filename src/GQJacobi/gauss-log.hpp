@@ -90,7 +90,8 @@ namespace GQLog {
             Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
-                mom[i] = pow(-1, i)/((i+1)*i);
+                //mom[i] = pow(-1, i)/((i+1)*i);
+                mom[i] = 1/i;
             }
             return mom;
         }
@@ -103,18 +104,14 @@ namespace GQLog {
 
             ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
             ab(0,1)=mom[0];
-            std::cout << " so far so good 1" << std::endl;
 
             std::cout << mom.size() << " " <<sig.col(1).size()<<std::endl;
             sig.row(1) = mom;
 
-            std::cout << " so far so good 2" << std::endl;
 
             for(int i = 2; i < n+1; i++){
-                std::cout << " so far so good i="<<i << std::endl;
                 for(int k = i-1; k < 2*n-i+1; k++){
                     sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
-                    std::cout << "k = " << k << std::endl;
                 }
                 ab(i-1,0)=abm(i-1,0)+sig(i,i)/sig(i,i-1)-sig(i-1,i-1)/ sig(i-1,i-2);
                 ab(i-1,1)=sig(i,i-1)/sig(i-1,i-2);
