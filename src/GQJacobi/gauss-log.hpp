@@ -105,7 +105,7 @@ namespace GQLog {
             ab(0,1)=mom[0];
             std::cout << " so far so good 1" << std::endl;
 
-            std::cout << mom.size() <<std::endl;
+            std::cout << mom.size() << " " <<sig.col(1).size()<<std::endl;
             sig.col(1) = mom;
 
             std::cout << " so far so good 2" << std::endl;
