@@ -126,7 +126,7 @@ namespace GQLog {
         }
 
 
-        tempate<typename F>
+        template<typename F>
         T operator()(F f) const{
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom(2*n);
