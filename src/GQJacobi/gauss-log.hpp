@@ -125,6 +125,19 @@ namespace GQLog {
             return nw;
         }
 
+
+        tempate<typename F>
+        T operator()(F f){
+            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
+            Vector<T, Dynamic> mom = mmom(2*n);
+            Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
+
+            T quad = 0;
+            for(int i = 0; i < nw.col(0).size(); i++){
+                quad+= nw(i, 1)*f(nw(i,0));
+            }
+            return quad;
+        }
         
 
 
