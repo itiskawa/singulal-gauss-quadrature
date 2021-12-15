@@ -16,11 +16,13 @@ namespace GQLog {
 
         std::vector<T> nodes;
         std::vector<T> weights;
+        std::size_t degree;
 
         GaussLogRule() = default;
 
         GaussLogRule(std::size_t n){
             assert(n>1);
+            degree = n;
         }
 
         /*
@@ -182,8 +184,8 @@ namespace GQLog {
 
 
         template<typename F>
-        T operator()(F f, int n) {
-            Matrix<T, Dynamic, Dynamic> nw = log_nw(n);
+        T operator()(F f) {
+            Matrix<T, Dynamic, Dynamic> nw = log_nw(degree);
 
             T quad = 0;
             for(int i = 0; i < nw.col(0).size(); i++){
