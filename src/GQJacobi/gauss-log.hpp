@@ -98,7 +98,7 @@ namespace GQLog {
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, Matrix<T, Dynamic, Dynamic> abm, Vector<T, Dynamic> mom){
             // mom must have size 2n
             
-            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(2*n, n+1);
+            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
             Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(2*n, 2);
 
             ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
@@ -106,7 +106,7 @@ namespace GQLog {
             std::cout << " so far so good 1" << std::endl;
 
             std::cout << mom.size() << " " <<sig.col(1).size()<<std::endl;
-            sig.col(1) = mom;
+            sig.row(1) = mom;
 
             std::cout << " so far so good 2" << std::endl;
 
