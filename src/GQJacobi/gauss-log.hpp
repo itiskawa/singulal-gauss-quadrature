@@ -91,7 +91,7 @@ namespace GQLog {
 
             for(int i = 0; i < n; i++){
                 //mom[i] = pow(-1, i)/((i+1)*i);
-                mom[i] = 1/i;
+                mom[i] = 1/(i+1);
             }
             return mom;
         }
