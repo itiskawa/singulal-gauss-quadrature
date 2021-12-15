@@ -14,8 +14,8 @@ namespace GQLog {
 
         public:
 
-        vector<T> nodes;
-        vector<T> weights;
+        std::vector<T> nodes;
+        std::vector<T> weights;
 
         GaussLogRule() = default;
 
