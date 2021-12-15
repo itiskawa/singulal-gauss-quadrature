@@ -13,6 +13,10 @@ namespace GQLog {
 
 
         public:
+
+        vector<T> nodes;
+        vector<T> weights;
+
         GaussLogRule() = default;
 
         /*
@@ -111,6 +115,18 @@ namespace GQLog {
             }
             return ab;
         }
+
+
+        Matrix<T, Dynamic, Dynamic> thang(int n){
+            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n, 0, 0);
+            Vector<T, Dynamic> mom = mmom(2*n);
+            Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
+            return nw;
+        }
+
+        
+
+
         
         
         
