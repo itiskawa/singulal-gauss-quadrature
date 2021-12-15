@@ -12,7 +12,7 @@ namespace GQLog {
     class GaussLogRule{
 
 
-
+        public:
         GaussLogRule() = default;
 
         /*
