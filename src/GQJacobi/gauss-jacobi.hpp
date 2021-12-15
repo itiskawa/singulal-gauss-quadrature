@@ -100,6 +100,23 @@ namespace GQJacobi{
         }
 
 
+        /*
+        * @operator
+        * @brief applies affine pullback of the function template f over interval ]a, b[
+        *
+        */
+        template<typename F>
+        T operator ()(F f, T a, T b) const {
+            T quad = 0;
+            for(std::size_t i = 0; i < degree; i++){
+                T x_i = 0.5(*(1-nodes[i])*a + (1+nodes[i])*b);// affine pullback nodes
+                quad += (weights[i] * std::real(f(x_i))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
+            } 
+            quad *= (0.5*(b-a)); // affine pullback weight ratio
+            return quad;
+        }   
+
+
 
         protected:
         /*
