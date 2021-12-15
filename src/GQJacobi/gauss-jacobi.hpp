@@ -17,7 +17,7 @@ namespace GQJacobi{
     template <class T>
     class GaussJacobiRule{
 
-        private:
+        protected:
         /*
         * @attributes
         * nodes: associated quadrature rule nodes
