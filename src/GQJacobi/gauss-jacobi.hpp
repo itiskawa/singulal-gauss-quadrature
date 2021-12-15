@@ -98,6 +98,7 @@ namespace GQJacobi{
                 }
                 std::cout << "done " << std::endl;
             }
+            return *this;
 
         }
 
