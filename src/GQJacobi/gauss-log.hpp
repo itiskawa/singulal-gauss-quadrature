@@ -189,7 +189,7 @@ namespace GQLog {
 
             T quad = 0;
             for(int i = 0; i < nw.col(0).size(); i++){
-                quad+= nw(i, 1)*f(nw(i,0)-1);
+                quad+= nw(i, 1)*f(nw(i,0));
             }
 
             // now the GaussLegendre part
