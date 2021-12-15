@@ -93,7 +93,7 @@ namespace GQLog {
             // mom must have size 2n
             
             Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
-            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(2*n, 2);
+            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(2*n, 2);
 
             ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
             ab(0,1)=mom[0];
@@ -114,7 +114,7 @@ namespace GQLog {
         
 
 
-    }
+    };
 
 
 
