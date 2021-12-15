@@ -88,7 +88,9 @@ namespace GQJacobi{
         GaussJacobiRule& operator=(const GaussJacobiRule& gq){
             if(this != &gq){
                 this->degree = gq.degree;
+                std::cout << "copied degree" << endl;
                 for(size_t i = 0; i < degree; i++){
+                    std::cout << "copying " << i << "th nodes / weight" << endl;
                     this->nodes.push_back(gq.nodes[i]);
                     this->weights.push_back(gq.weights[i]);
                 }
