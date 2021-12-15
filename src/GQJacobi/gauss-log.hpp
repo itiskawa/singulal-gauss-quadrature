@@ -112,7 +112,7 @@ namespace GQLog {
 
             for(int i = 2; i < n+1; i++){
                 std::cout << " so far so good i="<<i << std::endl;
-                for(int k = i-1; k < 2*n-i+2; k++){
+                for(int k = i-1; k < 2*n-i+1; k++){
                     sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
                     std::cout << "k = " << k << std::endl;
                 }
