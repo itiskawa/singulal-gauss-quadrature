@@ -40,7 +40,7 @@ namespace GQJacobi{
         * @constructor
         * @brief copy constructor
         */
-        GaussJacobiRule(GaussJacobiRule &g){
+        GaussJacobiRule(const GaussJacobiRule& g){
             this->degree = g.degree;
             for(int i = 0; i < degree; i++){
                 this->nodes[i] = g.nodes[i];
@@ -68,17 +68,35 @@ namespace GQJacobi{
 
 
         /*
-        * @method
+        * @operator
         * @brief template evaluation function
         */
         template<typename F>
         T operator ()(F f) const {
             T quad = 0;
             for(std::size_t i = 0; i < degree; i++){
-                quad += ((T)weights[i] * std::real(f(nodes[i]))) ;
+
+                quad += (weights[i] * std::real(f(nodes[i]))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
             } 
             return quad;
         }   
+
+        /*
+        * @operator
+        * @brief assignment override
+        */
+        GaussJacobiRule& operator=(const GaussJacobiRule& gq){
+            if(this != &gq){
+                this->degree = gq->degree;
+                for(size_t i = 0; i < degree; i++){
+                    this->nodes.push_back(gq->nodes[i]);
+                    this->weights.push_back(gq-<weights)[i]);
+                }
+            }
+
+        }
+
+
 
         protected:
         /*
@@ -195,7 +213,7 @@ namespace GQJacobi{
 
     /*
     * @class
-    * @brief a subclass of GaussJacobiRule, but deserved its own name, for ease of use
+    * @brief a subclass of GaussJacobiRule. Represents an unweighted Gauss quadrature rule
     *
     */
     template<typename T>
@@ -212,7 +230,8 @@ namespace GQJacobi{
 
     /*
     * @class
-    * @brief a subclass of GaussJacobiRule, but deserved its own name, for ease of use
+    * @brief a subclass of GaussJacobiRule. Represents an Gauss quadrature rule with a Chebyshev weight function.
+    * sgn = -1 or +1. -1 yields polynomials of first kind T(n). +1 yields the second kind U(n)
     *
     */
     template<typename T>
@@ -232,7 +251,7 @@ namespace GQJacobi{
         public:
         int sgn; 
 
-    }; // GaussChebyshevRule */
+    }; // GaussChebyshevRule
     
     
 
