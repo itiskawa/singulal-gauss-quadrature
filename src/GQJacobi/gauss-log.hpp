@@ -19,6 +19,10 @@ namespace GQLog {
 
         GaussLogRule() = default;
 
+        GaussLogRule(std::size_t n){
+            assert(n>1);
+        }
+
         /*
         * @method 
         * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
@@ -175,32 +179,21 @@ namespace GQLog {
             
         }
 
-        Matrix<T, Dynamic, Dynamic> thang(int n){
-            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            Vector<T, Dynamic> mom = mmom(2*n);
-            Matrix<T, Dynamic, Dynamic> nw = chebyshev(n, ab, mom);
-            return nw;
-        }
 
 
         template<typename F>
         T operator()(F f, int n) {
             Matrix<T, Dynamic, Dynamic> nw = log_nw(n);
 
-
             T quad = 0;
             for(int i = 0; i < nw.col(0).size(); i++){
                 quad+= nw(i, 1)*f(nw(i,0));
             }
+
+            // now the GaussLegendre part
+
             return quad;
         }
-        
-
-
-        
-        
-        
-
 
     };
 
