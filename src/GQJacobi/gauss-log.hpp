@@ -104,7 +104,6 @@ namespace GQLog {
             ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
             ab(0,1)=mom[0];
 
-            std::cout << mom.size() << " " <<sig.col(1).size()<<std::endl;
             sig.row(1) = mom;
 
 
