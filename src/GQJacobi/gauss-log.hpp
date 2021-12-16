@@ -114,7 +114,13 @@ namespace GQLog {
 
         Vector<T, Dynamic> mmom_jaclog(std::size_t n){
             Vector<T, Dynamic> mmom = Vector<T, Dynamic>::Zero(2*n);
-
+            mmom[0] = tgamma(1)*tgamma(1)*(boost::math::digamma(2)-boost::math::digamma(b+1))/tgamma(2);
+            int sgn = 1;
+            for(int i = 1; i < 2*n; i++){
+                k = i+1;
+                sgn *= -1;
+                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*stgamma(1)/((k+a+b)*tgamma(k+1))
+            }
 
             
             return mmom;
@@ -176,7 +182,8 @@ namespace GQLog {
             double gamma_0 = 1;
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            Vector<T, Dynamic> mom = mom_jaclog(n);
+            //Vector<T, Dynamic> mom = mom_jaclog(n);
+            Vector<T, Dynamic> mom = mmom_jaclog(n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
