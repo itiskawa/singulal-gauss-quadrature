@@ -106,7 +106,7 @@ namespace GQLog {
         Vector<T, Dynamic> mom_jaclog(std::size_t n){
             Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(2*n);
             for(int i = 0; i < 2*n; i++){
-                k = i+1;
+                int k = i+1;
                 mom[i] = tgamma(1)*tgamma(k)*(boost::math::digamma(k+1)-boost::math::digamma(k))/tgamma(k+1);
             }
             return mom;
