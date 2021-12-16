@@ -151,7 +151,7 @@ namespace GQLog {
         // takes normal moments as an argument
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n,Vector<T, Dynamic> mom){
             // mom must have size 2n
-            Matrix<T,Dynamic, Dynamic> abm = Matrix<T,Dynamic, Dynamic>::Zeros(2*n-1, 2);
+            Matrix<T,Dynamic, Dynamic> abm = Matrix<T,Dynamic, Dynamic>::Zero(2*n-1, 2);
             
             Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
             Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
