@@ -176,7 +176,7 @@ namespace GQLog {
             double gamma_0 = 1;
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            Vector<T, Dynamic> mom = mom_jaclog(2*n);
+            Vector<T, Dynamic> mom = mom_jaclog(n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
