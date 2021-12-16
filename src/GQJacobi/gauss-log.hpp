@@ -179,16 +179,19 @@ namespace GQLog {
         */
         Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
 
-            double gamma_0 = 1;
+            // finding the coefficients
+            double gamma_0 = 2;
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             //Vector<T, Dynamic> mom = mom_jaclog(n);
             Vector<T, Dynamic> mom = mmom_jaclog(n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
+
+
+
+            // solving the coefficients
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
-            
-
             Vector<T, Dynamic> nodes= solve.eigenvalues().real();
 
             Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
