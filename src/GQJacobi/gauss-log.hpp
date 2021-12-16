@@ -215,7 +215,7 @@ namespace GQLog {
             //shifted moments
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Vector<T, Dynamic> mom = mmom_jaclog(n);
-            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
             // trying with regular moments
             //Vector<T, Dynamic> mom = mom_jaclog(n);
             //Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom);
