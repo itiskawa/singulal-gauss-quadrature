@@ -147,6 +147,34 @@ namespace GQLog {
             }
             return ab;
         }
+
+        // takes normal moments as an argument
+        Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n,Vector<T, Dynamic> mom){
+            // mom must have size 2n
+            Matrix<T,Dynamic, Dynamic> abm = Matrix<T,Dynamic, Dynamic>::Zeros(2*n-1, 2);
+            
+            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
+            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+
+            ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
+            ab(0,1)=mom[0];
+
+            sig.row(1) = mom;
+
+
+            for(int i = 2; i < n+1; i++){
+                for(int k = i-1; k < 2*n-i+1; k++){
+                    sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
+                }
+                ab(i-1,0)=abm(i-1,0)+sig(i,i)/sig(i,i-1)-sig(i-1,i-1)/ sig(i-1,i-2);
+                ab(i-1,1)=sig(i,i-1)/sig(i-1,i-2);
+            }
+            return ab;
+        }
+
+
+
+
         /*
         * @method 
         * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
@@ -182,10 +210,12 @@ namespace GQLog {
             // finding the coefficients
             double gamma_0 = 1; // unsure, but seems correct, sicne a = b = 0
 
-            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            //Vector<T, Dynamic> mom = mom_jaclog(n);
-            Vector<T, Dynamic> mom = mmom_jaclog(n);
-            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
+            //Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
+            //Vector<T, Dynamic> mom = mmom_jaclog(n);
+
+            // trying with regular moments
+            Vector<T, Dynamic> mom = mom_jaclog(n);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom);
 
 
 
