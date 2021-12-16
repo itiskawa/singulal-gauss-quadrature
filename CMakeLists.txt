@@ -19,7 +19,7 @@ message(STATUS "GQJacobi version : ${${PROJECT_NAME}_VERSION}")
           
 #list(APPEND CMAKE_MODULE_PATH "/usr/local/Cellar/eigen/3.4.0_1/share/cmake/Modules/FindEigen3.cmake")
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost CONFIG)
 
 
 string( REGEX REPLACE "^lib" "" LIB_NAME ${PROJECT_NAME} )
