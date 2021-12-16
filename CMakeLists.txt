@@ -38,7 +38,7 @@ target_sources(
   )
   
 target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
-target_link_libraries(${LIB_NAME} INTERFACE Boost::Boost)
+target_link_libraries(${LIB_NAME} INTERFACE Boost::boost)
 target_compile_features(${LIB_NAME} INTERFACE cxx_std_11 )
 
 install(TARGETS ${LIB_NAME} 
