@@ -163,7 +163,8 @@ namespace GQLog {
 
 
             for(int i = 2; i < n+1; i++){
-                for(int k = i-1; k < 2*n-i+1; k++){
+                for(int k = i-1; k < 2*n-i; k++){ // min(k) = 1, max(k) = 2n-2
+
                     sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
                 }
                 ab(i-1,0)=abm(i-1,0)+sig(i,i)/sig(i,i-1)-sig(i-1,i-1)/ sig(i-1,i-2);
