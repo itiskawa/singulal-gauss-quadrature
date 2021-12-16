@@ -114,12 +114,12 @@ namespace GQLog {
 
         Vector<T, Dynamic> mmom_jaclog(std::size_t n){
             Vector<T, Dynamic> mmom = Vector<T, Dynamic>::Zero(2*n);
-            mmom[0] = tgamma(1)*tgamma(1)*(boost::math::digamma(2)-boost::math::digamma(b+1))/tgamma(2);
+            mmom[0] = tgamma(1)*tgamma(1)*(boost::math::digamma(2)-boost::math::digamma(1))/tgamma(2);
             int sgn = 1;
             for(int i = 1; i < 2*n; i++){
                 int k = i+1;
                 sgn *= -1;
-                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*tgamma(1)/((k)*tgamma(k+1))
+                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*tgamma(1)/((k)*tgamma(k+1));
             }
 
             
