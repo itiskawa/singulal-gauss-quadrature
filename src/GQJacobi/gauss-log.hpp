@@ -77,10 +77,10 @@ namespace GQLog {
             Matrix<T, Dynamic, Dynamic> ab = c_jacobi(n, 0, 0);
 
 
-            abj(0,0) = (1+ab(0,0))/2.;
-            abj(0,1) = (ab(0,1))/2;
+            //abj(0,0) = (1+ab(0,0))/2.;
+            //abj(0,1) = (ab(0,1))/2;
 
-            for(int i = 1; i < n; i++){
+            for(int i = 0; i < n; i++){
                 abj(i,0) = (1+ab(i,0))/2.;
                 abj(i,1) = ab(i,1)/4.;
             }
@@ -180,7 +180,7 @@ namespace GQLog {
         Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
 
             // finding the coefficients
-            double gamma_0 = 2;
+            double gamma_0 = 1; // unsure, but seems correct, sicne a = b = 0
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             //Vector<T, Dynamic> mom = mom_jaclog(n);
