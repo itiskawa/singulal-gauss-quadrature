@@ -119,7 +119,7 @@ namespace GQLog {
             for(int i = 1; i < 2*n; i++){
                 int k = i+1;
                 sgn *= -1;
-                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*tgamma(1)/((k+a+b)*tgamma(k+1))
+                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*tgamma(1)/((k)*tgamma(k+1))
             }
 
             
