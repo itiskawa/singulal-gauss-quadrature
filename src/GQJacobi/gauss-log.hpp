@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstddef>
 #include <type_traits>
+#include <boost/math/special_functions/digamma.hpp>
 using namespace Eigen;
 
 namespace GQLog {
@@ -101,6 +102,24 @@ namespace GQLog {
             return mom;
         }
 
+
+        Vector<T, Dynamic> mom_jaclog(std::size_t n){
+            Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(2*n);
+            for(int i = 0; i < 2*n; i++){
+                k = i+1;
+                mom[i] = tgamma(1)*tgamma(k)*(boost::math::digamma(k+1)-boost::math::digamma(k))/tgamma(k+1);
+            }
+            return mom;
+        }
+
+        Vector<T, Dynamic> mmom_jaclog(std::size_t n){
+            Vector<T, Dynamic> mmom = Vector<T, Dynamic>::Zero(2*n);
+
+
+            
+            return mmom;
+        }
+
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, Matrix<T, Dynamic, Dynamic> abm, Vector<T, Dynamic> mom){
             // mom must have size 2n
             
@@ -157,7 +176,7 @@ namespace GQLog {
             double gamma_0 = 1;
 
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            Vector<T, Dynamic> mom = mmom(2*n);
+            Vector<T, Dynamic> mom = mom_jaclog(2*n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n

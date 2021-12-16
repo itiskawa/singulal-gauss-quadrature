@@ -147,6 +147,7 @@ namespace GQJacobi{
         */
         double gamma_zero(double a, double b) {
             return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
+            
         }
 
         /*
