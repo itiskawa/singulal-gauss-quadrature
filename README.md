@@ -61,7 +61,8 @@ Once `GQJacobi` is installed and incuded, import is by typing:
 
 ### Example
 ````
-double square(double x)
+template <typename T>
+double square(T x)
 {
     return x*x;
 }
@@ -69,10 +70,7 @@ double square(double x)
 GQJacobi::GaussJacobiRule<double> gqj(4, -0.8, -0,2); // generates a 4-point Gauss-Jacobi quadrature rule
 
 //computation
-double quad = 0.;
-for(int i = 0; i <gqj.degree; i++){
-    quad += gqj.weights[i]*(square(gqj.nodes[i]));
-}
+double quad = gqj(square<double>);
 
 // now quad contains the integral from -1 to 1 of x^2
 ``` 
