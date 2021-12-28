@@ -1,5 +1,18 @@
 # C++ Library for Gaussian Quadrature with Singular weights
 
+### Dependencies
+GQJacobi is a library that relies on Eigen, which you can download by running;
+```
+brew install eigen
+```
+If you are building with CMake, this isn't a problem. However, if you are simply including into your `include` directory, you will have to set your compiler path to wherever you have installed Eigen.
+
+You will also need to have `Boost` installed, which you can do by typing:
+```
+brew install boost
+```
+
+
 ## Installation
 
 
@@ -12,18 +25,13 @@ $ cd build
 $ cmake ..
 $ sudo cmake --build . --target install
 ```
-
+If you get the message `Could NOT find Boost (missing: Boost_DIR)` or `Could NOT find Eigen3 (missing: Eigen3_DIR)` when installing, then go back to the previous step and install the dependencies.
 The `sudo` is very important, as files will be crated & require admin privileges.
 
 ### Setup by including
 
 As this is a header-only library, you can also dowload ``gauss-jacobi.hpp`` and put it into your 'include' file, for exmaple. However, it is important to note the following:
-### Dependencies
-GQJacobi is a library that relies on Eigen, which you can download by running;
-```
-brew install eigen
-```
-If you are building with CMake, this isn't a problem. However, if you are simply including into your `include` directory, you will have to set your compiler path to wherever you have installed Eigen.
+
 
 
 ## Building
