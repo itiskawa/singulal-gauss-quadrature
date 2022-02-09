@@ -132,13 +132,17 @@ namespace GQLog {
 
 
         Vector<T, Dynamic> mmom_log(std::size_t n){
-            Vector<T, Dynamic> mm = Vector<T, Dynamic>::Zero(2*n);
+            Vector<T, Dynamic> mm = Vector<T, Dynamic>::Zero(n);
             mm[0] = 1;
+            double c = 1.0;
 
             for(int i = 1; i < n; i++){
                 double p = (i+1)*i;
                 mm[i] = (pow(-1, i)/p)*(pow(tgamma(1), 2));
+                mm[i] *=c;
+                c *= (0.5*(i+1)/(2*(i+1)-1));
             }
+
             return mm;
         }
 
