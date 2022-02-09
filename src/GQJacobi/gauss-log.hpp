@@ -4,10 +4,10 @@
 #include <vector>
 #include <cstddef>
 #include <type_traits>
-#include <GQJacobi/utils.hpp>
+#include <GQJacobi/gauss-rule.hpp>
 using namespace Eigen;
 
-namespace GQLog {
+namespace GQLog : public GaussRule{
 
     template<class T>
     class GaussLogRule{
@@ -15,16 +15,26 @@ namespace GQLog {
 
         public:
 
-        std::vector<T> nodes;
-        std::vector<T> weights;
-        std::size_t degree;
+        //std::vector<T> nodes;
+        //std::vector<T> weights;
+        //std::size_t degree;
 
         GaussLogRule() = default;
 
         GaussLogRule(std::size_t n){
             assert(n>1);
-            degree = n;
+            this->degree = n;
 
+            // computing the nodes
+            Vector<T, Dynamic> mom = mmom_log(2*n);
+            Matrix<T, Dynamic, Dynamic> abm = shifted_c_log(2*n);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, abm);
+            Matrix<T, Dynamic, Dynamic> nw = nw(n, coeffs);
+
+            for(int i = 0; i < n; i++){
+                nodes.push_back(nw.col(0)[i]);
+                weights.push_back(nw.col(1)[i]);
+            }
         }
 
         /*
@@ -33,43 +43,7 @@ namespace GQLog {
         * monic polynomials associated to the Jacobi weight function
         */
        /*
-        Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
-
-            // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-            Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
-            
-
-            // this method follows Gautschi's r_jacobi function
-            double a0 = (b-a)/(a+b+2);
-            double b0 = pow(2, (a+b+1))*((tgamma(a+1)*tgamma(b+1))/tgamma(a+b+2));
-
-            // special first degree case
-            if(n == 1) {
-                coeffs(0, 0) = a0;
-                coeffs(0, 1) = b0;
-                return coeffs;
-            }
-
-            // alpha coefficients
-            coeffs(0, 0) = a0;
-            Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-            Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
-
-            for(int i = 1; i < n; i++){
-                coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
-            }
-
-
-            // beta coefficients
-            coeffs(0, 1) = b0;
-            coeffs(1, 1) = 4*(a+1)*(b+1)/(pow(a+b+2, 2)*(a+b+3));
-            for(int i = 2; i < n; i++){
-                coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-1], 2)*(ndeg[i-1]-1)*(ndeg[i-1]+1));
-            }
-            return coeffs;
-        }    */
-
-
+        
         /*
         * @brief computes the shifted recurrence relation terms
         *
@@ -97,41 +71,6 @@ namespace GQLog {
         * @brief computes modified moments
         *
         */
-        /*Vector<T, Dynamic> mmom(std::size_t n){
-            Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(n);
-
-            for(int i = 0; i < n; i++){
-                //mom[i] = pow(-1, i)/((i+1)*i);
-                mom[i] = 1/(i+1);
-            }
-            return mom;
-        }
-
-
-        Vector<T, Dynamic> mom_jaclog(std::size_t n){
-            Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(2*n);
-            for(int i = 0; i < 2*n; i++){
-                int k = i+1;
-                mom[i] = tgamma(1)*tgamma(k)*(boost::math::digamma(k+1)-boost::math::digamma(k))/tgamma(k+1);
-            }
-            return mom;
-        }
-
-        Vector<T, Dynamic> mmom_jaclog(std::size_t n){
-            Vector<T, Dynamic> mmom = Vector<T, Dynamic>::Zero(2*n);
-            mmom[0] = tgamma(1)*tgamma(1)*(boost::math::digamma(2)-boost::math::digamma(1))/tgamma(2);
-            int sgn = 1;
-            for(int i = 1; i < 2*n; i++){
-                int k = i+1;
-                sgn *= -1;
-                mmom[i] = sgn*tgamma(k-1)*tgamma(k)*tgamma(1)/((k)*tgamma(k+1));
-            }
-
-            
-            return mmom;
-        }*/
-
-
         Vector<T, Dynamic> mmom_log(std::size_t n){
             Vector<T, Dynamic> mm = Vector<T, Dynamic>::Zero(n);
             double c = 1.0;
@@ -189,44 +128,16 @@ namespace GQLog {
             return ab;
         }
 
-
-        /*
-        * @method 
-        * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
-        * following the Golub-Welsch Algorithm
-        */
-        Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
-            // argument is a nx2 matrix
-            // SIZE CHECK
-            assert(coeffs.rows() == n);
-            assert(coeffs.cols() == 2);
-            
-            Matrix<T, Dynamic, Dynamic> tridiag = Matrix<T, Dynamic, Dynamic>::Zero(n, n);
-
-            // setting alpha0 in top left corner
-            tridiag(0, 0) = coeffs(0, 0); 
-
-            // setting tridiagonal coefficients
-            for(int i = 1; i < n; i++){
-                tridiag(i, i) = coeffs(i, 0);
-                tridiag(i,i-1) = sqrt(coeffs(i, 1));
-                tridiag(i-1, i) = sqrt(coeffs(i, 1));
-            }
-
-            return tridiag;
-        }
-
         /*
         * @method 
         * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
         */
-        Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
+        Matrix<T, Dynamic, Dynamic> nw(std::size_t n, Matrix<T, Dynamic, Dynamic> ab) {
 
             // finding the coefficients
             double gamma_0 = 1; // given that a=b=0
 
-            Vector<T, Dynamic> mom = mmom_log(2*n);
-            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
+            
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, ab);
 
             // solving the coefficients
@@ -254,13 +165,10 @@ namespace GQLog {
 
         template<typename F>
         T operator()(F f) {
-            Matrix<T, Dynamic, Dynamic> nw = log_nw(degree);
-
             T quad = 0;
-            for(int i = 0; i < nw.col(0).size(); i++){
-                quad+= nw(i, 1)*f(nw(i,0));
-            }
-
+            for(std::size_t i = 0; i < degree; i++){
+                quad += (weights[i] * std::real(f(nodes[i]))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
+            } 
             // now the GaussLegendre part
 
             return quad;
