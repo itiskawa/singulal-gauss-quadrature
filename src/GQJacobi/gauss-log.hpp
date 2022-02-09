@@ -7,10 +7,10 @@
 #include <GQJacobi/gauss-rule.hpp>
 using namespace Eigen;
 
-namespace GQLog : public GaussRule{
+namespace GQLog{
 
     template<class T>
-    class GaussLogRule{
+    class GaussLogRule : public GaussRule{
 
 
         public:
