@@ -7,7 +7,7 @@
 using namespace Eigen;
 
 template<class T>
-namepace SingGauss {
+namespace SingGauss {
 class GaussRule {
     public:
 
