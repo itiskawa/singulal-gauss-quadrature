@@ -175,7 +175,7 @@ namespace GQLog {
                     if(k > 1){
                         s_1 = sigma(k-2, l);
                     }
-                    sigma(k,l) = sigma(k-1,l+1) - (ab(k-1,0) - abj(l,0))*sigma(k-1,l)-ab(k-1,1)*sigma(k-2,l) + abj(l,1)*sigma(k-1,l-1);
+                    sigma(k,l) = sigma(k-1,l+1) - (ab(k-1,0) - abj(l,0))*sigma(k-1,l)-ab(k-1,1)*s_1 + abj(l,1)*sigma(k-1,l-1);
 
                 }
                 // alpha_k
