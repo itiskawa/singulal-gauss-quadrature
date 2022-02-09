@@ -159,7 +159,7 @@ namespace GQLog {
             ab(0,1) = mom[0];
             
             // computing sigma
-            Matrix<T, Dynamic, Dynamic> sigma = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2n);
+            Matrix<T, Dynamic, Dynamic> sigma = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
 
             // initializing first row
             for(int l = 0; l < 2*n; l++){
@@ -229,7 +229,7 @@ namespace GQLog {
             //Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
 
             // trying with regular moments
-            Vector<T, Dynamic> mom = mom_jaclog(n);
+            Vector<T, Dynamic> mom = mmom_log(n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom);
 
 
