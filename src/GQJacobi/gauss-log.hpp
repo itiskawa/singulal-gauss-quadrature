@@ -171,7 +171,7 @@ namespace GQLog {
             // filling in n following rows
             for(int k = 1; k < n; k++){
                 for(int l = k; l < 2*n-k-1; l++){
-                    std::cout << k << "," << l << std::endl;
+                    //std::cout << k << "," << l << std::endl;
                     if(k > 1){
                         s_1 = sigma(k-2, l);
                     }
@@ -185,7 +185,7 @@ namespace GQLog {
                 ab(k, 1) = sigma(k,k)/sigma(k-1,k-1);
             }
 
-            std::cout << ab << std::endl;
+            std::cout << sig << std::endl;
 
             return ab;
         }
