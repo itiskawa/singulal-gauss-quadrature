@@ -21,6 +21,11 @@ class GaussRule {
         std::vector<T> weights;
         std::size_t degree;
 
+        GaussRule(std::size_t n){
+            assert(n>1);
+            this->degree = n;
+        };
+
         GaussRule() = default;
 
         Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
