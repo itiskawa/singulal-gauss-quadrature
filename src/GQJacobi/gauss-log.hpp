@@ -21,7 +21,8 @@ using namespace Eigen;
 
         GaussLogRule() = default;
 
-        GaussLogRule(std::size_t n){
+        GaussLogRule(std::size_t n) 
+        : GaussRule(){
             assert(n>1);
             this->degree = n;
 
