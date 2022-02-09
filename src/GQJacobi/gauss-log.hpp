@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstddef>
 #include <type_traits>
-#include <boost/math/special_functions/digamma.hpp>
+#include <GQJacobi/utils.hpp>
 using namespace Eigen;
 
 namespace GQLog {
@@ -32,6 +32,7 @@ namespace GQLog {
         * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
         * monic polynomials associated to the Jacobi weight function
         */
+       /*
         Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
@@ -66,7 +67,7 @@ namespace GQLog {
                 coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-1], 2)*(ndeg[i-1]-1)*(ndeg[i-1]+1));
             }
             return coeffs;
-        }    
+        }    */
 
 
         /*

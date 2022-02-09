@@ -1,0 +1,41 @@
+#include <Eigen/Dense>
+#include <complex>
+#include <vector>
+#include <cstddef>
+#include <type_traits>
+
+Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
+
+            // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
+            Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            
+
+            // this method follows Gautschi's r_jacobi function
+            double a0 = (b-a)/(a+b+2);
+            double b0 = pow(2, (a+b+1))*((tgamma(a+1)*tgamma(b+1))/tgamma(a+b+2));
+
+            // special first degree case
+            if(n == 1) {
+                coeffs(0, 0) = a0;
+                coeffs(0, 1) = b0;
+                return coeffs;
+            }
+
+            // alpha coefficients
+            coeffs(0, 0) = a0;
+            Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
+            Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
+
+            for(int i = 1; i < n; i++){
+                coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
+            }
+
+
+            // beta coefficients
+            coeffs(0, 1) = b0;
+            coeffs(1, 1) = 4*(a+1)*(b+1)/(pow(a+b+2, 2)*(a+b+3));
+            for(int i = 2; i < n; i++){
+                coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-1], 2)*(ndeg[i-1]-1)*(ndeg[i-1]+1));
+            }
+            return coeffs;
+        }    

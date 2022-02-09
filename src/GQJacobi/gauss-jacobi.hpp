@@ -310,4 +310,4 @@ namespace GQJacobi{
     
 
 
-} // namespace GQJacobi cool
+} // namespace GQJacobi
