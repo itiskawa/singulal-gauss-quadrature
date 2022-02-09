@@ -157,6 +157,8 @@ namespace GQLog {
 
             ab(0,0) = abj(0,0) + (mom[1]/mom[0]);
             ab(0,1) = mom[0];
+
+            T s_1 = 0.;
             
             // computing sigma
             Matrix<T, Dynamic, Dynamic> sigma = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
@@ -170,7 +172,9 @@ namespace GQLog {
             for(int k = 1; k < n; k++){
                 for(int l = k; l < 2*n-k-1; l++){
                     std::cout << k << "," << l << std::endl;
-
+                    if(k > 1){
+                        s_1 = sigma(k-2, l);
+                    }
                     sigma(k,l) = sigma(k-1,l+1) - (ab(k-1,0) - abj(l,0))*sigma(k-1,l)-ab(k-1,1)*sigma(k-2,l) + abj(l,1)*sigma(k-1,l-1);
 
                 }
