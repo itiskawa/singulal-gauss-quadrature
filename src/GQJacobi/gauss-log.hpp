@@ -180,7 +180,7 @@ namespace GQLog {
                 ab(k, 1) = sigma(k,k)/sigma(k-1,k-1);
             }
 
-            cout << ab << endl;
+            std::cout << ab << std::endl;
 
             return ab;
         }
