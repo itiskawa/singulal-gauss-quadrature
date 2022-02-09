@@ -153,7 +153,7 @@ namespace GQLog {
 
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, mom, abj){
             // should return an nx2 matrix, with [a,b], with a & b as nx1 vectors
-            Matrix<T, Dynamic, Dynamic> abj = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
+            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
 
             ab(0,0) = abj(0,0) + (mom[1]/mom[0]);
             ab(0,1) = mom[0];
