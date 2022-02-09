@@ -140,7 +140,7 @@ namespace GQLog {
                 double p = (i+1)*i;
                 mm[i] = (pow(-1, i)/p)*(pow(tgamma(1), 2));
                 mm[i] *=c;
-                c *= (0.5*(i+1)/(2*(i+1)-1));
+                //c *= (0.5*(i+1)/(2*(i+1)-1));
             }
 
             return mm;
