@@ -96,7 +96,7 @@ namespace GQLog {
         * @brief computes modified moments
         *
         */
-        Vector<T, Dynamic> mmom(std::size_t n){
+        /*Vector<T, Dynamic> mmom(std::size_t n){
             Vector<T, Dynamic> mom = Vector<T, Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
@@ -128,7 +128,7 @@ namespace GQLog {
 
             
             return mmom;
-        }
+        }*/
 
 
         Vector<T, Dynamic> mmom_log(std::size_t n){
@@ -151,50 +151,35 @@ namespace GQLog {
         }
 
 
-        Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, Matrix<T, Dynamic, Dynamic> abm, Vector<T, Dynamic> mom){
-            // mom must have size 2n
+        Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, mom, abj){
+            // should return an nx2 matrix, with [a,b], with a & b as nx1 vectors
+            Matrix<T, Dynamic, Dynamic> abj = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
+
+            ab(0,0) = abj(0,0) + (mom[1]/mom[0]);
+            ab(0,1) = mom[0];
             
-            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
-            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            // computing sigma
+            Matrix<T, Dynamic, Dynamic> sigma = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2n);
 
-            ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
-            ab(0,1)=mom[0];
-
-            sig.row(1) = mom;
-
-
-            for(int i = 2; i < n+1; i++){
-                for(int k = i-1; k < 2*n-i+1; k++){
-                    sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
-                }
-                ab(i-1,0)=abm(i-1,0)+sig(i,i)/sig(i,i-1)-sig(i-1,i-1)/ sig(i-1,i-2);
-                ab(i-1,1)=sig(i,i-1)/sig(i-1,i-2);
+            // initializing first row
+            for(int l = 0; l < 2*n; l++){
+                sigma(0, l) = mom[l];
             }
-            return ab;
-        }
 
-        // takes normal moments as an argument
-        Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n,Vector<T, Dynamic> mom){
-            // mom must have size 2n
-            Matrix<T,Dynamic, Dynamic> abm = Matrix<T,Dynamic, Dynamic>::Zero(2*n-1, 2);
-            
-            Matrix<T, Dynamic, Dynamic> sig = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
-            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            // filling in n following rows
+            for(int k = 1; k < n; k++){
+                for(int l = k; l < 2*n-k-1; l++){
 
-            ab(0,0)=abm(0,0)+mom[1]/mom[0]; 
-            ab(0,1)=mom[0];
+                    sigma(k,l) = sigma(k-1,l+1) - (ab(k-1,0) - abj(l,0))*sigma(k-1,l)-ab(k-1,1)*sigma(k-2,l) + abj(l,1)*sigma(k-1,l-1);
 
-            sig.row(1) = mom;
-
-
-            for(int i = 2; i < n+1; i++){
-                for(int k = i-1; k < 2*n-i; k++){ // min(k) = 1, max(k) = 2n-2
-
-                    sig(i,k)=sig(i-1,k+1)-(ab(i-2,0)-abm(k,0))*sig(n-1,k)-ab(i-2,1)*sig(i-2,k)+abm(k,1)*sig(i-1,k-1);
                 }
-                ab(i-1,0)=abm(i-1,0)+sig(i,i)/sig(i,i-1)-sig(i-1,i-1)/ sig(i-1,i-2);
-                ab(i-1,1)=sig(i,i-1)/sig(i-1,i-2);
+                // alpha_k
+                ab(k, 0) = abj(k, 0)+ (sigma(k,k+1)/sigma(k,k)) - (sigma(k-1,k)/sigma(k-1,k-1));
+
+                // beta_k
+                ab(k, 1) = sigma(k,k)/sigma(k-1,k-1);
             }
+
             return ab;
         }
 
