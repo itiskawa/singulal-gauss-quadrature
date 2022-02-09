@@ -28,6 +28,7 @@ using namespace Eigen;
             Vector<T, Dynamic> mom = mmom_log(2*n);
             Matrix<T, Dynamic, Dynamic> abm = shifted_c_log(2*n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, abm);
+            cout << coeffs.rows() << ", " << coeffs.cols() << endl;
             Matrix<T, Dynamic, Dynamic> nw = nw(n, coeffs);
 
             for(int i = 0; i < n; i++){
