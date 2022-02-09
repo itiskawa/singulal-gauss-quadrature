@@ -170,7 +170,7 @@ namespace GQLog {
 
             // filling in n following rows
             for(int k = 1; k < n; k++){
-                for(int l = k; l < 2*n-k-1; l++){
+                for(int l = k; l < 2*n-k; l++){
                     //std::cout << k << "," << l << std::endl;
                     if(k > 1){
                         s_1 = sigma(k-2, l);
