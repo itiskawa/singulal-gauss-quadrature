@@ -8,25 +8,9 @@ using namespace Eigen;
 
 
 template<class T>
-class GaussRule {
-    public:
 
-        /*
-        * @attributes
-        * nodes: associated quadrature rule nodes
-        * weights: associated quadrature rule weights
-        * degree: number of quadrature points
-        */
-        std::vector<T> nodes;
-        std::vector<T> weights;
-        std::size_t degree;
 
-        GaussRule(std::size_t n){
-            assert(n>1);
-            this->degree = n;
-        };
-
-        GaussRule() = default;
+  
 
         Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
@@ -91,4 +75,4 @@ class GaussRule {
         
         // solver for nodes and weights
         Matrix<T, Dynamic, Dynamic> nw(std::size_t n, Matrix<T, Dynamic, Dynamic> ab);
-};
+

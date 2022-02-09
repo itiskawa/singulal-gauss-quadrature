@@ -10,19 +10,19 @@ using namespace Eigen;
 //namespace GQLog{
 
     template<typename T>
-    class GaussLogRule : public GaussRule<T>{
+    class GaussLogRule{
 
 
         public:
 
-        //std::vector<T> nodes;
-        //std::vector<T> weights;
-        //std::size_t degree;
+        std::vector<T> nodes;
+        std::vector<T> weights;
+        std::size_t degree;
 
         GaussLogRule() = default;
 
-        GaussLogRule(std::size_t n) 
-        : GaussRule<T>(n){
+        GaussLogRule(std::size_t n) {
+            this->degree = n;
 
             // computing the nodes
             Vector<T, Dynamic> mom = mmom_log(2*n);
@@ -137,10 +137,10 @@ using namespace Eigen;
             double gamma_0 = 1; // given that a=b=0
 
             
-            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, ab);
+            
 
             // solving the coefficients
-            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
+            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(ab, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             Vector<T, Dynamic> nodes= solve.eigenvalues().real();
 
