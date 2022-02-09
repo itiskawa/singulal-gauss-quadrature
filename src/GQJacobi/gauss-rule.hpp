@@ -8,7 +8,7 @@ using namespace Eigen;
 
 template<class T>
 class GaussRule {
-    protected:
+    public:
 
         /*
         * @attributes
