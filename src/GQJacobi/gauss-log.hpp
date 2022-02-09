@@ -130,6 +130,19 @@ namespace GQLog {
             return mmom;
         }
 
+
+        Vector<T, Dynamic> mmom_log(std::size_t n){
+            Vector<T, Dynamic> mm = Vector<T, Dynamic>::Zero(2*n);
+            mm[0] = 1;
+
+            for(int i = 1; i < n; i++){
+                double p = (i-1)*i;
+                mm[i] = (pow(-1, i)/p)*(pow(tgamma(1), 2));
+            }
+            return mm;
+        }
+
+
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n, Matrix<T, Dynamic, Dynamic> abm, Vector<T, Dynamic> mom){
             // mom must have size 2n
             
