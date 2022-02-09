@@ -51,8 +51,8 @@ namespace GQLog {
 
             // alpha coefficients
             coeffs(0, 0) = a0;
-            VectorXd deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-            VectorXd ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
+            Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
+            Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
 
             for(int i = 1; i < n; i++){
                 coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
@@ -150,7 +150,11 @@ namespace GQLog {
             return mm;
         }
 
-
+        /*
+        * @method
+        * @brief returns the recurrence coefficients of ln(1/t) for t in ]0,1[ as a nx2 array
+        *
+        */
         Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n,Vector<T, Dynamic> mom,Matrix<T, Dynamic, Dynamic> abj){
             // should return an nx2 matrix, with [a,b], with a & b as nx1 vectors
             Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
@@ -171,10 +175,7 @@ namespace GQLog {
             // filling in n following rows
             for(int k = 1; k < n; k++){
                 for(int l = k; l < 2*n-k; l++){
-                    //std::cout << k << "," << l << std::endl;
-                    if(k > 1){
-                        s_1 = sigma(k-2, l);
-                    }
+                    if(k > 1){ s_1 = sigma(k-2, l); }
                     sigma(k,l) = sigma(k-1,l+1) - (ab(k-1,0) - abj(l,0))*sigma(k-1,l)-ab(k-1,1)*s_1 + abj(l,1)*sigma(k-1,l-1);
 
                 }
@@ -184,13 +185,8 @@ namespace GQLog {
                 // beta_k
                 ab(k, 1) = sigma(k,k)/sigma(k-1,k-1);
             }
-
-            std::cout << sigma.cols() << std::endl;
-
             return ab;
         }
-
-
 
 
         /*
@@ -226,19 +222,11 @@ namespace GQLog {
         Matrix<T, Dynamic, Dynamic> log_nw(std::size_t n) {
 
             // finding the coefficients
-            double gamma_0 = 1; // unsure, but seems correct, sicne a = b = 0
+            double gamma_0 = 1; // given that a=b=0
 
-            //shifted moments
-            //Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
-            //Vector<T, Dynamic> mom = mmom_jaclog(n);
-            //Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
-
-            // trying with regular moments
             Vector<T, Dynamic> mom = mmom_log(2*n);
             Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
             Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, ab);
-
-
 
             // solving the coefficients
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
