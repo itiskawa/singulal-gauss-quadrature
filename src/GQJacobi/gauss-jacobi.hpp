@@ -188,6 +188,7 @@ namespace GQJacobi{
             for(int i = 2; i < n; i++){
                 coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-1], 2)*(ndeg[i-1]-1)*(ndeg[i-1]+1));
             }
+            cout << coeffs << endl;
             return coeffs;
         }    
 

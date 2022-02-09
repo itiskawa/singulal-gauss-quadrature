@@ -1,0 +1,8 @@
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/package.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/package_source.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/edit_cache.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/rebuild_cache.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/list_install_components.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/install.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/install/local.dir
+/Users/kawa/Desktop/College/BA5/thesis/singular-gauss-quad/build/CMakeFiles/install/strip.dir
