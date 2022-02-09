@@ -234,8 +234,9 @@ namespace GQLog {
             //Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, ab, mom);
 
             // trying with regular moments
-            Vector<T, Dynamic> mom = mmom_log(n);
-            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom);
+            Vector<T, Dynamic> mom = mmom_log(2*n);
+            Matrix<T, Dynamic, Dynamic> ab = shifted_c_log(2*n);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, ab);
 
 
 
