@@ -28,7 +28,7 @@ using namespace Eigen;
             Vector<T, Dynamic> mom = mmom_log(2*n);
             
             //cout << coeffs.rows() << ", " << coeffs.cols() << endl;
-            Matrix<T, Dynamic, Dynamic> nw = nw(n);
+            Matrix<T, Dynamic, Dynamic> nws = nw(n);
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
