@@ -6,7 +6,7 @@
 
 using namespace Eigen;
 
-namespace SingGauss {
+
 template<class T>
 class GaussRule {
     public:
@@ -85,4 +85,3 @@ class GaussRule {
         // solver for nodes and weights
         Matrix<T, Dynamic, Dynamic> nw(std::size_t n, Matrix<T, Dynamic, Dynamic> ab);
 };
-}
