@@ -26,10 +26,9 @@ using namespace Eigen;
 
             // computing the nodes
             Vector<T, Dynamic> mom = mmom_log(2*n);
-            Matrix<T, Dynamic, Dynamic> abm = shifted_c_log(2*n);
-            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, abm);
-            cout << coeffs.rows() << ", " << coeffs.cols() << endl;
-            Matrix<T, Dynamic, Dynamic> nw = nw(n, coeffs);
+            
+            //cout << coeffs.rows() << ", " << coeffs.cols() << endl;
+            Matrix<T, Dynamic, Dynamic> nw = nw(n);
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nw.col(0)[i]);
@@ -132,12 +131,13 @@ using namespace Eigen;
         * @method 
         * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
         */
-        Matrix<T, Dynamic, Dynamic> nw(std::size_t n, Matrix<T, Dynamic, Dynamic> ab) {
+        Matrix<T, Dynamic, Dynamic> nw(std::size_t n) {
 
             // finding the coefficients
             double gamma_0 = 1; // given that a=b=0
 
-            
+            Matrix<T, Dynamic, Dynamic> abm = shifted_c_log(2*n);
+            Matrix<T, Dynamic, Dynamic> coeffs = chebyshev(n, mom, abm);
             
 
             // solving the coefficients
