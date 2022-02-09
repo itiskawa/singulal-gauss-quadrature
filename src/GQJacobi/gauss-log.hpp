@@ -84,7 +84,7 @@ namespace GQLog {
             for(int i = 0; i < n; i++){
                 abj(i,0) = (1+ab(i,0))/2.;
             }
-            abj(0, 1) = ab(0,1)/(pow(2,a+b+1));
+            abj(0, 1) = ab(0,1)/2.;
             for(int i = 1; i < n; i++){
                 abj(i,1) = ab(i,1)/4.;
             }
