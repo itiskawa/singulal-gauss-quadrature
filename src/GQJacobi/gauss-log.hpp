@@ -136,7 +136,7 @@ namespace GQLog {
             mm[0] = 1;
 
             for(int i = 1; i < n; i++){
-                double p = (i-1)*i;
+                double p = (i+1)*i;
                 mm[i] = (pow(-1, i)/p)*(pow(tgamma(1), 2));
             }
             return mm;
