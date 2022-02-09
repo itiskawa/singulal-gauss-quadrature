@@ -22,7 +22,7 @@ using namespace Eigen;
         GaussLogRule() = default;
 
         GaussLogRule(std::size_t n) 
-        : GaussRule(n){
+        : GaussRule<T>(n){
 
             // computing the nodes
             Vector<T, Dynamic> mom = mmom_log(2*n);
