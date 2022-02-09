@@ -1,13 +1,13 @@
 #pragma once
+#include <GQJacobi/gauss-rule.hpp>
 #include <Eigen/Dense>
 #include <complex>
 #include <vector>
 #include <cstddef>
 #include <type_traits>
-#include <GQJacobi/gauss-rule.hpp>
 using namespace Eigen;
 
-namespace GQLog{
+//namespace GQLog{
 
     template<class T>
     class GaussLogRule : public GaussRule<T>{
@@ -182,4 +182,4 @@ namespace GQLog{
 
 
 
-} // Namespace GQLog
+//} // Namespace GQLog
