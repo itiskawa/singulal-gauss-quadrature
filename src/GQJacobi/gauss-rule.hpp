@@ -6,8 +6,8 @@
 
 using namespace Eigen;
 
-template<class T>
 namespace SingGauss {
+template<class T>
 class GaussRule {
     public:
 
