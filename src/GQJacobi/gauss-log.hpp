@@ -83,6 +83,9 @@ namespace GQLog {
 
             for(int i = 0; i < n; i++){
                 abj(i,0) = (1+ab(i,0))/2.;
+            }
+            
+            for(int i = 1; i < n; i++){
                 abj(i,1) = ab(i,1)/4.;
             }
             return abj;
