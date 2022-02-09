@@ -174,8 +174,8 @@ namespace GQJacobi{
 
             // alpha coefficients
             coeffs(0, 0) = a0;
-            VectorXd deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-            VectorXd ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
+            Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
+            Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
 
             for(int i = 1; i < n; i++){
                 coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
