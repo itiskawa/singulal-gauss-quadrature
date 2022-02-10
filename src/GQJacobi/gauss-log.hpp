@@ -50,14 +50,32 @@ using namespace Eigen;
             return this->weights;
         }
 
+        /*
+        * @constructor
+        * @brief default constructor
+        */
         GaussLogRule() = default;
 
+        /*
+        * @constructor
+        * @brief copy constructor
+        */
+        GaussLogRule(const GaussLogRule& gq){
+            this->degree = gq.getDeg();
+            for(int i = 0; i < degree; i++){
+                this->nodes.push_back(gq.getN()[i]);
+                this->weights.push_back(gq.getW()[i]);
+            }
+        }
+        
+        /*
+        * @constructor 
+        * @brief full constructor instantiates the desired quadrature rule by pre-computing the corresponding nodes / weights
+        */
         GaussLogRule(std::size_t n) {
             this->degree = n;
 
             // computing the nodes
-            
-            
             //cout << coeffs.rows() << ", " << coeffs.cols() << endl;
             Matrix<T, Dynamic, Dynamic> nws = nw(n);
 
@@ -66,13 +84,6 @@ using namespace Eigen;
                 weights.push_back(nws.col(1)[i]);
             }
         }
-
-        /*
-        * @method 
-        * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
-        * monic polynomials associated to the Jacobi weight function
-        */
-       /*
         
         /*
         * @brief computes the shifted recurrence relation terms
@@ -95,7 +106,6 @@ using namespace Eigen;
             }
             return abj;
         }
-
 
         /*
         * @brief computes modified moments

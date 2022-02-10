@@ -1,5 +1,5 @@
 #pragma once
-//#include <GQJacobi/gauss-rule.hpp>
+#include <GQJacobi/gauss-rule.hpp>
 #include <Eigen/Dense>
 #include <complex>
 #include <vector>
@@ -7,7 +7,7 @@
 #include <type_traits>
 using namespace Eigen;
 
-namespace GQJacobi{
+namespace GQJacobi : public GaussRule<T>{
 
     /*
     * @author V.B. (alias @itiskawa)
@@ -26,6 +26,8 @@ namespace GQJacobi{
         * degree: number of quadrature points
         */
         std::vector<T> nodes;
+        double alpha;
+        double beta;
         std::vector<T> weights;
         std::size_t degree;
 
@@ -82,12 +84,14 @@ namespace GQJacobi{
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
-            Matrix<T, Dynamic, Dynamic> nw = jacobi_nw(n, a, b);
+            Matrix<T, Dynamic, Dynamic> nws = nw(n, a, b);
             this->degree = n;
+            this->alpha = a;
+            this->beta = b;
 
             for(int i = 0; i < n; i++){
-                nodes.push_back(nw.col(0)[i]);
-                weights.push_back(nw.col(1)[i]);
+                nodes.push_back(nws.col(0)[i]);
+                weights.push_back(nws.col(1)[i]);
             }
         }
 
@@ -153,82 +157,13 @@ namespace GQJacobi{
 
         /*
         * @method 
-        * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
-        * monic polynomials associated to the Jacobi weight function
-        */
-        /*Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
-
-            // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-            Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
-            
-
-            // this method follows Gautschi's r_jacobi function
-            double a0 = (b-a)/(a+b+2);
-            double b0 = pow(2, (a+b+1))*((tgamma(a+1)*tgamma(b+1))/tgamma(a+b+2));
-
-            // special first degree case
-            if(n == 1) {
-                coeffs(0, 0) = a0;
-                coeffs(0, 1) = b0;
-                return coeffs;
-            }
-
-            // alpha coefficients
-            coeffs(0, 0) = a0;
-            Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-            Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
-
-            for(int i = 1; i < n; i++){
-                coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
-            }
-
-
-            // beta coefficients
-            coeffs(0, 1) = b0;
-            coeffs(1, 1) = 4*(a+1)*(b+1)/(pow(a+b+2, 2)*(a+b+3));
-            for(int i = 2; i < n; i++){
-                coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-1], 2)*(ndeg[i-1]-1)*(ndeg[i-1]+1));
-            }
-            //std::cout << coeffs << std::endl;
-            return coeffs;
-        }   */ 
-
-
-        /*
-        * @method 
-        * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
-        * following the Golub-Welsch Algorithm
-        */
-        /*Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
-            // argument is a nx2 matrix
-            // SIZE CHECK
-            assert(coeffs.rows() == n);
-            assert(coeffs.cols() == 2);
-            
-            Matrix<T, Dynamic, Dynamic> tridiag = Matrix<T, Dynamic, Dynamic>::Zero(n, n);
-
-            // setting alpha0 in top left corner
-            tridiag(0, 0) = coeffs(0, 0); 
-
-            // setting tridiagonal coefficients
-            for(int i = 1; i < n; i++){
-                tridiag(i, i) = coeffs(i, 0);
-                tridiag(i,i-1) = sqrt(coeffs(i, 1));
-                tridiag(i-1, i) = sqrt(coeffs(i, 1));
-            }
-
-            return tridiag;
-        }*/
-
-        /*
-        * @method 
         * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
         */
-        Matrix<T, Dynamic, Dynamic> jacobi_nw(std::size_t n, double a, double b) {
+        Matrix<T, Dynamic, Dynamic> nw(std::size_t n) {
 
-            double gamma_0 = gamma_zero(a, b);
+            double gamma_0 = gamma_zero(this->alpha, this->beta);
 
-            Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi<T>(n, a, b);
+            Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi<T>(n, this->alpha, this->beta);
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             
