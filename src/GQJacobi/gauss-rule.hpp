@@ -48,9 +48,7 @@ Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
     return coeffs;
 }    
 
-double gamma_zero(double a, double b) {
-    return (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));
-}
+
 
 template<class T>
 Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
