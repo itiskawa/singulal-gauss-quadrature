@@ -7,7 +7,7 @@
 #include <type_traits>
 using namespace Eigen;
 
-namespace GQJacobi : public GaussRule<T>{
+namespace GQJacobi {
 
     /*
     * @author V.B. (alias @itiskawa)
@@ -16,7 +16,7 @@ namespace GQJacobi : public GaussRule<T>{
     * 
     */
     template <class T>
-    class GaussJacobiRule{
+    class GaussJacobiRule : public GaussRule<T>{
 
         protected:
         /*
