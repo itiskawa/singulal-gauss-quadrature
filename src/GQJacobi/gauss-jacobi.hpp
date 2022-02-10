@@ -51,7 +51,16 @@ namespace GQJacobi {
             return this->weights;
         }
 
+        /*
+        * @method
+        * @brief getter for a parameter of w(x)=(1-x)^a(1+x)^b
+        */
         double getAlpha() const{ return this->alpha; }
+
+        /*
+        * @method
+        * @brief getter for b parameter of w(x)=(1-x)^a(1+x)^b
+        */
         double getBeta() const{ return this->beta; }
 
         /*

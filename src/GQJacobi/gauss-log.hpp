@@ -120,6 +120,7 @@
                     this->weights.push_back(glq.getW()[i]);
                 }
             }
+            return *this;
         }
 
 
