@@ -84,7 +84,7 @@ namespace GQJacobi {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
-            Matrix<T, Dynamic, Dynamic> nws = nw(n, a, b);
+            Matrix<T, Dynamic, Dynamic> nws = nw(n);
             this->degree = n;
             this->alpha = a;
             this->beta = b;
@@ -163,8 +163,8 @@ namespace GQJacobi {
 
             double gamma_0 = gamma_zero(this->alpha, this->beta);
 
-            Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi<T>(n, this->alpha, this->beta);
-            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
+            Matrix<T, Dynamic, Dynamic> coeffs = this->c_jacobi<T>(n, this->alpha, this->beta);
+            Matrix<T, Dynamic, Dynamic> J_n = this->tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             
 
