@@ -1,5 +1,6 @@
 #pragma once
 #include <GQJacobi/gauss-rule.hpp>
+#include <GQJacobi/gauss-jacobi.hpp>
 #include <Eigen/Dense>
 #include <complex>
 #include <vector>
@@ -207,11 +208,13 @@ using namespace Eigen;
         template<typename F>
         T operator()(F f) {
             T quad = 0;
+            GQJacobi::GaussLegendreRule glg(this->degree);
+            quad += glg(f, 0, 1);
             for(std::size_t i = 0; i < degree; i++){
-                quad += (weights[i] * std::real(f(nodes[i]))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
+                quad -= (weights[i] * std::real(f(nodes[i]-1))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
             } 
-            // now the GaussLegendre part
-
+           
+            
             return quad;
         }
 
