@@ -10,7 +10,7 @@ using namespace Eigen;
 template<class T>
 class GaussRule{
 
-    protected : 
+    public : 
     Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
         // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
