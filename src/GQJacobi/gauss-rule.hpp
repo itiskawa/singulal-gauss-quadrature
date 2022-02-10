@@ -73,6 +73,5 @@ Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, st
 }
 
 // solver for nodes and weights
-template<class T>
-Matrix<T, Dynamic, Dynamic> nw(std::size_t n, Matrix<T, Dynamic, Dynamic> ab);
+
 
