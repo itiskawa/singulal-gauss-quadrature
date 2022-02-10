@@ -80,8 +80,8 @@ using namespace Eigen;
         */
         Matrix<T, Dynamic, Dynamic> shifted_c_log(std::size_t n){
             Matrix<T, Dynamic, Dynamic> abj = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
-            Matrix<T, Dynamic, Dynamic> ab = c_jacobi<T>(n, 0, 0);
-
+            Matrix<T, Dynamic, Dynamic> ab = this.c_jacobi<T>(n, 0, 0);
+            
 
             //abj(0,0) = (1+ab(0,0))/2.;
             //abj(0,1) = (ab(0,1))/2;
@@ -172,7 +172,7 @@ using namespace Eigen;
             
 
             // solving the coefficients
-            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(ab, n);
+            Matrix<T, Dynamic, Dynamic> J_n = this.tridiagCoeffs(ab, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             Vector<T, Dynamic> nodes= solve.eigenvalues().real();
 
