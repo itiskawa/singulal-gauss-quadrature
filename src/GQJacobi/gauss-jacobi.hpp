@@ -1,5 +1,6 @@
 #pragma once
 #include <Eigen/Dense>
+#include <GQJacobi/gauss-rule.hpp>
 #include <complex>
 #include <vector>
 #include <cstddef>
@@ -155,7 +156,7 @@ namespace GQJacobi{
         * @brief computes the recurrence relation coefficents (alpha_n, beta_n) of the
         * monic polynomials associated to the Jacobi weight function
         */
-        Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
+        /*Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
             // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
             Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
@@ -190,7 +191,7 @@ namespace GQJacobi{
             }
             //std::cout << coeffs << std::endl;
             return coeffs;
-        }    
+        }   */ 
 
 
         /*
@@ -198,7 +199,7 @@ namespace GQJacobi{
         * @brief places the recurrence relation coefficients 'coeffs' in a tridiagonal matrix,
         * following the Golub-Welsch Algorithm
         */
-        Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
+        /*Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
             // argument is a nx2 matrix
             // SIZE CHECK
             assert(coeffs.rows() == n);
@@ -217,7 +218,7 @@ namespace GQJacobi{
             }
 
             return tridiag;
-        }
+        }*/
 
         /*
         * @method 

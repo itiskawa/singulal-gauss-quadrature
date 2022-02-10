@@ -13,11 +13,42 @@ using namespace Eigen;
     class GaussLogRule{
 
 
-        public:
+        protected:
 
+        /*
+        * @attributes
+        * nodes: associated quadrature rule nodes
+        * weights: associated quadrature rule weights
+        * degree: number of quadrature points
+        */
         std::vector<T> nodes;
         std::vector<T> weights;
         std::size_t degree;
+
+        public:
+        /*
+        * @method
+        * @brief getter for number of quadrature points
+        */
+        std::size_t getDeg() const{
+            return this->degree;
+        }
+
+        /*
+        * @method
+        * @brief getter for quadrature nodes
+        */
+        std::vector<T> getN() const{
+            return this->nodes;
+        }
+
+        /*
+        * @method
+        * @brief getter for quadrature weights
+        */
+        std::vector<T> getW() const{
+            return this->weights;
+        }
 
         GaussLogRule() = default;
 
