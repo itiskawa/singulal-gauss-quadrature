@@ -208,7 +208,7 @@ using namespace Eigen;
         template<typename F>
         T operator()(F f) {
             T quad = 0;
-            GQJacobi::GaussLegendreRule glg(this->degree);
+            GQJacobi::GaussLegendreRule<T> glg(this->degree);
             quad += glg(f, 0, 1);
             for(std::size_t i = 0; i < degree; i++){
                 quad -= (weights[i] * std::real(f(nodes[i]-1))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
