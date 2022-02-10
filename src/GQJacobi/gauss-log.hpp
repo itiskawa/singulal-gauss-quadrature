@@ -209,7 +209,7 @@ using namespace Eigen;
         T operator()(F f) {
             T quad = 0;
             GQJacobi::GaussLegendreRule<T> glg(this->degree);
-            quad += glg([](T x){return log(x+1)*f(x);}, 0, 1);
+            quad += glg([](T x){return log(x+1)*f;}, 0, 1);
             std::cout << "Legendre Integral : " << quad << std::endl;
             for(std::size_t i = 0; i < degree; i++){
                 quad -= (weights[i] * std::real(f(nodes[i]-1))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
