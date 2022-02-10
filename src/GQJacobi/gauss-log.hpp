@@ -3,7 +3,7 @@
 #include <GQJacobi/gauss-jacobi.hpp>
 
 
-//namespace GQLog{
+namespace GQLog{
 
 
     /*
@@ -246,9 +246,4 @@
     };
 
 
-
-
-
-
-
-//} // Namespace GQLog
+} // Namespace GQLog
