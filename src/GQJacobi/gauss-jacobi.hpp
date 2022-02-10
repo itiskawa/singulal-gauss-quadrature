@@ -228,7 +228,7 @@ namespace GQJacobi{
 
             double gamma_0 = gamma_zero(a, b);
 
-            Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi(n, a, b);
+            Matrix<T, Dynamic, Dynamic> coeffs = c_jacobi<T>(n, a, b);
             Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(coeffs, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             
