@@ -1,6 +1,6 @@
 #pragma once
-#include <Eigen/Dense>
 #include <GQJacobi/gauss-rule.hpp>
+#include <Eigen/Dense>
 #include <complex>
 #include <vector>
 #include <cstddef>

@@ -7,10 +7,6 @@
 using namespace Eigen;
 
 
-
-
-  
-
 template<class T>
 Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
@@ -73,5 +69,6 @@ Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, st
 }
 
 // solver for nodes and weights
+
 
 
