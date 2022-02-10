@@ -1,3 +1,4 @@
+#pragma once
 #include <GQJacobi/gauss-rule.hpp>
 
 
