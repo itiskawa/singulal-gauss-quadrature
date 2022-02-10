@@ -11,7 +11,7 @@ template<class T>
 class GaussRule{
 
     public : 
-    Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
+    virtual Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
         // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
         Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
@@ -49,7 +49,7 @@ class GaussRule{
 
 
 
-    Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
+    virtual Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
         // argument is a nx2 matrix
         // SIZE CHECK
         assert(coeffs.rows() == n);
