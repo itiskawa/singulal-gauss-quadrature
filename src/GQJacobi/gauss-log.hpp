@@ -1,7 +1,6 @@
 #pragma once
 #include <GQJacobi/gauss-rule.hpp>
 #include <GQJacobi/gauss-jacobi.hpp>
-#include <Eigen/Dense>
 
 
 //namespace GQLog{

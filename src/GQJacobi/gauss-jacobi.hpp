@@ -1,6 +1,5 @@
 #pragma once
 #include <GQJacobi/gauss-rule.hpp>
-#include <Eigen/Dense>
 
 
 namespace GQJacobi {
