@@ -86,6 +86,38 @@ using namespace Eigen;
             }
         }
         
+
+        /*
+        * @operator
+        * @brief template evaluation function
+        */
+        template<typename F>
+        T operator()(F f) {
+            T quad = 0;
+            // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
+            GQJacobi::GaussLegendreRule<T> glg(this->degree);
+            quad += glg([&](T x){ return log(x+1)*f(x); }, 0, 1);
+
+            // evaluation of integral over ]-1,0[
+            for(std::size_t i = 0; i < degree; i++){
+                quad -= (weights[i] * std::real(f(nodes[i]-1))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
+            } 
+            return quad;
+        }
+
+        GaussLogRule& operator=(const GaussLogRule& glq){
+            if(this != &glq){
+                this->degree = glq.getDeg();
+
+                for(size_t i = 0; i < degree; i++){
+                    this->nodes.push_back(glq.getN()[i]);
+                    this->weights.push_back(glq.getW()[i]);
+                }
+            }
+        }
+
+
+        protected:
         /*
         * @brief computes the shifted recurrence relation terms
         *
@@ -203,21 +235,6 @@ using namespace Eigen;
             
         }
 
-
-
-        template<typename F>
-        T operator()(F f) {
-            T quad = 0;
-            GQJacobi::GaussLegendreRule<T> glg(this->degree);
-            quad += glg([&](T x){return log(x+1)*f(x);}, 0, 1);
-            std::cout << "Legendre Integral : " << quad << std::endl;
-            for(std::size_t i = 0; i < degree; i++){
-                quad -= (weights[i] * std::real(f(nodes[i]-1))) ; // cast to real for cmath functions. Is only meant for f:R->R anyways
-            } 
-           
-            
-            return quad;
-        }
 
     };
 

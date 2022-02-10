@@ -56,7 +56,8 @@ namespace GQJacobi {
             return this->weights;
         }
 
-
+        double getAlpha() const{ return this->alpha; }
+        double getBeta() const{ return this->beta; }
 
         /*
         * @constructor
@@ -95,8 +96,6 @@ namespace GQJacobi {
             }
         }
 
-
-
         /*
         * @operator
         * @brief template evaluation function
@@ -134,6 +133,8 @@ namespace GQJacobi {
         GaussJacobiRule& operator=(const GaussJacobiRule& gq){
             if(this != &gq){
                 this->degree = gq.getDeg();
+                this->alpha = gq.getAlpha();
+                this->beta = gq.getBeta();
                 
                 for(size_t i = 0; i < degree; i++){
                     this->nodes.push_back(gq.getN()[i]);
@@ -141,7 +142,6 @@ namespace GQJacobi {
                 }
             }
             return *this;
-
         }
 
 
