@@ -1,5 +1,5 @@
 #pragma once
-#include <GQJacobi/gauss-rule.hpp>
+//#include <GQJacobi/gauss-rule.hpp>
 #include <Eigen/Dense>
 #include <complex>
 #include <vector>
