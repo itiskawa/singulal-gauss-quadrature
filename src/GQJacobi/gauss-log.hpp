@@ -172,7 +172,7 @@ using namespace Eigen;
             
 
             // solving the coefficients
-            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs(ab, n);
+            Matrix<T, Dynamic, Dynamic> J_n = tridiagCoeffs<T>(ab, n);
             SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
             Vector<T, Dynamic> nodes= solve.eigenvalues().real();
 
