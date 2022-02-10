@@ -10,7 +10,7 @@ using namespace Eigen;
 //namespace GQLog{
 
     template<typename T>
-    class GaussLogRule : public GaussRule{
+    class GaussLogRule : public GaussRule<T>{
 
 
         protected:
