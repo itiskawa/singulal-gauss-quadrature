@@ -3,7 +3,6 @@
 #include <GQJacobi/gauss-jacobi.hpp>
 #include <Eigen/Dense>
 
-using namespace Eigen;
 
 //namespace GQLog{
 

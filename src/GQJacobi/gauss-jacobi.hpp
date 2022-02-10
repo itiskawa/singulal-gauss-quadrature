@@ -2,7 +2,6 @@
 #include <GQJacobi/gauss-rule.hpp>
 #include <Eigen/Dense>
 
-using namespace Eigen;
 
 namespace GQJacobi {
 
