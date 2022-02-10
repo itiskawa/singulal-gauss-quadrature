@@ -70,10 +70,10 @@ class GaussRule{
         return tridiag;
     }
 
-    
+
 
     // solver for nodes and weights
 
-}
+};
 
 
