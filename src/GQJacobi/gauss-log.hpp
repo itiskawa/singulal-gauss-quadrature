@@ -2,14 +2,18 @@
 #include <GQJacobi/gauss-rule.hpp>
 #include <GQJacobi/gauss-jacobi.hpp>
 #include <Eigen/Dense>
-#include <complex>
-#include <vector>
-#include <cstddef>
-#include <type_traits>
+
 using namespace Eigen;
 
 //namespace GQLog{
 
+
+    /*
+    * @author V.B. (alias @itiskawa)
+    * @class
+    * @brief a class that contains the nodes, weights and number of points of a Gaussian quadrature rule with weight function w(x)=ln(1/x) over ]-1,1[
+    * 
+    */
     template<typename T>
     class GaussLogRule : public GaussRule<T>{
 
@@ -105,6 +109,10 @@ using namespace Eigen;
             return quad;
         }
 
+        /*
+        * @operator
+        * @brief assignment override
+        */
         GaussLogRule& operator=(const GaussLogRule& glq){
             if(this != &glq){
                 this->degree = glq.getDeg();

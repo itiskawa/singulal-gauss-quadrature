@@ -1,10 +1,7 @@
 #pragma once
 #include <GQJacobi/gauss-rule.hpp>
 #include <Eigen/Dense>
-#include <complex>
-#include <vector>
-#include <cstddef>
-#include <type_traits>
+
 using namespace Eigen;
 
 namespace GQJacobi {
