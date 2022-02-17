@@ -80,7 +80,7 @@ namespace GQLog{
 
             // computing the nodes
             //cout << coeffs.rows() << ", " << coeffs.cols() << endl;
-            Matrix<T, Dynamic, Dynamic> nws = nw(n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nws = nw(n);
 
             for(int i = 0; i < n; i++){
                 nodes.push_back(nws.col(0)[i]);
