@@ -127,11 +127,11 @@ namespace GQLog{
         protected:
         /*
         * @brief computes the shifted recurrence relation terms
-        *
+        * 
         */
-        Matrix<T, Dynamic, Dynamic> shifted_c_log(std::size_t n){
-            Matrix<T, Dynamic, Dynamic> abj = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
-            Matrix<T, Dynamic, Dynamic> ab = this->c_jacobi(n, 0, 0);
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> shifted_c_log(std::size_t n){
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> abj = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n,2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> ab = this->c_jacobi(n, 0, 0);
             
 
             //abj(0,0) = (1+ab(0,0))/2.;
@@ -151,8 +151,8 @@ namespace GQLog{
         * @brief computes modified moments
         *
         */
-        Vector<T, Dynamic> mmom_log(std::size_t n){
-            Vector<T, Dynamic> mm = Vector<T, Dynamic>::Zero(n);
+        Eigen::Vector<T, Eigen::Dynamic> mmom_log(std::size_t n){
+            Eigen::Vector<T, Eigen::Dynamic> mm = Eigen::Vector<T, Eigen::Dynamic>::Zero(n);
             double c = 1.0;
 
             for(int i = 0; i < n; i++){
@@ -175,9 +175,9 @@ namespace GQLog{
         * @brief returns the recurrence coefficients of ln(1/t) for t in ]0,1[ as a nx2 array
         *
         */
-        Matrix<T, Dynamic, Dynamic> chebyshev(std::size_t n,Vector<T, Dynamic> mom,Matrix<T, Dynamic, Dynamic> abj){
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> chebyshev(std::size_t n,Eigen::Vector<T, Eigen::Dynamic> mom, Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> abj){
             // should return an nx2 matrix, with [a,b], with a & b as nx1 vectors
-            Matrix<T, Dynamic, Dynamic> ab = Matrix<T, Dynamic, Dynamic>::Zero(n,2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> ab = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n,2);
 
             ab(0,0) = abj(0,0) + (mom[1]/mom[0]);
             ab(0,1) = mom[0];
@@ -185,7 +185,7 @@ namespace GQLog{
             T s_1 = 0.;
             
             // computing sigma
-            Matrix<T, Dynamic, Dynamic> sigma = Matrix<T, Dynamic, Dynamic>::Zero(n+1, 2*n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> sigma = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n+1, 2*n);
 
             // initializing first row
             for(int l = 0; l < 2*n; l++){
@@ -212,29 +212,29 @@ namespace GQLog{
         * @method 
         * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
         */
-        Matrix<T, Dynamic, Dynamic> nw(std::size_t n) {
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw(std::size_t n) {
 
             // finding the coefficients
             double gamma_0 = 1; // given that a=b=0
-            Vector<T, Dynamic> mom = mmom_log(2*n);
-            Matrix<T, Dynamic, Dynamic> abm = shifted_c_log(2*n);
-            Matrix<T, Dynamic, Dynamic> ab = chebyshev(n, mom, abm);
+            Eigen::Vector<T, Eigen::Dynamic> mom = mmom_log(2*n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> abm = shifted_c_log(2*n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> ab = chebyshev(n, mom, abm);
             
 
             // solving the coefficients
-            Matrix<T, Dynamic, Dynamic> J_n = this->tridiagCoeffs(ab, n);
-            SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
-            Vector<T, Dynamic> nodes= solve.eigenvalues().real();
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> J_n = this->tridiagCoeffs(ab, n);
+            Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> solve(J_n); // yields much faster computations of high n
+            Eigen::Vector<T, Eigen::Dynamic> nodes= solve.eigenvalues().real();
 
-            Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> eigenvecs = solve.eigenvectors().real();
 
-            Vector<T, Dynamic> weights = Vector<T, Dynamic>::Zero(n);
+            Eigen::Vector<T, Eigen::Dynamic> weights = Eigen::Vector<T, Eigen::Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
                 weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
             }
 
-            Matrix<T, Dynamic, Dynamic> nw = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);
             nw.col(0) = nodes;
             nw.col(1) = weights;
             

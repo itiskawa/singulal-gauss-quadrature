@@ -8,17 +8,27 @@
 #include <vector>
 #include <cstddef>
 #include <type_traits>
-using namespace Eigen;
 
 
+/*
+* @author V.B. (alias @itiskawa)
+* @abstract class
+* @brief an abstract class that defines common functions to different quadrature solvers
+* @param T type of the integration (float, double etc...)
+*/
 template<class T>
 class GaussRule{
 
     public : 
-    virtual Matrix<T, Dynamic, Dynamic> c_jacobi(std::size_t n, double a, double b) {
+    /*
+    * @brief computes the recurrence relation coefficients of the monic Jacobi Polynomials
+    * @param n number of desired coefficients
+    * @return a nx2 array with the alpha_k and beta_k coefficients in the columns 0 and 1 respetively
+    */
+    virtual Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> c_jacobi(std::size_t n, double a, double b) {
 
         // coefficient matrix: alpha and beta stored in columns, goes from 0 to n
-        Matrix<T, Dynamic, Dynamic> coeffs = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);
         
 
         // this method follows Gautschi's r_jacobi function
@@ -34,8 +44,8 @@ class GaussRule{
 
         // alpha coefficients
         coeffs(0, 0) = a0;
-        Vector<T,Dynamic> deg = Vector<T, Dynamic>::LinSpaced(n-1,1, n-1);
-        Vector<T,Dynamic> ndeg = (2*deg)+(Vector<T, Dynamic>::Ones(n-1)*(a+b));
+        Eigen::Vector<T,Eigen::Dynamic> deg = Eigen::Vector<T, Eigen::Dynamic>::LinSpaced(n-1,1, n-1);
+        Eigen::Vector<T,Eigen::Dynamic> ndeg = (2*deg)+(Eigen::Vector<T, Eigen::Dynamic>::Ones(n-1)*(a+b));
 
         for(int i = 1; i < n; i++){
             coeffs(i, 0) = (pow(b,2)-pow(a,2))/(ndeg[i-1]*(ndeg[i-1]+2));
@@ -52,14 +62,18 @@ class GaussRule{
     }    
 
 
-
-    virtual Matrix<T, Dynamic, Dynamic> tridiagCoeffs(Matrix<T, Dynamic, Dynamic> coeffs, std::size_t n) {
-        // argument is a nx2 matrix
+    /*
+    * @brief rearranges an array of recurrence relation coefficients into a self-adjoint matrix for Golub-Weklsch solve
+    * @param coeffs: nx2 array of recurrence relation coefficients, n: number of desired coefficients
+    * @return nxn self-adjoint tridiagonal matrix 
+    */
+    virtual Eigen::Matrix<T, Eigen::Dynamic,Eigen::Dynamic> tridiagCoeffs(Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs, std::size_t n) {
+        // argument is a nx2 Eigen::Matrix
         // SIZE CHECK
         assert(coeffs.rows() == n);
         assert(coeffs.cols() == 2);
         
-        Matrix<T, Dynamic, Dynamic> tridiag = Matrix<T, Dynamic, Dynamic>::Zero(n, n);
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiag = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, n);
 
         // setting alpha0 in top left corner
         tridiag(0, 0) = coeffs(0, 0); 
@@ -75,8 +89,6 @@ class GaussRule{
     }
 
 
-
-    // solver for nodes and weights
 
 };
 

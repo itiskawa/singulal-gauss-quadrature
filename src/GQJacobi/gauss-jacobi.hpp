@@ -89,7 +89,7 @@ namespace GQJacobi {
             assert(n>1);
             assert(a > -1);
             assert(b > -1);
-            Matrix<T, Dynamic, Dynamic> nws = nw(n);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nws = nw(n);
             this->degree = n;
             this->alpha = a;
             this->beta = b;
@@ -163,26 +163,26 @@ namespace GQJacobi {
         * @method 
         * @brief computes the nodes & weights of the associated Gauss-Jacobi quadrature rule
         */
-        Matrix<T, Dynamic, Dynamic> nw(std::size_t n) {
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw(std::size_t n) {
 
             double gamma_0 = gamma_zero(this->alpha, this->beta);
 
-            Matrix<T, Dynamic, Dynamic> coeffs = this->c_jacobi(n, this->alpha, this->beta);
-            Matrix<T, Dynamic, Dynamic> J_n = this->tridiagCoeffs(coeffs, n);
-            SelfAdjointEigenSolver<Matrix<T, Dynamic, Dynamic>> solve(J_n); // yields much faster computations of high n
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = this->c_jacobi(n, this->alpha, this->beta);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> J_n = this->tridiagCoeffs(coeffs, n);
+            Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T,Eigen::Dynamic, Eigen::Dynamic>> solve(J_n); // yields much faster computations of high n
             
 
-            Vector<T, Dynamic> nodes= solve.eigenvalues().real();
+            Eigen::Vector<T, Eigen::Dynamic> nodes= solve.eigenvalues().real();
 
-            Matrix<T, Dynamic, Dynamic> eigenvecs = solve.eigenvectors().real();
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> eigenvecs = solve.eigenvectors().real();
 
-            Vector<T, Dynamic> weights = Vector<T, Dynamic>::Zero(n);
+            Eigen::Vector<T, Eigen::Dynamic> weights = Eigen::Vector<T, Eigen::Dynamic>::Zero(n);
 
             for(int i = 0; i < n; i++){
                 weights[i] = gamma_0*pow(eigenvecs.col(i).normalized()[0], 2);
             }
 
-            Matrix<T, Dynamic, Dynamic> nw = Matrix<T, Dynamic, Dynamic>::Zero(n, 2);
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nw = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);
             nw.col(0) = nodes;
             nw.col(1) = weights;
             
