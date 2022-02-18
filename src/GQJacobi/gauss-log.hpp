@@ -107,11 +107,8 @@ namespace GQLog{
         template<typename F>
         T operator()(F f) {
             T quad = 0;
-
-            std::cout << "Before Legendre Part" << std::endl;
+            
             // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
-
-            // NEED TO FIX THIS PART
             GQJacobi::GaussLegendreRule<T> glg(this->degree);
             quad += glg([&](T x){ return log(x+1)*f(x); }, 0, 1);
 
