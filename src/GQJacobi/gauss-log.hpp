@@ -130,7 +130,7 @@ namespace GQLog{
             if(this != &glq){
                 this->degree = glq.getDeg();
 
-                for(size_t i = 0; i < degree; i++){
+                for(size_t i = 0; i < this->degree; i++){
                     this->nodes.push_back(glq.getN()[i]);
                     this->weights.push_back(glq.getW()[i]);
                 }
