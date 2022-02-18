@@ -107,13 +107,14 @@ namespace GQJacobi {
             assert(a > -1);
             assert(b > -1);
 
-            // nodes & weights computation
-            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nws = nw();
-
             // initializig all fields
             this->degree = n;
             this->alpha = a;
             this->beta = b;
+            
+            // nodes & weights computation
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nws = nw();
+
             for(int i = 0; i < n; i++){
                 nodes.push_back(nws.col(0)[i]);
                 weights.push_back(nws.col(1)[i]);
