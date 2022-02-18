@@ -223,7 +223,7 @@ namespace GQJacobi {
             
             /* Extracting eigenvalues and vectors. Only the real part is considered as 
              * they are guaranteed to be real given the nature of the problem */
-            Eigen::Vector<T, Eigen::Dynamic> nodes = solve.eigenvalues().real();å
+            Eigen::Vector<T, Eigen::Dynamic> nodes = solve.eigenvalues().real();
             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> eigenvecs = solve.eigenvectors().real();
 
             // Solving the weights using Golub-Welsch algorithm formula 
