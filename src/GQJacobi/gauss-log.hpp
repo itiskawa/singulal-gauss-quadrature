@@ -112,6 +112,8 @@ namespace GQLog{
             GQJacobi::GaussLegendreRule<T> glg(this->degree);
             quad += glg([&](T x){ return log(x+1)*f(x); }, 0, 1);
 
+            std::cout << "Past Legendre Part" << std::endl;
+            
             // evaluation of integral over ]-1,0[
             for(std::size_t i = 0; i < degree; i++){
                 // cast to real for cmath functions. Is only meant for f:R->R anyways
