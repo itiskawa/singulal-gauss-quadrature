@@ -1,5 +1,5 @@
 #pragma once
-#include <GQJacobi/gauss-rule.hpp>
+#include <SingGQ/gauss-rule.hpp>
 
 
 namespace GQJacobi {

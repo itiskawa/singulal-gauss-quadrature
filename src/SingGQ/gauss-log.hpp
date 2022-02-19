@@ -1,6 +1,6 @@
 #pragma once
-#include <GQJacobi/gauss-rule.hpp>
-#include <GQJacobi/gauss-jacobi.hpp>
+#include <SingGQ/gauss-rule.hpp>
+#include <SingGQ/gauss-jacobi.hpp>
 
 
 namespace GQLog{
