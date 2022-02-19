@@ -60,17 +60,23 @@ Once `GQJacobi` is installed and incuded, import is by typing:
 ```
 
 ### Example
+Say you want to compute the integral of `cos` with respect to a Chebyshev weight function
 ````
-template <typename T>
-double square(T x)
-{
-    return x*x;
-}
+//instantiate quadrature rule: 10 nodes
+GQJacobi::GaussChebyshevRule<double> gch(10, -1); // equivalent to GaussJacobiRule<double> gch(10, -0.5, -0.5)
 
-GQJacobi::GaussJacobiRule<double> gqj(4, -0.8, -0,2); // generates a 4-point Gauss-Jacobi quadrature rule
+//compute quadrature
+double cosQuadCheb = gch(cos<double>);
+````
 
-//computation
-double quad = gqj(square<double>);
+Lambda notation is also supported
 
-// now quad contains the integral from -1 to 1 of x^2
-``` 
+````
+double cosQuadCheb = gch([](double x){return cos(x);})
+````
+
+Integral computation over different intervals is possible as well (say over ]0,2[)
+
+````
+double cosQuadCheb2 = gch(cos<double>, 0,2);
+````
