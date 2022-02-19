@@ -1,4 +1,4 @@
-# C++ Library for Gaussian Quadrature with Singular weights
+# SingGQ : a C++ Library for Gaussian Quadrature with Singular weights
 
 ### Dependencies
 SingGQ is a library that relies on Eigen, which you can download by running;
