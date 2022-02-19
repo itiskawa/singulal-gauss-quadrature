@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 
-if( TARGET GQJacobi)
+if( TARGET SingGQ)
     return()
-endif(TARGET GQJacobi)
+endif(TARGET SingGQ)
 
 if( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
   set(STANDALONE ON)
@@ -11,13 +11,12 @@ endif( )
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "usr/local/include/eigen3")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(GQJacobi VERSION 1.0.0)
+project(SingGQ VERSION 1.0.0)
 #include(dependencies)
 
-message(STATUS "GQJacobi version : ${${PROJECT_NAME}_VERSION}")
+message(STATUS "SingGQ version : ${${PROJECT_NAME}_VERSION}")
 
           
-#list(APPEND CMAKE_MODULE_PATH "/usr/local/Cellar/eigen/3.4.0_1/share/cmake/Modules/FindEigen3.cmake")
 find_package(Eigen3 REQUIRED)
 find_package(Boost CONFIG)
 
@@ -34,7 +33,7 @@ target_include_directories( ${LIB_NAME} INTERFACE
 target_sources(
   ${LIB_NAME}
   INTERFACE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/GQJacobi/gauss-jacobi.hpp>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/SingGQ/gauss-jacobi.hpp>
   )
   
 target_link_libraries(${LIB_NAME} INTERFACE Eigen3::Eigen)
