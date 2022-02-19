@@ -1,7 +1,7 @@
 # C++ Library for Gaussian Quadrature with Singular weights
 
 ### Dependencies
-GQJacobi is a library that relies on Eigen, which you can download by running;
+SingGQ is a library that relies on Eigen, which you can download by running;
 ```
 brew install eigen
 ```
@@ -40,11 +40,11 @@ As this is a header-only library, you can also dowload ``gauss-jacobi.hpp`` and 
 Your root CMake will need to include the following lines
 
 ```
-find_package(GQJacobi)
-target_link_libraries(yourprojectname PUBLIC GQJacobi::GQJacobi)
+find_package(SingGQ)
+target_link_libraries(yourprojectname PUBLIC SingGQ::SingGQ)
 ```
 
-for `GQJacobi` to work. The rest is already handled (dependencies and such).
+for `SingGQ` to work. The rest is already handled (dependencies and such).
 
 ### As an include
 You will need to configure your project in such a way that the `gauss-jacobi.hpp` file can properly include `Eigen`.
@@ -54,9 +54,9 @@ You will need to configure your project in such a way that the `gauss-jacobi.hpp
 
 ## Usage
 
-Once `GQJacobi` is installed and incuded, import is by typing:
+Once `SingGQ` is installed and incuded, import is by typing:
 ```
-#include "GQJacobi/gauss-jacobi.hpp"
+#include "SingGQ/gauss-jacobi.hpp"
 ```
 
 ### Example
