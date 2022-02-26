@@ -120,6 +120,28 @@ namespace GQLog{
             return quad;
         }
 
+
+        template<typename F>
+        T operator()(F f, T a, T b) {
+            assert(a < b);
+            assert(a >= -1);
+            T quad = 0;
+            
+            // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
+            GQJacobi::GaussLegendreRule<T> glg(this->degree);
+            quad += glg([&](T x){ return log(x+1)*f(x); }, 0, 1);
+
+
+            // evaluation of integral over ]-1,0[
+            for(std::size_t i = 0; i < degree; i++){
+                // cast to real for cmath functions. Is only meant for f:R->R anyways
+                quad -= (weights[i] * std::real(f(nodes[i]-1))) ; 
+            } 
+            return quad;
+        }
+
+
+
         /**
          * @brief Assignment operator 
          * 

@@ -149,6 +149,7 @@ namespace GQJacobi {
         */
         template<typename F>
         T operator ()(F f, T a, T b) const {
+            assert(a < b);
             T quad = 0;
 
             for(std::size_t i = 0; i < degree; i++){
