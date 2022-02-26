@@ -138,7 +138,7 @@ namespace GQJacobi {
         } 
 
         /**
-         * @brief Applies quadrature rule to a function over integration interval ]a,b[
+         * @brief Applies GaussJacobi quadrature rule to a function over integration interval ]a,b[
          * Computation is done using affine pullback
          * 
          * @param F : function template type

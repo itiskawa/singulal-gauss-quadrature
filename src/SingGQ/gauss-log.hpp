@@ -120,11 +120,25 @@ namespace GQLog{
             return quad;
         }
 
-
+        /**
+         * @brief Applies GaussLog quadrature rule to a function over integration interval ]a,b[
+         * Computation is done depending on values of a resp. b
+         * 
+         * @tparam F : function template type
+         * @param f : function template
+         * @param a beginning of integration interval
+         * @param b : end of integration interval
+         * @return numerical value equal to the approximation of I[f,w] over ]a,b[
+         */
         template<typename F>
         T operator()(F f, T a, T b) {
             assert(a < b);
+            // Impossible case
             assert(a >= -1);
+
+            if(a==-1){
+                
+            }
             T quad = 0;
             
             // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
