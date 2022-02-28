@@ -321,7 +321,7 @@ namespace GQLog{
     template<typename T>
     class GaussPureLogRule: public GaussLogRule<T>{
         public:
-        
+
         GaussPureLogRule(std::size_t n) : GaussLogRule<T>(n) {};
 
         /**
@@ -336,9 +336,9 @@ namespace GQLog{
             T quad = 0;
 
             // evaluation of integral using regular Golub-Welsch
-            for(std::size_t i = 0; i < degree; i++){
+            for(std::size_t i = 0; i < this->degree; i++){
                 // cast to real for cmath functions. Is only meant for f:R->R anyways
-                quad -= (weights[i] * std::real(f(nodes[i]))) ; 
+                quad -= (this->weights[i] * std::real(f(this->nodes[i]))) ; 
             } 
             return quad;
         }
