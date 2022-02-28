@@ -320,7 +320,7 @@ namespace GQLog{
      */
     template<typename T>
     class GaussPureLogRule: public GaussLogRule<T>{
-        GaussPureLogRule(std::size_t n) : GaussLogRule(n) {};
+        GaussPureLogRule(std::size_t n) : GaussLogRule<T>(n) {};
 
         /**
          * @brief Applies quadrature rule to a function (paramater f) with respect to w(x) = ln(1/x)
@@ -340,7 +340,7 @@ namespace GQLog{
             } 
             return quad;
         }
-    }
+    }; // GaussPureLogRule
 
 
 } // Namespace GQLog
