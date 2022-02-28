@@ -120,6 +120,7 @@ namespace GQLog{
             return quad;
         }
 
+
         /**
          * @brief Applies GaussLog quadrature rule to a function over integration interval ]a,b[
          * Computation is done depending on values of a resp. b
@@ -312,6 +313,34 @@ namespace GQLog{
             return nw;
         }
     }; // GaussLogRule<T>
+
+    /**
+     * @brief a subclass of GaussLogRule<T> for Gaussian Quadrature Rules with respect to the weight function ln(1/x) over ]0,1[
+     * 
+     */
+    template<typename T>
+    class GaussPureLogRule: public GaussLogRule<T>{
+        GaussPureLogRule(std::size_t n) : GaussLogRule(n) {};
+
+        /**
+         * @brief Applies quadrature rule to a function (paramater f) with respect to w(x) = ln(1/x)
+         * 
+         * @param F : function template type
+         * @param f : function template
+         * @return numerical value equal to the approximation of I[f,ln(x+1)]
+        */
+        template<typename F>
+        T operator()(F f) {
+            T quad = 0;
+
+            // evaluation of integral using regular Golub-Welsch
+            for(std::size_t i = 0; i < degree; i++){
+                // cast to real for cmath functions. Is only meant for f:R->R anyways
+                quad -= (weights[i] * std::real(f(nodes[i]))) ; 
+            } 
+            return quad;
+        }
+    }
 
 
 } // Namespace GQLog
