@@ -59,6 +59,8 @@ Once `SingGQ` is installed and incuded, import is by typing:
 #include "SingGQ/gauss-jacobi.hpp"
 ```
 
+Each weight function is in its respective namespace. To use Gauss-Jacobi quadrature rules, use the namespace `GQJacobi`, and for Gauss-Log quadrature rules, use `GQLog`. Each solver is available from there.
+
 ### Example
 Say you want to compute the integral of `cos` with respect to a Chebyshev weight function
 ````
