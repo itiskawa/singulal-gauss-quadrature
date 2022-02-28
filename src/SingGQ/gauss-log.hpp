@@ -320,6 +320,8 @@ namespace GQLog{
      */
     template<typename T>
     class GaussPureLogRule: public GaussLogRule<T>{
+        public:
+        
         GaussPureLogRule(std::size_t n) : GaussLogRule<T>(n) {};
 
         /**
