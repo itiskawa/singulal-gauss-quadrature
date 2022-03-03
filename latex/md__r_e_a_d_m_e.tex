@@ -1,0 +1,77 @@
+\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{Dependencies}\label{md__r_e_a_d_m_e_autotoc_md1}
+Sing\+GQ is a library that relies on Eigen, which you can download by running; 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{brew install eigen}
+
+\end{DoxyCode}
+ If you are building with CMake, this isn\textquotesingle{}t a problem. However, if you are simply including into your {\ttfamily include} directory, you will have to set your compiler path to wherever you have installed Eigen.
+
+You will also need to have {\ttfamily Boost} installed, which you can do by typing\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{brew install boost}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Installation}\label{md__r_e_a_d_m_e_autotoc_md2}
+To use this header-\/ony library, clone this repo and run the following commands in the directory you\textquotesingle{}re cloned to\+: \hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{Setup with CMake}\label{md__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd singular-\/gauss-\/quad}
+\DoxyCodeLine{\$ mkdir build}
+\DoxyCodeLine{\$ cd build}
+\DoxyCodeLine{\$ cmake ..}
+\DoxyCodeLine{\$ sudo cmake -\/-\/build . -\/-\/target install}
+
+\end{DoxyCode}
+ If you get the message {\ttfamily Could NOT find Boost (missing\+: Boost\+\_\+\+DIR)} or {\ttfamily Could NOT find Eigen3 (missing\+: Eigen3\+\_\+\+DIR)} when installing, then go back to the previous step and install the dependencies. The {\ttfamily sudo} is very important, as files will be crated \& require admin privileges.\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{Setup by including}\label{md__r_e_a_d_m_e_autotoc_md4}
+As this is a header-\/only library, you can also dowload {\ttfamily \mbox{\hyperlink{gauss-jacobi_8hpp_source}{gauss-\/jacobi.\+hpp}}} and put it into your \textquotesingle{}include\textquotesingle{} file, for exmaple. However, it is important to note the following\+:\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysection{Building}\label{md__r_e_a_d_m_e_autotoc_md5}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{With CMake}\label{md__r_e_a_d_m_e_autotoc_md6}
+Your root CMake will need to include the following lines
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{find\_package(SingGQ)}
+\DoxyCodeLine{target\_link\_libraries(yourprojectname PUBLIC SingGQ::SingGQ)}
+
+\end{DoxyCode}
+
+
+for {\ttfamily Sing\+GQ} to work. The rest is already handled (dependencies and such).\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{As an include}\label{md__r_e_a_d_m_e_autotoc_md7}
+You will need to configure your project in such a way that the {\ttfamily \mbox{\hyperlink{gauss-jacobi_8hpp_source}{gauss-\/jacobi.\+hpp}}} file can properly include {\ttfamily Eigen}.
+
+{\bfseries{NOTE!}} {\itshape You may need to add the include path to Eigen in your environment! The code compiles and runs, but the IDE or editor may fuss about, thus making the experience uncomfortable.}\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{Usage}\label{md__r_e_a_d_m_e_autotoc_md8}
+Once {\ttfamily Sing\+GQ} is installed and incuded, import is by typing\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#include "{}SingGQ/gauss-\/jacobi.hpp"{}}
+
+\end{DoxyCode}
+
+
+Each weight function is in its respective namespace. To use Gauss-\/\+Jacobi quadrature rules, use the namespace {\ttfamily GQJacobi}, and for Gauss-\/\+Log quadrature rules, use {\ttfamily GQLog}. Each solver is available from there.\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{Example}\label{md__r_e_a_d_m_e_autotoc_md9}
+Say you want to compute the integral of {\ttfamily cos} with respect to a Chebyshev weight function 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//instantiate quadrature rule: 10 nodes}
+\DoxyCodeLine{GQJacobi::GaussChebyshevRule<double> gch(10, -\/1); // equivalent to GaussJacobiRule<double> gch(10, -\/0.5, -\/0.5)}
+\DoxyCodeLine{}
+\DoxyCodeLine{//compute quadrature}
+\DoxyCodeLine{double cosQuadCheb = gch(cos<double>);}
+
+\end{DoxyCode}
+
+
+Lambda notation is also supported
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{double cosQuadCheb = gch([](double x)\{return cos(x);\})}
+
+\end{DoxyCode}
+
+
+Integral computation over different intervals is possible as well (say over \mbox{]}0,2\mbox{[})
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{double cosQuadCheb2 = gch(cos<double>, 0,2);}
+
+\end{DoxyCode}
+ 

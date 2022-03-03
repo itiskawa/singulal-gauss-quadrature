@@ -1,0 +1,84 @@
+\hypertarget{gauss-rule_8hpp_source}{}\doxysection{gauss-\/rule.hpp}
+\label{gauss-rule_8hpp_source}\index{src/SingGQ/gauss-\/rule.hpp@{src/SingGQ/gauss-\/rule.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <complex>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <cstddef>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <complex>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <cstddef>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 }
+\DoxyCodeLine{20 \textcolor{keyword}{template}<\textcolor{keyword}{class} T>}
+\DoxyCodeLine{21 \textcolor{keyword}{class }\mbox{\hyperlink{class_gauss_rule}{GaussRule}}\{}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     public : }
+\DoxyCodeLine{34     \textcolor{keyword}{virtual} Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> \mbox{\hyperlink{class_gauss_rule_aebc3bf05fac716fefa21dfd167ae8ab2}{c\_jacobi}}(std::size\_t n, \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b) \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         \textcolor{comment}{// Empty coefficient matrix: alpha\_k and beta\_k are stored in columns}}
+\DoxyCodeLine{37         Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);}
+\DoxyCodeLine{38         }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40         \textcolor{comment}{// Following Gautschi's method}}
+\DoxyCodeLine{41         \textcolor{keywordtype}{double} a0 = (b-\/a)/(a+b+2);}
+\DoxyCodeLine{42         \textcolor{keywordtype}{double} b0 = pow(2, (a+b+1))*((tgamma(a+1)*tgamma(b+1))/tgamma(a+b+2));}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{comment}{// Special first degree case}}
+\DoxyCodeLine{45         \textcolor{keywordflow}{if}(n == 1) \{}
+\DoxyCodeLine{46             coeffs(0, 0) = a0;}
+\DoxyCodeLine{47             coeffs(0, 1) = b0;}
+\DoxyCodeLine{48             \textcolor{keywordflow}{return} coeffs;}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         \textcolor{comment}{// Computing / storing the alpha coefficients}}
+\DoxyCodeLine{52         coeffs(0, 0) = a0;}
+\DoxyCodeLine{53         Eigen::Vector<T,Eigen::Dynamic> deg = Eigen::Vector<T, Eigen::Dynamic>::LinSpaced(n-\/1,1, n-\/1);}
+\DoxyCodeLine{54         Eigen::Vector<T,Eigen::Dynamic> ndeg = (2*deg)+(Eigen::Vector<T, Eigen::Dynamic>::Ones(n-\/1)*(a+b));}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 1; i < n; i++)\{}
+\DoxyCodeLine{57             coeffs(i, 0) = (pow(b,2)-\/pow(a,2))/(ndeg[i-\/1]*(ndeg[i-\/1]+2));}
+\DoxyCodeLine{58         \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{comment}{// Computimg / storing the beta coefficients}}
+\DoxyCodeLine{62         coeffs(0, 1) = b0;}
+\DoxyCodeLine{63         coeffs(1, 1) = 4*(a+1)*(b+1)/(pow(a+b+2, 2)*(a+b+3));}
+\DoxyCodeLine{64         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 2; i < n; i++)\{}
+\DoxyCodeLine{65             coeffs(i, 1) = (4*(i*(i+b)*(i+a)*(i+a+b))) / (pow(ndeg[i-\/1], 2)*(ndeg[i-\/1]-\/1)*(ndeg[i-\/1]+1));}
+\DoxyCodeLine{66         \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68         \textcolor{keywordflow}{return} coeffs;}
+\DoxyCodeLine{69     \}    }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{88     \textcolor{keyword}{virtual} Eigen::Matrix<T, Eigen::Dynamic,Eigen::Dynamic> \mbox{\hyperlink{class_gauss_rule_a16155f5ed140bcb5071c62535cf16ccc}{tridiagCoeffs}}(Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs, std::size\_t n) \{}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90         \textcolor{comment}{// SIZE CHECK}}
+\DoxyCodeLine{91         assert(coeffs.rows() == n);}
+\DoxyCodeLine{92         assert(coeffs.cols() == 2);}
+\DoxyCodeLine{93         }
+\DoxyCodeLine{94         Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> tridiag = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, n);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96         \textcolor{comment}{// Setting alpha0 in top left corner}}
+\DoxyCodeLine{97         tridiag(0, 0) = coeffs(0, 0); }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99         \textcolor{comment}{// Setting tridiagonal coefficients}}
+\DoxyCodeLine{100         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 1; i < n; i++)\{}
+\DoxyCodeLine{101             tridiag(i, i) = coeffs(i, 0);}
+\DoxyCodeLine{102             tridiag(i,i-\/1) = sqrt(coeffs(i, 1));}
+\DoxyCodeLine{103             tridiag(i-\/1, i) = sqrt(coeffs(i, 1));}
+\DoxyCodeLine{104         \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         \textcolor{keywordflow}{return} tridiag;}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \}; \textcolor{comment}{// GaussRule<T>}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 }
+
+\end{DoxyCode}

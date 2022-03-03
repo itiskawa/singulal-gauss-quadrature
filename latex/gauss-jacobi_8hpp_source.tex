@@ -1,0 +1,193 @@
+\hypertarget{gauss-jacobi_8hpp_source}{}\doxysection{gauss-\/jacobi.hpp}
+\label{gauss-jacobi_8hpp_source}\index{src/SingGQ/gauss-\/jacobi.hpp@{src/SingGQ/gauss-\/jacobi.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <SingGQ/gauss-\/rule.hpp>}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }GQJacobi \{}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{15     \textcolor{keyword}{template} <\textcolor{keyword}{class} T>}
+\DoxyCodeLine{16     \textcolor{keyword}{class }\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_gauss_rule}{GaussRule}}<T>\{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keyword}{protected}:}
+\DoxyCodeLine{26         std::vector<T> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}};}
+\DoxyCodeLine{27         std::vector<T> weights;}
+\DoxyCodeLine{28         \textcolor{keywordtype}{double} alpha;}
+\DoxyCodeLine{29         \textcolor{keywordtype}{double} beta;}
+\DoxyCodeLine{30         std::size\_t degree;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{public}:}
+\DoxyCodeLine{38         std::size\_t \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a05a0b19ead6561332f0fe609d6d5339c}{getDeg}}()\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} this-\/>degree;}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{47         std::vector<T> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_afeb7372eb7122e19380780b9dac8dd3c}{getN}}()\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{48             \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}};}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{56         std::vector<T> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ab29c12c8d8a5250c224347a3d9e43b25}{getW}}()\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{57             \textcolor{keywordflow}{return} this-\/>weights;}
+\DoxyCodeLine{58         \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{65         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ad0dd931f3223a562ea79a122437ffe44}{getAlpha}}()\textcolor{keyword}{ const}\{ \textcolor{keywordflow}{return} this-\/>alpha; \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{72         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a41ea5a26d697e687c5a974ba42c6abf9}{getBeta}}()\textcolor{keyword}{ const}\{ \textcolor{keywordflow}{return} this-\/>beta; \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{77         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_acbc1fa687eddff99f24b934247e1af03}{GaussJacobiRule}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{85         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a825f9b6281b14dae61a8e17c332583c7}{GaussJacobiRule}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}\& gq)\{}
+\DoxyCodeLine{86             this-\/>degree = gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a05a0b19ead6561332f0fe609d6d5339c}{getDeg}}();}
+\DoxyCodeLine{87             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < degree; i++)\{}
+\DoxyCodeLine{88                 this-\/>nodes.push\_back(gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_afeb7372eb7122e19380780b9dac8dd3c}{getN}}()[i]);}
+\DoxyCodeLine{89                 this-\/>weights.push\_back(gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ab29c12c8d8a5250c224347a3d9e43b25}{getW}}()[i]);}
+\DoxyCodeLine{90             \}}
+\DoxyCodeLine{91         \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{102         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_aaaa36b199104b710ab1fe1b75d3d282c}{GaussJacobiRule}}(std::size\_t n, \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b) \{}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104             \textcolor{comment}{// validity check}}
+\DoxyCodeLine{105             assert(n>1);}
+\DoxyCodeLine{106             assert(a > -\/1);}
+\DoxyCodeLine{107             assert(b > -\/1);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109             \textcolor{comment}{// initializig all fields}}
+\DoxyCodeLine{110             this-\/>degree = n;}
+\DoxyCodeLine{111             this-\/>alpha = a;}
+\DoxyCodeLine{112             this-\/>beta = b;}
+\DoxyCodeLine{113             }
+\DoxyCodeLine{114             \textcolor{comment}{// nodes \& weights computation}}
+\DoxyCodeLine{115             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> nws = \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}}();}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < n; i++)\{}
+\DoxyCodeLine{118                 \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}}.push\_back(nws.col(0)[i]);}
+\DoxyCodeLine{119                 weights.push\_back(nws.col(1)[i]);}
+\DoxyCodeLine{120             \}}
+\DoxyCodeLine{121         \}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{130         \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{131         T \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6e4b154e40718e6de2209013b122ff2f}{operator ()}}(F f)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{132             T quad = 0;}
+\DoxyCodeLine{133             \textcolor{keywordflow}{for}(std::size\_t i = 0; i < degree; i++)\{}
+\DoxyCodeLine{134                 \textcolor{comment}{// cast to real for cmath functions. Is only meant for f:R-\/>R anyways}}
+\DoxyCodeLine{135                 quad += (weights[i] * std::real(f(\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}}[i]))) ; }
+\DoxyCodeLine{136             \} }
+\DoxyCodeLine{137             \textcolor{keywordflow}{return} quad;}
+\DoxyCodeLine{138         \} }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{150         \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{151         T \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6e4b154e40718e6de2209013b122ff2f}{operator ()}}(F f, T a, T b)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{152             assert(a < b);}
+\DoxyCodeLine{153             T quad = 0;}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155             \textcolor{keywordflow}{for}(std::size\_t i = 0; i < degree; i++)\{}
+\DoxyCodeLine{156                 \textcolor{comment}{// affine pullback nodes}}
+\DoxyCodeLine{157                 T x\_i = 0.5*((1-\/\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}}[i])*a + (1+\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}}[i])*b);}
+\DoxyCodeLine{158                 \textcolor{comment}{// cast to real for cmath functions. Is only meant for f:R-\/>R anyways}}
+\DoxyCodeLine{159                 quad += (weights[i] * std::real(f(x\_i))) ; }
+\DoxyCodeLine{160             \} }
+\DoxyCodeLine{161             \textcolor{comment}{// affine pullback weight ratio}}
+\DoxyCodeLine{162             quad *= (0.5*(b-\/a)); }
+\DoxyCodeLine{163             \textcolor{keywordflow}{return} quad;}
+\DoxyCodeLine{164         \}   }
+\DoxyCodeLine{165 }
+\DoxyCodeLine{172         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}\& \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a08e81d0237eb6dc0e8edd9997d38f53f}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}\& gq)\{}
+\DoxyCodeLine{173             \textcolor{comment}{// testing equality first}}
+\DoxyCodeLine{174             \textcolor{keywordflow}{if}(\textcolor{keyword}{this} != \&gq)\{}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176                 \textcolor{comment}{// assigning all fields}}
+\DoxyCodeLine{177                 this-\/>degree = gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a05a0b19ead6561332f0fe609d6d5339c}{getDeg}}();}
+\DoxyCodeLine{178                 this-\/>alpha = gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ad0dd931f3223a562ea79a122437ffe44}{getAlpha}}();}
+\DoxyCodeLine{179                 this-\/>beta = gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a41ea5a26d697e687c5a974ba42c6abf9}{getBeta}}();}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181                 \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < degree; i++)\{}
+\DoxyCodeLine{182                     this-\/>nodes.push\_back(gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_afeb7372eb7122e19380780b9dac8dd3c}{getN}}()[i]);}
+\DoxyCodeLine{183                     this-\/>weights.push\_back(gq.\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ab29c12c8d8a5250c224347a3d9e43b25}{getW}}()[i]);}
+\DoxyCodeLine{184                 \}}
+\DoxyCodeLine{185             \}}
+\DoxyCodeLine{186             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{187         \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190         \textcolor{keyword}{protected}:}
+\DoxyCodeLine{196         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ac5cc7e7bc681fd74e21b79734f22e2e9}{gamma\_zero}}() \{}
+\DoxyCodeLine{197             \textcolor{keywordtype}{double} a = this-\/>alpha;}
+\DoxyCodeLine{198             \textcolor{keywordtype}{double} b = this-\/>beta;}
+\DoxyCodeLine{199             \textcolor{keywordflow}{return} (pow(2, a+b+1)*tgamma(a+1)*tgamma(b+1))/(tgamma(a+b+2));}
+\DoxyCodeLine{200             }
+\DoxyCodeLine{201         \}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{211         Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}}() \{}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213             \textcolor{keywordtype}{double} gamma\_0 = \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_ac5cc7e7bc681fd74e21b79734f22e2e9}{gamma\_zero}}();}
+\DoxyCodeLine{214             std::size\_t n = this-\/>degree;}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216             \textcolor{comment}{/* Computing the recurrence relation coefficients for the tridiagolanisation process}}
+\DoxyCodeLine{217 \textcolor{comment}{             * Both functions below are from the abstract super-\/class template GaussRule<T>}}
+\DoxyCodeLine{218 \textcolor{comment}{            */}}
+\DoxyCodeLine{219             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> coeffs = this-\/>\mbox{\hyperlink{class_gauss_rule_aebc3bf05fac716fefa21dfd167ae8ab2}{c\_jacobi}}(n, this-\/>alpha, this-\/>beta);}
+\DoxyCodeLine{220             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> J\_n = this-\/>\mbox{\hyperlink{class_gauss_rule_a16155f5ed140bcb5071c62535cf16ccc}{tridiagCoeffs}}(coeffs, n);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222             \textcolor{comment}{// The self-\/adjoint solver. Significant speedup for large n}}
+\DoxyCodeLine{223             Eigen::SelfAdjointEigenSolver<Eigen::Matrix<T,Eigen::Dynamic, Eigen::Dynamic>> solve(J\_n); }
+\DoxyCodeLine{224             }
+\DoxyCodeLine{225             \textcolor{comment}{/* Extracting eigenvalues and vectors. Only the real part is considered as }}
+\DoxyCodeLine{226 \textcolor{comment}{             * they are guaranteed to be real given the nature of the problem */}}
+\DoxyCodeLine{227             Eigen::Vector<T, Eigen::Dynamic> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}} = solve.eigenvalues().real();}
+\DoxyCodeLine{228             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> eigenvecs = solve.eigenvectors().real();}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230             \textcolor{comment}{// Solving the weights using Golub-\/Welsch algorithm formula }}
+\DoxyCodeLine{231             Eigen::Vector<T, Eigen::Dynamic> weights = Eigen::Vector<T, Eigen::Dynamic>::Zero(n);}
+\DoxyCodeLine{232             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < n; i++)\{}
+\DoxyCodeLine{233                 weights[i] = gamma\_0*pow(eigenvecs.col(i).normalized()[0], 2);}
+\DoxyCodeLine{234             \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236             \textcolor{comment}{// Preparing more compact return type}}
+\DoxyCodeLine{237             Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}} = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(n, 2);}
+\DoxyCodeLine{238             \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}}.col(0) = \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a6f9217f0fecb61b23074bfdfd2f0ce7f}{nodes}};}
+\DoxyCodeLine{239             \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}}.col(1) = weights;}
+\DoxyCodeLine{240             }
+\DoxyCodeLine{241             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule_a7fae8f3edab25e3aac5bef802b8faa6c}{nw}};}
+\DoxyCodeLine{242             }
+\DoxyCodeLine{243         \}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \}; \textcolor{comment}{// GaussJacobiRule<T>}}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 }
+\DoxyCodeLine{253     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{254     \textcolor{keyword}{class }\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_legendre_rule}{GaussLegendreRule}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}<T>\{}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257         \textcolor{keyword}{public}:}
+\DoxyCodeLine{263         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_legendre_rule_ab7552a4609618d9dcfebd8cd02277296}{GaussLegendreRule}}(std::size\_t n)}
+\DoxyCodeLine{264         : \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}<T>(n, 0, 0)}
+\DoxyCodeLine{265         \{\}}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \}; \textcolor{comment}{// GaussLegendreRule<T>}}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269 }
+\DoxyCodeLine{275     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{276     \textcolor{keyword}{class }\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{GaussChebyshevRule}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}<T>\{}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{283         \textcolor{keyword}{private}:}
+\DoxyCodeLine{284         \textcolor{keywordtype}{int} sgn; }
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286         \textcolor{keyword}{public}:}
+\DoxyCodeLine{293         \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule_ae382f702c4cf37fc989ce54247fd0d0e}{GaussChebyshevRule}}(std::size\_t n, \textcolor{keywordtype}{int} sgn) }
+\DoxyCodeLine{294         : \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_jacobi_rule}{GaussJacobiRule}}<T>(n, sgn*0.5, sgn*0.5)}
+\DoxyCodeLine{295         \{}
+\DoxyCodeLine{296             \textcolor{comment}{// checks that the sign is none other than ±1}}
+\DoxyCodeLine{297             assert(fabs(sgn)==1);}
+\DoxyCodeLine{298             this-\/>sgn = sgn;}
+\DoxyCodeLine{299         \}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{306         \textcolor{keywordtype}{int} \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule_a0f5fe3c718af992b0931156e22770cef}{getSgn}}()\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{307             \textcolor{keywordflow}{return} this-\/>sgn;}
+\DoxyCodeLine{308         \}}
+\DoxyCodeLine{309     \}; \textcolor{comment}{// GaussChebyshevRule<T>}}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311 \} \textcolor{comment}{// namespace GQJacobi}}
+
+\end{DoxyCode}

@@ -1,0 +1,99 @@
+\hypertarget{class_gauss_rule}{}\doxysection{Gauss\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_gauss_rule}\index{GaussRule$<$ T $>$@{GaussRule$<$ T $>$}}
+
+
+An abstract class that defines common functions to different quadrature solvers It has been chosen to not contain fields nor evaluation operators, due to subtleties in subclasses (notably Gauss\+Log\+Rule$<$\+T$>$)  
+
+
+
+
+{\ttfamily \#include $<$gauss-\/rule.\+hpp$>$}
+
+Inheritance diagram for Gauss\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.352941cm]{class_gauss_rule}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_gauss_rule_aebc3bf05fac716fefa21dfd167ae8ab2}{c\+\_\+jacobi}} (std\+::size\+\_\+t n, double a, double b)
+\begin{DoxyCompactList}\small\item\em Computes the recurrence relation coefficients of the monic Jacobi Polynomials The methods mimics r\+\_\+jacobi.\+m of W. Gautschi in his MATLAB Suite for Orthognonal Polynomials available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. \end{DoxyCompactList}\item 
+virtual Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_gauss_rule_a16155f5ed140bcb5071c62535cf16ccc}{tridiag\+Coeffs}} (Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ coeffs, std\+::size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em rearranges an array of recurrence relation coefficients into a self-\/adjoint matrix for Golub-\/\+Welsch solve The alpha coefficients are placed in the diagonal, and the n-\/1 first beta coefficients\textquotesingle{} square roots are placed tridiagonally \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class Gauss\+Rule$<$ T $>$}
+An abstract class that defines common functions to different quadrature solvers It has been chosen to not contain fields nor evaluation operators, due to subtleties in subclasses (notably Gauss\+Log\+Rule$<$\+T$>$) 
+
+\begin{DoxyAuthor}{Author}
+V.\+B. (alias @itiskawa) 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em T} & \+: the data type of the quadrature (float, double etc...) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+February 2022 
+\end{DoxyDate}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_gauss_rule_aebc3bf05fac716fefa21dfd167ae8ab2}\label{class_gauss_rule_aebc3bf05fac716fefa21dfd167ae8ab2}} 
+\index{GaussRule$<$ T $>$@{GaussRule$<$ T $>$}!c\_jacobi@{c\_jacobi}}
+\index{c\_jacobi@{c\_jacobi}!GaussRule$<$ T $>$@{GaussRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{c\_jacobi()}{c\_jacobi()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+virtual Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_gauss_rule}{Gauss\+Rule}}$<$ T $>$\+::c\+\_\+jacobi (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n,  }\item[{double}]{a,  }\item[{double}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Computes the recurrence relation coefficients of the monic Jacobi Polynomials The methods mimics r\+\_\+jacobi.\+m of W. Gautschi in his MATLAB Suite for Orthognonal Polynomials available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: desired number of coefficients, should match the number of quadrature nodes / weights for a Gauss-\/\+Jacobi quadrature rule \\
+\hline
+{\em a} & \+: the a parameter of the Jacobi weight function \\
+\hline
+{\em b} & \+: the b parameter of the Jacobi weight function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a nx2 array with the recurrence relation coefficients in the columns 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_gauss_rule_a16155f5ed140bcb5071c62535cf16ccc}\label{class_gauss_rule_a16155f5ed140bcb5071c62535cf16ccc}} 
+\index{GaussRule$<$ T $>$@{GaussRule$<$ T $>$}!tridiagCoeffs@{tridiagCoeffs}}
+\index{tridiagCoeffs@{tridiagCoeffs}!GaussRule$<$ T $>$@{GaussRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{tridiagCoeffs()}{tridiagCoeffs()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+virtual Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_gauss_rule}{Gauss\+Rule}}$<$ T $>$\+::tridiag\+Coeffs (\begin{DoxyParamCaption}\item[{Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$}]{coeffs,  }\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+rearranges an array of recurrence relation coefficients into a self-\/adjoint matrix for Golub-\/\+Welsch solve The alpha coefficients are placed in the diagonal, and the n-\/1 first beta coefficients\textquotesingle{} square roots are placed tridiagonally 
+
+example with n=4\+: \begin{DoxyVerb} | a_0 c_1 0    0   0  |
+ | c_1 a_1 b_2  0   0  |
+\end{DoxyVerb}
+ J = $\vert$ 0 c\+\_\+2 a\+\_\+3 c\+\_\+2 0 $\vert$ where c\+\_\+i = sqrt(b\+\_\+i) $\vert$ 0 0 c\+\_\+3 a\+\_\+4 c\+\_\+3 $\vert$
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & nx2 array of recurrence relation coefficients, n\+: number of desired coefficients \\
+\hline
+{\em n} & \+: desired matrix size, should match the number of coefficients \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nxn self-\/adjoint tridiagonal matrix 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Sing\+GQ/gauss-\/rule.\+hpp\end{DoxyCompactItemize}

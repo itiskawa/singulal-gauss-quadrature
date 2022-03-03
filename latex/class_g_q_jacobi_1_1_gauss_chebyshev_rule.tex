@@ -1,0 +1,73 @@
+\hypertarget{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{}\doxysection{GQJacobi\+::Gauss\+Chebyshev\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_g_q_jacobi_1_1_gauss_chebyshev_rule}\index{GQJacobi::GaussChebyshevRule$<$ T $>$@{GQJacobi::GaussChebyshevRule$<$ T $>$}}
+
+
+A practical subclass of Gauss\+Jacobi\+Rule$<$\+T$>$. Represents an Gauss quadrature rule with a Chebyshev weight function. Note that both types of the Chebyshev weight function are accepted, despite the second kind not being singular.  
+
+
+
+
+{\ttfamily \#include $<$gauss-\/jacobi.\+hpp$>$}
+
+Inheritance diagram for GQJacobi\+::Gauss\+Chebyshev\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_g_q_jacobi_1_1_gauss_chebyshev_rule}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule_ae382f702c4cf37fc989ce54247fd0d0e}{Gauss\+Chebyshev\+Rule}} (std\+::size\+\_\+t n, int sgn)
+\begin{DoxyCompactList}\small\item\em Constructor of \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{Gauss\+Chebyshev\+Rule}}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule_a0f5fe3c718af992b0931156e22770cef}{get\+Sgn}} () const
+\begin{DoxyCompactList}\small\item\em Getter for sgn. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class GQJacobi\+::\+Gauss\+Chebyshev\+Rule$<$ T $>$}
+A practical subclass of Gauss\+Jacobi\+Rule$<$\+T$>$. Represents an Gauss quadrature rule with a Chebyshev weight function. Note that both types of the Chebyshev weight function are accepted, despite the second kind not being singular. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_q_jacobi_1_1_gauss_chebyshev_rule_ae382f702c4cf37fc989ce54247fd0d0e}\label{class_g_q_jacobi_1_1_gauss_chebyshev_rule_ae382f702c4cf37fc989ce54247fd0d0e}} 
+\index{GQJacobi::GaussChebyshevRule$<$ T $>$@{GQJacobi::GaussChebyshevRule$<$ T $>$}!GaussChebyshevRule@{GaussChebyshevRule}}
+\index{GaussChebyshevRule@{GaussChebyshevRule}!GQJacobi::GaussChebyshevRule$<$ T $>$@{GQJacobi::GaussChebyshevRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GaussChebyshevRule()}{GaussChebyshevRule()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{GQJacobi\+::\+Gauss\+Chebyshev\+Rule}}$<$ T $>$\+::\+Gauss\+Chebyshev\+Rule (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n,  }\item[{int}]{sgn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor of \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{Gauss\+Chebyshev\+Rule}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: the desired number of quadrature nodes / weights \\
+\hline
+{\em sgn} & \+: the sign determining the kind (first or second) of Chebyshev weight function \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_q_jacobi_1_1_gauss_chebyshev_rule_a0f5fe3c718af992b0931156e22770cef}\label{class_g_q_jacobi_1_1_gauss_chebyshev_rule_a0f5fe3c718af992b0931156e22770cef}} 
+\index{GQJacobi::GaussChebyshevRule$<$ T $>$@{GQJacobi::GaussChebyshevRule$<$ T $>$}!getSgn@{getSgn}}
+\index{getSgn@{getSgn}!GQJacobi::GaussChebyshevRule$<$ T $>$@{GQJacobi::GaussChebyshevRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSgn()}{getSgn()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+int \mbox{\hyperlink{class_g_q_jacobi_1_1_gauss_chebyshev_rule}{GQJacobi\+::\+Gauss\+Chebyshev\+Rule}}$<$ T $>$\+::get\+Sgn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for sgn. 
+
+\begin{DoxyReturn}{Returns}
+the sgn field 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Sing\+GQ/gauss-\/jacobi.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,330 @@
+\hypertarget{class_g_q_log_1_1_gauss_log_rule}{}\doxysection{GQLog\+::Gauss\+Log\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_g_q_log_1_1_gauss_log_rule}\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+
+
+A class that contains the nodes, weights and number of points of a Gaussian quadrature rule with weight function w(x)=ln(1/x) over \mbox{]}-\/1,1\mbox{[} It inherits from the Gauss\+Rule$<$\+T$>$ and is also a class template qith parameter T.  
+
+
+
+
+{\ttfamily \#include $<$gauss-\/log.\+hpp$>$}
+
+Inheritance diagram for GQLog\+::Gauss\+Log\+Rule\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_g_q_log_1_1_gauss_log_rule}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_ad3d49217931c0b3837f81e634664fbb4}{get\+Deg}} () const
+\begin{DoxyCompactList}\small\item\em Getter for number of quadrature points. \end{DoxyCompactList}\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a081652c886e48757da8523cd8171d17c}{getN}} () const
+\begin{DoxyCompactList}\small\item\em Getter for quadrature nodes. \end{DoxyCompactList}\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_aab0c88d897fded81319597bdd98b165a}{getW}} () const
+\begin{DoxyCompactList}\small\item\em Getter for quadrature weights. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_af9a9416ef01cbbd68855fe93c96e7eba}\label{class_g_q_log_1_1_gauss_log_rule_af9a9416ef01cbbd68855fe93c96e7eba}} 
+{\bfseries Gauss\+Log\+Rule} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor for \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a7ccc956f269ef39118bb36e20adba162}{Gauss\+Log\+Rule}} (const \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} \&gql)
+\begin{DoxyCompactList}\small\item\em Copy constructor. Assigns all fields of gql to this. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a676217fd4537976917735e8f58be61c6}{Gauss\+Log\+Rule}} (std\+::size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Constructor of a new \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\T \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a2c8ccdb5a87d44db5efa8a9096473559}{operator()}} (F f)
+\begin{DoxyCompactList}\small\item\em Applies quadrature rule to a function This evaluation is a bit tricker, as the desired weight function is actually ln(x+1) over \mbox{]}-\/1,1\mbox{[}, not ln(1/x) over \mbox{]}0,1\mbox{[} Because of this, half of the quadrature is solved via a Gauss\+Legendre\+Rule, and the other half by this. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\T \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a095301b81279ab460f27bbb5dfe20855}{operator()}} (F f, T a, T b)
+\begin{DoxyCompactList}\small\item\em Applies Gauss\+Log quadrature rule to a function over integration interval \mbox{]}a,b\mbox{[} Computation is done depending on values of a resp. b. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} \& \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a8ca605b9741914d79d1270be62e8cb58}{operator=}} (const \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} \&glq)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_aaf87fe6ff783c2ae5a5971ee7bcd0301}{shifted\+\_\+c\+\_\+log}} (std\+::size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Computes the shifted recurrence relation coefficients of the Jacobi weight function The computation follows W. Gautschi\textquotesingle{}s r\+\_\+jacobi01.\+m method, available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector$<$ T, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a4e3a40c4699e00db8e819deb46d05dd8}{mmom\+\_\+log}} (std\+::size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Computes the modified moments (mixed moments) of ln(1/x) with respect to the Jacobi Polynomials Routine is found in mmom\+\_\+log.\+m by W. Gautschi, available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_a366d8f634fc624b92e77c733d5068748}{chebyshev}} (std\+::size\+\_\+t n, Eigen\+::\+Vector$<$ T, Eigen\+::\+Dynamic $>$ mom, Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ abj)
+\begin{DoxyCompactList}\small\item\em The modified Chebyshev Algorithm. It computes the recurrence relation coefficients of the orthogonal polynomial w.\+r. to w(x) = ln(1/x) The mathematics of the computation are explained in Chapter 2 of W. Gautschi\textquotesingle{}s \textquotesingle{}Orthogonal Polynomials\+: Computation and Approximation\textquotesingle{}. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_affa69ff49dacba72e627338a63518874}{nw}} (std\+::size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em computes the nodes \& weights of the associated Gauss-\/\+Jacobi quadrature rule \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule_ad490796c3547284bf80d576edfdf24df}{nodes}}
+\item 
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a9b50744018efe5adf41c0716b759ada3}\label{class_g_q_log_1_1_gauss_log_rule_a9b50744018efe5adf41c0716b759ada3}} 
+std\+::vector$<$ T $>$ {\bfseries weights}
+\item 
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a2b25c48366876bbde11f780fc30dc32a}\label{class_g_q_log_1_1_gauss_log_rule_a2b25c48366876bbde11f780fc30dc32a}} 
+std\+::size\+\_\+t {\bfseries degree}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class GQLog\+::\+Gauss\+Log\+Rule$<$ T $>$}
+A class that contains the nodes, weights and number of points of a Gaussian quadrature rule with weight function w(x)=ln(1/x) over \mbox{]}-\/1,1\mbox{[} It inherits from the Gauss\+Rule$<$\+T$>$ and is also a class template qith parameter T. 
+
+\begin{DoxyAuthor}{Author}
+V.\+B. (alias @itiskawa)
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em T} & \+: the data type of the quadrature (float, double etc...) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+February 2022 
+\end{DoxyDate}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a7ccc956f269ef39118bb36e20adba162}\label{class_g_q_log_1_1_gauss_log_rule_a7ccc956f269ef39118bb36e20adba162}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!GaussLogRule@{GaussLogRule}}
+\index{GaussLogRule@{GaussLogRule}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GaussLogRule()}{GaussLogRule()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::\+Gauss\+Log\+Rule (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}}$<$ T $>$ \&}]{gql }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy constructor. Assigns all fields of gql to this. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&gql} & address of \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} instance to be copied \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a676217fd4537976917735e8f58be61c6}\label{class_g_q_log_1_1_gauss_log_rule_a676217fd4537976917735e8f58be61c6}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!GaussLogRule@{GaussLogRule}}
+\index{GaussLogRule@{GaussLogRule}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GaussLogRule()}{GaussLogRule()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::\+Gauss\+Log\+Rule (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor of a new \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: desired number of quadrature nodes / weights \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a366d8f634fc624b92e77c733d5068748}\label{class_g_q_log_1_1_gauss_log_rule_a366d8f634fc624b92e77c733d5068748}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!chebyshev@{chebyshev}}
+\index{chebyshev@{chebyshev}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{chebyshev()}{chebyshev()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::chebyshev (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n,  }\item[{Eigen\+::\+Vector$<$ T, Eigen\+::\+Dynamic $>$}]{mom,  }\item[{Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$}]{abj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+The modified Chebyshev Algorithm. It computes the recurrence relation coefficients of the orthogonal polynomial w.\+r. to w(x) = ln(1/x) The mathematics of the computation are explained in Chapter 2 of W. Gautschi\textquotesingle{}s \textquotesingle{}Orthogonal Polynomials\+: Computation and Approximation\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: the desired amount of recurrence relation coefficients \\
+\hline
+{\em mom} & \+: the 2n first modified moments \\
+\hline
+{\em abj} & \+: the 2n first shifted recurrence relation coefficients \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The recurrence relation coefficients of the orthogonal polynomial w.\+r. to w(x) = ln(1/x) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_ad3d49217931c0b3837f81e634664fbb4}\label{class_g_q_log_1_1_gauss_log_rule_ad3d49217931c0b3837f81e634664fbb4}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!getDeg@{getDeg}}
+\index{getDeg@{getDeg}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getDeg()}{getDeg()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::get\+Deg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for number of quadrature points. 
+
+\begin{DoxyReturn}{Returns}
+this-\/\texorpdfstring{$>$}{>}degree 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a081652c886e48757da8523cd8171d17c}\label{class_g_q_log_1_1_gauss_log_rule_a081652c886e48757da8523cd8171d17c}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!getN@{getN}}
+\index{getN@{getN}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getN()}{getN()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::getN (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for quadrature nodes. 
+
+\begin{DoxyReturn}{Returns}
+this-\/\texorpdfstring{$>$}{>}nodes 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_aab0c88d897fded81319597bdd98b165a}\label{class_g_q_log_1_1_gauss_log_rule_aab0c88d897fded81319597bdd98b165a}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!getW@{getW}}
+\index{getW@{getW}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getW()}{getW()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::getW (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for quadrature weights. 
+
+\begin{DoxyReturn}{Returns}
+this-\/\texorpdfstring{$>$}{>}weights 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a4e3a40c4699e00db8e819deb46d05dd8}\label{class_g_q_log_1_1_gauss_log_rule_a4e3a40c4699e00db8e819deb46d05dd8}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!mmom\_log@{mmom\_log}}
+\index{mmom\_log@{mmom\_log}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{mmom\_log()}{mmom\_log()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+Eigen\+::\+Vector$<$ T, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::mmom\+\_\+log (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Computes the modified moments (mixed moments) of ln(1/x) with respect to the Jacobi Polynomials Routine is found in mmom\+\_\+log.\+m by W. Gautschi, available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: the desired number of moments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The n first modified moments 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_affa69ff49dacba72e627338a63518874}\label{class_g_q_log_1_1_gauss_log_rule_affa69ff49dacba72e627338a63518874}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!nw@{nw}}
+\index{nw@{nw}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nw()}{nw()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::nw (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+computes the nodes \& weights of the associated Gauss-\/\+Jacobi quadrature rule 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: desired number of quadrature nodes / weights \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a2c8ccdb5a87d44db5efa8a9096473559}\label{class_g_q_log_1_1_gauss_log_rule_a2c8ccdb5a87d44db5efa8a9096473559}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename F $>$ \\
+T \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::operator() (\begin{DoxyParamCaption}\item[{F}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Applies quadrature rule to a function This evaluation is a bit tricker, as the desired weight function is actually ln(x+1) over \mbox{]}-\/1,1\mbox{[}, not ln(1/x) over \mbox{]}0,1\mbox{[} Because of this, half of the quadrature is solved via a Gauss\+Legendre\+Rule, and the other half by this. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em F} & \+: function template type \\
+\hline
+{\em f} & \+: function template \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+numerical value equal to the approximation of I\mbox{[}f,ln(x+1)\mbox{]} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a095301b81279ab460f27bbb5dfe20855}\label{class_g_q_log_1_1_gauss_log_rule_a095301b81279ab460f27bbb5dfe20855}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename F $>$ \\
+T \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::operator() (\begin{DoxyParamCaption}\item[{F}]{f,  }\item[{T}]{a,  }\item[{T}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Applies Gauss\+Log quadrature rule to a function over integration interval \mbox{]}a,b\mbox{[} Computation is done depending on values of a resp. b. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em F} & \+: function template type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em f} & \+: function template \\
+\hline
+{\em a} & beginning of integration interval \\
+\hline
+{\em b} & \+: end of integration interval \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+numerical value equal to the approximation of I\mbox{[}f,w\mbox{]} over \mbox{]}a,b\mbox{[} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_a8ca605b9741914d79d1270be62e8cb58}\label{class_g_q_log_1_1_gauss_log_rule_a8ca605b9741914d79d1270be62e8cb58}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}} \& \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{Gauss\+Log\+Rule}}$<$ T $>$ \&}]{glq }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&glq} & \+: Gauss\+Logi\+Rule instance we want to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$\ast$this 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_aaf87fe6ff783c2ae5a5971ee7bcd0301}\label{class_g_q_log_1_1_gauss_log_rule_aaf87fe6ff783c2ae5a5971ee7bcd0301}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!shifted\_c\_log@{shifted\_c\_log}}
+\index{shifted\_c\_log@{shifted\_c\_log}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{shifted\_c\_log()}{shifted\_c\_log()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+Eigen\+::\+Matrix$<$ T, Eigen\+::\+Dynamic, Eigen\+::\+Dynamic $>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::shifted\+\_\+c\+\_\+log (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Computes the shifted recurrence relation coefficients of the Jacobi weight function The computation follows W. Gautschi\textquotesingle{}s r\+\_\+jacobi01.\+m method, available at\+: \href{https://www.cs.purdue.edu/archives/2002/wxg/codes/OPQ.html}{\texttt{ https\+://www.\+cs.\+purdue.\+edu/archives/2002/wxg/codes/\+OPQ.\+html}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \+: desired number of coefficients \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a (nx2) array with the shifted monic Jacobi recurrence relation coefficients 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_g_q_log_1_1_gauss_log_rule_ad490796c3547284bf80d576edfdf24df}\label{class_g_q_log_1_1_gauss_log_rule_ad490796c3547284bf80d576edfdf24df}} 
+\index{GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}!nodes@{nodes}}
+\index{nodes@{nodes}!GQLog::GaussLogRule$<$ T $>$@{GQLog::GaussLogRule$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$T$>$ \mbox{\hyperlink{class_g_q_log_1_1_gauss_log_rule}{GQLog\+::\+Gauss\+Log\+Rule}}$<$ T $>$\+::nodes\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodes} & \+: nodes of the quadrature rule Q\mbox{[}., ln(1/x)\mbox{]} over \mbox{]}0,1\mbox{[} \\
+\hline
+{\em weights} & \+: weights of the quadrature Q\mbox{[}., ln(1/x)\mbox{]} rule over \mbox{]}0,1\mbox{[} \\
+\hline
+{\em degree} & \+: number of quadrature points, i.\+e. size of nodes \& weights vector \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Sing\+GQ/gauss-\/log.\+hpp\end{DoxyCompactItemize}
