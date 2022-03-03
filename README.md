@@ -58,8 +58,13 @@ All documentation is available on [these Github Pages](https://itiskawa.github.i
 
 Once `SingGQ` is installed and incuded, import is by typing:
 ```
-#include "SingGQ/gauss-jacobi.hpp"
+#include <SingGQ/gauss-jacobi.hpp>
 ```
+or 
+```
+#include <SingGQ/gauss-log.hpp>
+```
+depending on what you need to compute.
 
 Each weight function is in its respective namespace. To use Gauss-Jacobi quadrature rules, use the namespace `GQJacobi`, and for Gauss-Log quadrature rules, use `GQLog`. Each solver is available from there.
 
