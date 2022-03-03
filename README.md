@@ -54,6 +54,8 @@ You will need to configure your project in such a way that the `gauss-jacobi.hpp
 
 ## Usage
 
+All documentation is available on [these Github Pages](https://itiskawa.github.io/SingGQ-doc/) but a short example is provided for fast usage.
+
 Once `SingGQ` is installed and incuded, import is by typing:
 ```
 #include "SingGQ/gauss-jacobi.hpp"
