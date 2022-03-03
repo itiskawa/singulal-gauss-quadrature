@@ -16,7 +16,7 @@ brew install boost
 ## Installation
 
 
-To use this header-ony library, clone this repo and run the following commands in the directory you're cloned to:
+To use this header-ony library, clone this repo by running `git clone https://github.com/itiskawa/singular-gauss-quadrature.git` in your directory of choice and run the following commands in the directory you've cloned to:
 ### Setup with CMake
 ```
 $ cd singular-gauss-quad
@@ -75,7 +75,7 @@ Say you want to compute the integral of `cos` with respect to a Chebyshev weight
 GQJacobi::GaussChebyshevRule<double> gch(10, -1); // equivalent to GaussJacobiRule<double> gch(10, -0.5, -0.5)
 
 //compute quadrature
-double cosQuadCheb = gch(cos<double>);
+double cosQuadCheb gch(cos<double>);
 ````
 
 Lambda notation is also supported
