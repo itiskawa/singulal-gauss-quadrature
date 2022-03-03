@@ -43,6 +43,7 @@ Your root CMake will need to include the following lines
 find_package(SingGQ)
 target_link_libraries(yourprojectname PUBLIC SingGQ::SingGQ)
 ```
+(An example of `CMakeLists.txt` and `main.cpp` is given in the `test/` folder of this repository)
 
 for `SingGQ` to work. The rest is already handled (dependencies and such).
 
