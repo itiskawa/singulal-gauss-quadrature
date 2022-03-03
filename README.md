@@ -48,7 +48,7 @@ target_link_libraries(yourprojectname PUBLIC SingGQ::SingGQ)
 for `SingGQ` to work. The rest is already handled (dependencies and such).
 
 ### As an include
-You will need to configure your project in such a way that the `gauss-jacobi.hpp` file can properly include `Eigen`.
+You will need to configure your project in such a way that the `gauss-jacobi.hpp` file can properly include `Eigen`. Of course, you may also just add the .hpp files to an `include` directory and import them. Just make sure you can successfully import the dependencies beforehand.
 
 
 **NOTE!** _You may need to add the include path to Eigen in your environment! The code compiles and runs, but the IDE or editor may fuss about, thus making the experience uncomfortable._
