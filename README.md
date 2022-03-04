@@ -19,7 +19,7 @@ brew install boost
 To use this header-ony library, clone this repo by running `git clone https://github.com/itiskawa/singular-gauss-quadrature.git` in your directory of choice and run the following commands in the directory you've cloned to:
 ### Setup with CMake
 ```
-$ cd singular-gauss-quad
+$ cd singular-gauss-quadrature
 $ mkdir build
 $ cd build
 $ cmake ..
