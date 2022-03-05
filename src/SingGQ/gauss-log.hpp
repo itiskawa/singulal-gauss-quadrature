@@ -144,7 +144,7 @@ namespace GQLog{
             
             // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
             GQJacobi::GaussLegendreRule<T> glg(this->degree);
-            quad += glg([&](T x){f((b-a)*x + a);}, 0, 1);
+            quad += glg([&](T x){return f((b-a)*x + a);}, 0, 1);
 
             // scaling factor adjustment due to affine pullback. Is well defined by the property b>a
             quad *= log(b-a);
