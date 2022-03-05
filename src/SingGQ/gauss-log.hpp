@@ -152,7 +152,7 @@ namespace GQLog{
             // evaluation of second half of the integral using the special quadrature rule
             for(std::size_t i = 0; i < degree; i++){
                 // cast to real for cmath functions. Is only meant for f:R->R anyways
-                quad -= (weights[i] * std::real(f(nodes[i](b-a)+a))) ; 
+                quad -= (weights[i] * std::real(f(nodes[i]*(b-a)+a))) ; 
             } 
             // last scaling due to affine pullback
             return (b-a)*quad;
