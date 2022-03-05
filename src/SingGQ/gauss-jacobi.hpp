@@ -138,8 +138,8 @@ namespace GQJacobi {
         } 
 
         /**
-         * @brief Applies GaussJacobi quadrature rule to a function over integration interval ]a,b[
-         * Computation is done using affine pullback
+         * @brief Applies Gauss-Jacobi quadrature rule to a function over integration interval ]a,b[ w.r. to (x-b)^alpha*(x-a)^beta
+         * Computation is done using affine pullback which reduces the problem to a scaled and 'dilated' numerical integration of f
          * 
          * @param F : function template type
          * @param f : function template
@@ -158,8 +158,9 @@ namespace GQJacobi {
                 // cast to real for cmath functions. Is only meant for f:R->R anyways
                 quad += (weights[i] * std::real(f(x_i))) ; 
             } 
-            // affine pullback weight ratio
-            quad *= (0.5*(b-a)); 
+
+            // affine pullback scaling ratio
+            quad *= pow((0.5*(b-a)), 1+this->getAlpha()+this->getBeta()); 
             return quad;
         }   
 
