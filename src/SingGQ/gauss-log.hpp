@@ -122,8 +122,12 @@ namespace GQLog{
 
 
         /**
-         * @brief Applies GaussLog quadrature rule to a function over integration interval ]a,b[
-         * Computation is done depending on values of a resp. b
+         * @brief Applies GaussLog quadrature rule to a function over integration interval ]a,b[ for the weight function ln(x-a) via affine pullback
+         * The affine pullback enables us to split the integral into two parts over ]-,1[:
+         * log(s(b-a))f(s(b-a)+a) = log(b-a)f(s(b-a)+a) + log(s)f(s(bn-a)+a)
+         * The first half is nonsingular, as b>a, and is computable with a GaussLegendreRule<T> instance
+         * The second half requires an instance of the developed special quadrature rule 
+         * 
          * 
          * @tparam F : function template type
          * @param f : function template
@@ -133,26 +137,25 @@ namespace GQLog{
          */
         template<typename F>
         T operator()(F f, T a, T b) {
+            // boundary conditions
             assert(a < b);
-            // Impossible case
-            assert(a >= -1);
-
-            if(a==-1){
-                
-            }
+            
             T quad = 0;
             
             // evaluation of integral over ]0,1[, no singularity => use GaussLegendreRule
             GQJacobi::GaussLegendreRule<T> glg(this->degree);
-            quad += glg([&](T x){ return log(x+1)*f(x); }, 0, 1);
+            quad += glg([&](T x){f((b-a)*x + a);}, 0, 1);
 
+            // scaling factor adjustment due to affine pullback. Is well defined by the property b>a
+            quad *= log(b-a);
 
-            // evaluation of integral over ]-1,0[
+            // evaluation of second half of the integral using the special quadrature rule
             for(std::size_t i = 0; i < degree; i++){
                 // cast to real for cmath functions. Is only meant for f:R->R anyways
-                quad -= (weights[i] * std::real(f(nodes[i]-1))) ; 
+                quad -= (weights[i] * std::real(f(nodes[i](b-a)+a))) ; 
             } 
-            return quad;
+            // last scaling due to affine pullback
+            return (b-a)*quad;
         }
 
 
